@@ -1,28 +1,22 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-export default function Question({ text, id }: { text: string, id: number }) {
+export default function Question({ text, id, refetch }: { text: string, id: number, refetch: ()=>Promise<void> }) {
 
     const [isEditing, setEditing] = useState(false);
-    const [questionText, setQuestionText] = useState("")
 
-    const handleEdit = async () => {
-        
-        axios.put(`https://qiz-api.herokuapp.com/questions/${id}`, {question : questionText})
+    const handleEdit = async (e: React.FormEvent<HTMLInputElement>) => {
+        console.log(id)
+        await axios.put(`https://qiz-api.herokuapp.com/questions/${id}`, { question: e.currentTarget.value})
         setEditing(false);
-
-    }
-
-    const handleEditing = async (e: React.FormEvent<HTMLInputElement>) => {
-
-        setQuestionText(e.currentTarget.value);
-
+        await refetch();
     }
 
     return (<div className="mb-4">
         {isEditing ? 
 
-            <input onChange={handleEditing} onBlur={handleEdit}>
+            <input className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+            onBlur={handleEdit} defaultValue={text} type="text" autoFocus={true}>
             </input>
 
 
