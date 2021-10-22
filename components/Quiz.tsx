@@ -1,5 +1,6 @@
 import React, { useState, SetStateAction } from 'react'
 import AnswerChoice from "./AnswerChoice"
+import CreateQuiz from "./CreateQuiz"
 import Question from "./Question"
 import Submit from "./Submit"
 import axios from 'axios'
@@ -56,10 +57,12 @@ export default function Quiz({ question, answers }: { question: string, answers:
             setCorrect(false)
         }
     }
+
     return (
         <div className="w-full h-screen bg-blue-200">
 
             <form className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                {/* <CreateQuiz func={createQuiz}/> */}
                 <Question text={question} />
                 {
                     answers.map((ans, index)=>(
