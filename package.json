@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "lint": "next lint",
-    "deploy": "git add . && git commit -m Heroku && git push heroku master"
+    "lint": "next lint"
   },
   "dependencies": {
     "axios": "^0.22.0",
@@ -23,9 +22,13 @@
     "postcss": "^8.3.9",
     "tailwindcss": "^2.2.16",
     "typescript": "4.4.3"
+<<<<<<< HEAD
   },
   "cacheDirectories": [
     "node_modules/",
     ".next/cache/"
   ]
+=======
+  }
+>>>>>>> 13da1b91968ab3bdd747ef2e08209c71ec9127e9
 }

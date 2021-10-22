@@ -1,38 +1,64 @@
+import axios, { AxiosResponse } from 'axios'
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import Quiz from '../components/Quiz'
+import CreateQuiz from '../components/CreateQuiz'
+
+
+interface Quiz {
+  id: number
+  choices: [string]
+  correctChoice: number
+  question: string
+};
+
+
 
 const Home: NextPage = () => {
-  const [data, setData] = useState();
-
+  const question = "What is the meaning of life?"
+  const answers = ["41", "42", "43", "44"]
+  const [quizId, setQuizId] = useState(-1);
+  const [quizData, setQuizData] = useState<Quiz | null>(null);
   useEffect(() => {
-    (async () => {
-      const res = await axios.get('https://cse416-demo-api.herokuapp.com/');
-      setData(res.data);
-      console.log(res);
-    })();
-  }, []);
+    if (quizId > 0) {
+      (async () => {
+        const answerResult = await axios.get(`https://qiz-api.herokuapp.com/questions/${quizId}`);
+        if (answerResult.data) {
+          const quiz: Quiz = answerResult.data;
+          setQuizData(quiz);
+        }
   
-  return (
-    <div>
-      <Head>
-        <title>CSE 416 Test App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1>
-          Welcome to Qiz!
-        </h1>
-
-        <p>
-          <code>{data}</code>
-        </p>
-      </main>
-    </div>
-  )
+      })();
+    } else {
+      setQuizData(null);
+    }
+  }, [quizId]);
+  const createQuiz = async () => {
+    const answerResult: AxiosResponse<{id: number}> = await axios.post('https://qiz-api.herokuapp.com/questions', {
+      question: "Edit question text",
+      choices: ["correct", "inccorect", "incorrect", "incorrect"],
+      correctChoice: 0
+    });
+    if (!answerResult) {
+        console.log('error');
+        return;
+    }
+    console.log(answerResult.data)
+    setQuizId(answerResult.data.id);
+  }
+  return (quizData ? <Quiz question={quizData.question} answers={quizData.choices}/> : <CreateQuiz createQuiz={createQuiz}/>);
 }
+
+// if (quiz == 0){
+//   return (
+//     <Quiz question={question} answers={answers}></Quiz>
+//   )
+// }
+// else if (quiz == 1){
+//   return (
+//     <CreateQuiz></Create>
+//   )
+// }
+
 
 export default Home
