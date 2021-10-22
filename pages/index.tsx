@@ -15,8 +15,6 @@ interface Quiz {
 
 
 const Home: NextPage = () => {
-  const question = "What is the meaning of life?"
-  const answers = ["41", "42", "43", "44"]
   const [quizId, setQuizId] = useState(-1);
   const [quizData, setQuizData] = useState<Quiz | null>(null);
   useEffect(() => {
@@ -46,19 +44,7 @@ const Home: NextPage = () => {
     console.log(answerResult.data)
     setQuizId(answerResult.data.id);
   }
-  return (quizData ? <Quiz question={quizData.question} answers={quizData.choices}/> : <CreateQuiz createQuiz={createQuiz}/>);
+  return (quizData ? <Quiz question={quizData.question} answers={quizData.choices} id={quizData.id}/> : <CreateQuiz createQuiz={createQuiz}/>);
 }
-
-// if (quiz == 0){
-//   return (
-//     <Quiz question={question} answers={answers}></Quiz>
-//   )
-// }
-// else if (quiz == 1){
-//   return (
-//     <CreateQuiz></Create>
-//   )
-// }
-
 
 export default Home

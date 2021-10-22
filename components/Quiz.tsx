@@ -5,7 +5,7 @@ import Question from "./Question"
 import Submit from "./Submit"
 import axios from 'axios'
 
-export default function Quiz({ question, answers }: { question: string, answers: string[] }) {
+export default function Quiz({ question, answers, id }: { question: string, answers: string[], id: number }) {
     const [answerChosen, setChosen] = useState(-1)
     const [correct, setCorrect] = useState<boolean | null>(null);
     const func = async (num: number) => {
@@ -63,7 +63,7 @@ export default function Quiz({ question, answers }: { question: string, answers:
 
             <form className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 {/* <CreateQuiz func={createQuiz}/> */}
-                <Question text={question} />
+                <Question text={question} id={id}/>
                 {
                     answers.map((ans, index)=>(
                         <AnswerChoice key={ans + index} text={ans} index={index} func={func} selectedIndex={answerChosen}/>
