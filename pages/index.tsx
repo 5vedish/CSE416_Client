@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Quiz from '../components/Quiz'
 import CreateQuiz from '../components/CreateQuiz'
 
@@ -27,14 +27,15 @@ const Home: NextPage = () => {
             setQuizData(quiz)
         }
     }
+    const memoizedRefetch = useCallback(refetchQuiz, [quizId])
     useEffect(() => {
         if (quizId > 0) {
-            refetchQuiz()
+            memoizedRefetch()
         } else {
             setQuizData(null)
         }
         localStorage.setItem('quizId', quizId.toString())
-    }, [quizId, refetchQuiz])
+    }, [quizId, memoizedRefetch])
     const createQuiz = async () => {
         const answerResult: AxiosResponse<{ id: number }> = await axios.post(
             'https://qiz-api.herokuapp.com/questions',
