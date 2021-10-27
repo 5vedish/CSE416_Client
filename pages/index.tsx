@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import Quiz from '../components/Quiz'
-import CreateQuiz from '../components/CreateQuiz'
+import Quiz from '../components/Quiz/Quiz'
+import CreateQuiz from '../components/Quiz/CreateQuiz'
 
 interface Quiz {
   id: number
@@ -57,7 +57,8 @@ const Home: NextPage = () => {
   }
   return (
     quizData ? 
-    <Quiz refetch={refetchQuiz} correctChoice={quizData.correctChoice} question={quizData.question} answers={quizData.choices} id={quizData.id} deleteQuiz={deleteQuiz} /> : <CreateQuiz createQuiz={createQuiz}/>
+    <Quiz refetch={refetchQuiz} correctChoice={quizData.correctChoice} question={quizData.question} answers={quizData.choices} id={quizData.id} deleteQuiz={deleteQuiz} /> : 
+    <CreateQuiz createQuiz={createQuiz}/>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-export default function Submit({ choice, func, setCorrect, setChosen}:
+export default function Submit({ choice, func, setCorrect, setChosen }:
     {
         choice: number, func: (num: number) => Promise<void>, setCorrect: any, setChosen: any
     }) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-export default function CreateQuiz({createQuiz}:
+export default function CreateQuiz({ createQuiz }:
     {
         createQuiz: () => Promise<void>
     }) {

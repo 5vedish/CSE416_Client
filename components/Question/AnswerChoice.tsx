@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-export default function AnswerChoice({ text, index, func, selectedIndex}:
+export default function AnswerChoice({ text, index, func, selectedIndex }:
     {
         text: string, index: number, func: (num: number) => Promise<void>, selectedIndex: number
     }) {
