@@ -1,9 +1,9 @@
-import React, { useState, SetStateAction } from 'react'
-import AnswerChoice from './AnswerChoice'
-import DeleteQuiz from './DeleteQuiz'
-import Question from './Question'
-import Submit from './Submit'
-import axios from 'axios'
+import React, { useState, SetStateAction } from 'react';
+import AnswerChoice from './AnswerChoice';
+import DeleteQuiz from './DeleteQuiz';
+import Question from './Question';
+import Submit from './Submit';
+import axios from 'axios';
 
 export default function Quiz({
     question,
@@ -13,25 +13,25 @@ export default function Quiz({
     refetch,
     deleteQuiz,
 }: {
-    question: string
-    answers: string[]
-    id: number
-    correctChoice: number
-    refetch: () => Promise<void>
-    deleteQuiz: () => Promise<void>
+    question: string;
+    answers: string[];
+    id: number;
+    correctChoice: number;
+    refetch: () => Promise<void>;
+    deleteQuiz: () => Promise<void>;
 }) {
-    const [answerChosen, setChosen] = useState(-1)
-    const [correct, setCorrect] = useState<boolean | null>(null)
+    const [answerChosen, setChosen] = useState(-1);
+    const [correct, setCorrect] = useState<boolean | null>(null);
     const func = async (num: number) => {
         if (answerChosen == num) {
-            setChosen(-1)
+            setChosen(-1);
         } else {
-            setChosen(num)
+            setChosen(num);
         }
-    }
+    };
     const submit = async () => {
-        setCorrect(answerChosen === correctChoice)
-    }
+        setCorrect(answerChosen === correctChoice);
+    };
 
     return (
         <div className="w-full h-screen bg-blue-200">
@@ -67,5 +67,5 @@ export default function Quiz({
                 <DeleteQuiz deleteQuiz={deleteQuiz} />
             </form>
         </div>
-    )
+    );
 }

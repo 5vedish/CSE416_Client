@@ -1,41 +1,41 @@
-import axios, { AxiosResponse } from 'axios'
-import type { NextPage } from 'next'
-import { useCallback, useEffect, useState } from 'react'
-import Quiz from '../components/Quiz'
-import CreateQuiz from '../components/CreateQuiz'
+import axios, { AxiosResponse } from 'axios';
+import type { NextPage } from 'next';
+import { useCallback, useEffect, useState } from 'react';
+import Quiz from '../components/Quiz';
+import CreateQuiz from '../components/CreateQuiz';
 
 interface Quiz {
-    id: number
-    choices: [string]
-    correctChoice: number
-    question: string
+    id: number;
+    choices: [string];
+    correctChoice: number;
+    question: string;
 }
 
 const Home: NextPage = () => {
-    const [quizId, setQuizId] = useState(-1)
+    const [quizId, setQuizId] = useState(-1);
     useEffect(() => {
-        const savedId = localStorage.getItem('quizId')
-        if (savedId) setQuizId(parseInt(savedId))
-    }, [])
-    const [quizData, setQuizData] = useState<Quiz | null>(null)
+        const savedId = localStorage.getItem('quizId');
+        if (savedId) setQuizId(parseInt(savedId));
+    }, []);
+    const [quizData, setQuizData] = useState<Quiz | null>(null);
     const refetchQuiz = async () => {
         const answerResult = await axios.get(
             `https://qiz-api.herokuapp.com/questions/${quizId}`,
-        )
+        );
         if (answerResult.data) {
-            const quiz: Quiz = answerResult.data
-            setQuizData(quiz)
+            const quiz: Quiz = answerResult.data;
+            setQuizData(quiz);
         }
-    }
-    const memoizedRefetch = useCallback(refetchQuiz, [quizId])
+    };
+    const memoizedRefetch = useCallback(refetchQuiz, [quizId]);
     useEffect(() => {
         if (quizId > 0) {
-            memoizedRefetch()
+            memoizedRefetch();
         } else {
-            setQuizData(null)
+            setQuizData(null);
         }
-        localStorage.setItem('quizId', quizId.toString())
-    }, [quizId, memoizedRefetch])
+        localStorage.setItem('quizId', quizId.toString());
+    }, [quizId, memoizedRefetch]);
     const createQuiz = async () => {
         const answerResult: AxiosResponse<{ id: number }> = await axios.post(
             'https://qiz-api.herokuapp.com/questions',
@@ -44,19 +44,19 @@ const Home: NextPage = () => {
                 choices: ['correct', 'inccorect', 'incorrect', 'incorrect'],
                 correctChoice: 0,
             },
-        )
+        );
         if (!answerResult) {
-            console.log('error')
-            return
+            console.log('error');
+            return;
         }
-        console.log(answerResult.data)
-        setQuizId(answerResult.data.id)
-    }
+        console.log(answerResult.data);
+        setQuizId(answerResult.data.id);
+    };
     const deleteQuiz = async () => {
-        if (quizId < 0) return
-        await axios.delete(`https://qiz-api.herokuapp.com/questions/${quizId}`)
-        setQuizId(-1)
-    }
+        if (quizId < 0) return;
+        await axios.delete(`https://qiz-api.herokuapp.com/questions/${quizId}`);
+        setQuizId(-1);
+    };
     return quizData ? (
         <Quiz
             refetch={refetchQuiz}
@@ -68,7 +68,7 @@ const Home: NextPage = () => {
         />
     ) : (
         <CreateQuiz createQuiz={createQuiz} />
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

@@ -1,23 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 export default function AnswerChoice({
     text,
     index,
     func,
     selectedIndex,
 }: {
-    text: string
-    index: number
-    func: (num: number) => Promise<void>
-    selectedIndex: number
+    text: string;
+    index: number;
+    func: (num: number) => Promise<void>;
+    selectedIndex: number;
 }) {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
     return (
         <div className="mb-4">
             <button
                 type="button"
                 onClick={() => {
-                    setCount(count + 1)
-                    func(index)
+                    setCount(count + 1);
+                    func(index);
                 }}
                 className={`text-left w-full ${
                     selectedIndex === index
@@ -28,5 +28,5 @@ export default function AnswerChoice({
                 {text}
             </button>
         </div>
-    )
+    );
 }

@@ -1,25 +1,25 @@
-import axios from 'axios'
-import React, { useState } from 'react'
+import axios from 'axios';
+import React, { useState } from 'react';
 
 export default function Question({
     text,
     id,
     refetch,
 }: {
-    text: string
-    id: number
-    refetch: () => Promise<void>
+    text: string;
+    id: number;
+    refetch: () => Promise<void>;
 }) {
-    const [isEditing, setEditing] = useState(false)
+    const [isEditing, setEditing] = useState(false);
 
     const handleEdit = async (e: React.FormEvent<HTMLInputElement>) => {
-        console.log(id)
+        console.log(id);
         await axios.put(`https://qiz-api.herokuapp.com/questions/${id}`, {
             question: e.currentTarget.value,
-        })
-        setEditing(false)
-        await refetch()
-    }
+        });
+        setEditing(false);
+        await refetch();
+    };
 
     return (
         <div className="mb-4">
@@ -41,5 +41,5 @@ export default function Question({
                 </label>
             )}
         </div>
-    )
+    );
 }
