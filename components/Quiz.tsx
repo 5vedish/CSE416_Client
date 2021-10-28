@@ -4,6 +4,7 @@ import DeleteQuiz from './DeleteQuiz';
 import Question from './Question';
 import Submit from './Submit';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 export default function Quiz({
     question,
@@ -35,6 +36,7 @@ export default function Quiz({
 
     return (
         <div className="w-full h-screen bg-blue-200">
+            <Navbar />
             <form className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 {/* <CreateQuiz func={createQuiz}/> */}
                 <Question refetch={refetch} text={question} id={id} />
