@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { httpClient } from '../lib/axios';
 import React, { useState } from 'react';
 
 export default function Question({
@@ -14,7 +14,7 @@ export default function Question({
 
     const handleEdit = async (e: React.FormEvent<HTMLInputElement>) => {
         console.log(id);
-        await axios.put(`https://qiz-api.herokuapp.com/questions/${id}`, {
+        await httpClient.put(`/questions/${id}`, {
             question: e.currentTarget.value,
         });
         setEditing(false);
