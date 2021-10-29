@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
-import GridWrapper from '../components/Wrapper/GridWrapper';
+import GridWrapper from '../components/wrapper/GridWrapper';
 import Navbar from '../components/Navbar';
 
 type Inputs = {
