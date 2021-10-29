@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FormWrapper from '../components/FormWrapper';
+import FormWrapper from '../components/Wrapper/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 import { useAuth } from '../components/AuthProvider';

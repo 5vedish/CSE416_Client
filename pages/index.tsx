@@ -4,6 +4,9 @@ import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
 import CreateQuiz from '../components/CreateQuiz';
 import { httpClient } from '../lib/axios';
+import { useAuth } from '../components/AuthProvider';
+import Image from 'next/image';
+import Navbar from '../components/Navbar';
 
 interface Quiz {
     id: number;
@@ -14,11 +17,8 @@ interface Quiz {
 
 const Home: NextPage = () => {
     const [quizId, setQuizId] = useState(-1);
-    useEffect(() => {
-        const savedId = localStorage.getItem('quizId');
-        if (savedId) setQuizId(parseInt(savedId));
-    }, []);
-    const [quizData, setQuizData] = useState<Quiz | null>(null);
+    const { loading } = useAuth();
+
     const refetchQuiz = async () => {
         await httpClient
             .get(`/questions/${quizId}`)
@@ -32,15 +32,9 @@ const Home: NextPage = () => {
                 return;
             });
     };
+
     const memoizedRefetch = useCallback(refetchQuiz, [quizId]);
-    useEffect(() => {
-        if (quizId > 0) {
-            memoizedRefetch();
-        } else {
-            setQuizData(null);
-        }
-        localStorage.setItem('quizId', quizId.toString());
-    }, [quizId, memoizedRefetch]);
+
     const createQuiz = async () => {
         const answerResult: AxiosResponse<{ id: number }> =
             await httpClient.post('/questions', {
@@ -55,22 +49,46 @@ const Home: NextPage = () => {
         console.log(answerResult.data);
         setQuizId(answerResult.data.id);
     };
+
     const deleteQuiz = async () => {
         if (quizId < 0) return;
         await httpClient.delete(`/questions/${quizId}`);
         setQuizId(-1);
     };
-    return quizData ? (
-        <Quiz
-            refetch={refetchQuiz}
-            correctChoice={quizData.correctChoice}
-            question={quizData.question}
-            answers={quizData.choices}
-            id={quizData.id}
-            deleteQuiz={deleteQuiz}
-        />
-    ) : (
-        <CreateQuiz createQuiz={createQuiz} />
+
+    useEffect(() => {
+        const savedId = localStorage.getItem('quizId');
+        if (savedId) setQuizId(parseInt(savedId));
+    }, []);
+    const [quizData, setQuizData] = useState<Quiz | null>(null);
+
+    useEffect(() => {
+        if (quizId > 0) {
+            memoizedRefetch();
+        } else {
+            setQuizData(null);
+        }
+        localStorage.setItem('quizId', quizId.toString());
+    }, [quizId, memoizedRefetch]);
+
+    return (
+        <div className="h-screen bg-blue-500">
+            <Navbar />
+            {loading ? (
+                <Image src="/splash_art.svg" layout="fill" />
+            ) : quizData ? (
+                <Quiz
+                    refetch={refetchQuiz}
+                    correctChoice={quizData.correctChoice}
+                    question={quizData.question}
+                    answers={quizData.choices}
+                    id={quizData.id}
+                    deleteQuiz={deleteQuiz}
+                />
+            ) : (
+                <CreateQuiz createQuiz={createQuiz} />
+            )}
+        </div>
     );
 };
 
