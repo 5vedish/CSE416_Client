@@ -1,24 +1,30 @@
-import axios, { AxiosResponse } from 'axios';
-import type { NextPage } from 'next';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import React from 'react';
+import { NextPage } from 'next';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import FormWrapper from '../components/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
+import { useAuth } from '../components/AuthProvider';
 
 type Inputs = {
+    email: string;
     password: string;
-    confirmPassword: string;
 };
 
-const ResetPassword: NextPage = () => {
+const Login: NextPage = () => {
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
     } = useForm<Inputs>();
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+    const { logIn } = useAuth();
+
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        logIn(data);
+    };
 
     const [passwordShown, setPasswordShown] = useState(false);
 
@@ -31,73 +37,64 @@ const ResetPassword: NextPage = () => {
                 <div className="mb-4">
                     <label
                         className="block text-gray-700 text-2xl mb-4 font-bold"
-                        htmlFor="username"
+                        htmlFor="header"
                     >
-                        Reset Password
+                        Login
                     </label>
                 </div>
 
-                {/* include validation with required or other standard HTML validation rules */}
                 <div className="mb-4">
                     <label
                         className="block text-gray-700 text-sm font-bold mb-2"
-                        htmlFor="password"
+                        htmlFor="email"
                     >
-                        New Password
+                        Email
                     </label>
                     <div className="relative">
                         <input
-                            {...register('password', {
-                                required: 'New password is required',
+                            {...register('email', {
+                                required: 'Email required.',
                             })}
                             className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            type={passwordShown ? 'text' : 'password'}
                         />
-                        <div
-                            className="absolute top-2 right-2 cursor-pointer select-none"
-                            onClick={() => setPasswordShown(!passwordShown)}
-                        >
-                            {passwordShown ? (
-                                <EyeOffIcon className="h-5 w-5 text-gray-500" />
-                            ) : (
-                                <EyeIcon className="h-5 w-5 text-gray-500" />
-                            )}
-                        </div>
                     </div>
-                    {errors.password && (
-                        <span className="text-red-500 text-sm">
-                            {errors.password.message}
-                        </span>
-                    )}
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 relative">
                     <label
                         className="block text-gray-700 text-sm font-bold mb-2"
                         htmlFor="password"
                     >
-                        Confirm New Password
+                        Password
                     </label>
                     <input
-                        {...register('confirmPassword', {
-                            required: 'Please confirm new password',
-                            validate: (p) =>
-                                p === watch('password') ||
-                                'Passwords must match',
+                        {...register('password', {
+                            required: 'Password required.',
                         })}
                         className={`shadow appearance-none ${
-                            errors.confirmPassword?.type === 'validate'
+                            errors.password?.type === 'validate'
                                 ? 'border-red-500'
                                 : 'border-gray-300'
                         } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                        type="password"
+                        type={passwordShown ? 'text' : 'password'}
                     />
-                    <span className="text-red-500 text-sm">
-                        {errors.confirmPassword?.message}
-                    </span>
+                    <div
+                        className="absolute top-9 right-2 cursor-pointer select-none"
+                        onClick={() => setPasswordShown(!passwordShown)}
+                    >
+                        {passwordShown ? (
+                            <EyeOffIcon className="h-5 w-5 text-gray-500" />
+                        ) : (
+                            <EyeIcon className="h-5 w-5 text-gray-500" />
+                        )}
+                    </div>
                 </div>
+                <span className="text-red-500 text-sm">
+                    {errors.password?.message}
+                </span>
                 <div className="flex items-center justify-between">
                     <input
+                        value="Login"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
                         type="submit"
                     />
@@ -107,4 +104,4 @@ const ResetPassword: NextPage = () => {
     );
 };
 
-export default ResetPassword;
+export default Login;

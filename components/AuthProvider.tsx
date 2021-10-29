@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 
 type User = { id: string; displayName: string; email: string };
 
+type LogInType = {
+    email: string;
+    password: string;
+};
+
 type AuthContextValue = {
     user: User | undefined;
     loading: boolean;
     signUp: () => void;
-    logIn: () => void;
+    logIn: (data: LogInType) => void;
     logOut: () => void;
     requestPasswordReset: () => void;
     resetPassword: () => void;
@@ -40,7 +45,9 @@ function useAuthProvider() {
 
     const signUp = () => {};
 
-    const logIn = () => {};
+    const logIn = (data: LogInType) => {
+        console.log(data);
+    };
 
     const logOut = () => {};
 
