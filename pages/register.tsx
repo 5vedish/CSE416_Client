@@ -4,6 +4,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import FormWrapper from '../components/Wrapper/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
+import { AxiosResponse } from 'axios';
+import { httpClient } from '../lib/axios';
 
 type Inputs = {
     password: string;
@@ -19,9 +21,18 @@ const Register: NextPage = () => {
         watch,
         formState: { errors },
     } = useForm<Inputs>();
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        // register now
-        console.log(data);
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        const answerResult: AxiosResponse<{ id: number }> =
+            await httpClient.post('/user', {
+                displayName: data.displayName,
+                email: data.email,
+                password: data.password,
+            });
+        if (!answerResult) {
+            console.log('error');
+            return;
+        }
+        console.log(answerResult.data);
     };
 
     const [passwordShown, setPasswordShown] = useState(false);
