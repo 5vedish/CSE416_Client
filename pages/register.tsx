@@ -32,7 +32,6 @@ const Register: NextPage = () => {
             console.log('error');
             return;
         }
-        console.log(answerResult.data);
     };
 
     const [passwordShown, setPasswordShown] = useState(false);
