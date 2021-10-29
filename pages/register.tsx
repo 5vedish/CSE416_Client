@@ -1,6 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import FormWrapper from '../components/FormWrapper';
 

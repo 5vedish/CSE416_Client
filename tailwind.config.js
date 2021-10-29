@@ -7,6 +7,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                logo: ['Libre Franklin', ...defaultTheme.fontFamily.sans],
             },
         },
     },

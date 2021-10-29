@@ -10,8 +10,8 @@ export default function Dropdown() {
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="inline-flex w-full px-4 py-2 text-white rounded-md">
-                        <UserIcon className="w-5 h-5 text-white" />
-                        <ChevronDownIcon className="w-5 h-5 ml-2 -mr-1" />
+                        <UserIcon className="w-10 h-10 text-white" />
+                        <ChevronDownIcon className="w-10 h-10 ml-2 -mr-1" />
                     </Menu.Button>
                 </div>
                 <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-white divide-y rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
