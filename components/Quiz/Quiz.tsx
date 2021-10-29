@@ -1,5 +1,5 @@
 import React, { useState, SetStateAction } from 'react';
-import AnswerChoice from '../Question/AnswerChoice';
+import AnswerChoice from '../AnswerChoice1';
 import DeleteQuiz from './DeleteQuiz';
 import Question from '../Question';
 import Submit from './Submit';
