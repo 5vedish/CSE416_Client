@@ -1,8 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FormWrapper from '../components/FormWrapper';
+import FormWrapper from '../components/Wrapper/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 
@@ -50,7 +49,7 @@ const ResetPassword: NextPage = () => {
                             {...register('password', {
                                 required: 'New password is required',
                             })}
-                            className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type={passwordShown ? 'text' : 'password'}
                         />
                         <div
@@ -88,7 +87,7 @@ const ResetPassword: NextPage = () => {
                         className={`shadow appearance-none ${
                             errors.confirmPassword?.type === 'validate'
                                 ? 'border-red-500'
-                                : 'border-gray-300'
+                                : 'border'
                         } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                         type="password"
                     />

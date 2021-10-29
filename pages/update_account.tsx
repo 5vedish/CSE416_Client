@@ -1,9 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FormWrapper from '../components/Wrapper/FormWrapper';
-
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 import GridWrapper from '../components/Wrapper/GridWrapper';
 import Navbar from '../components/Navbar';
