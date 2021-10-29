@@ -1,8 +1,9 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
 import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
 import CreateQuiz from '../components/CreateQuiz';
+import { httpClient } from '../lib/axios';
 
 interface Quiz {
     id: number;
@@ -19,13 +20,17 @@ const Home: NextPage = () => {
     }, []);
     const [quizData, setQuizData] = useState<Quiz | null>(null);
     const refetchQuiz = async () => {
-        const answerResult = await axios.get(
-            `https://qiz-api.herokuapp.com/questions/${quizId}`,
-        );
-        if (answerResult.data) {
-            const quiz: Quiz = answerResult.data;
-            setQuizData(quiz);
-        }
+        await httpClient
+            .get(`/questions/${quizId}`)
+            .then((answerResult) => {
+                if (answerResult.data) {
+                    const quiz: Quiz = answerResult.data;
+                    setQuizData(quiz);
+                }
+            })
+            .catch((e) => {
+                return;
+            });
     };
     const memoizedRefetch = useCallback(refetchQuiz, [quizId]);
     useEffect(() => {
@@ -37,14 +42,12 @@ const Home: NextPage = () => {
         localStorage.setItem('quizId', quizId.toString());
     }, [quizId, memoizedRefetch]);
     const createQuiz = async () => {
-        const answerResult: AxiosResponse<{ id: number }> = await axios.post(
-            'https://qiz-api.herokuapp.com/questions',
-            {
+        const answerResult: AxiosResponse<{ id: number }> =
+            await httpClient.post('/questions', {
                 question: 'Edit question text',
                 choices: ['correct', 'inccorect', 'incorrect', 'incorrect'],
                 correctChoice: 0,
-            },
-        );
+            });
         if (!answerResult) {
             console.log('error');
             return;
@@ -54,7 +57,7 @@ const Home: NextPage = () => {
     };
     const deleteQuiz = async () => {
         if (quizId < 0) return;
-        await axios.delete(`https://qiz-api.herokuapp.com/questions/${quizId}`);
+        await httpClient.delete(`/questions/${quizId}`);
         setQuizId(-1);
     };
     return quizData ? (
