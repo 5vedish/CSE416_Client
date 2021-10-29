@@ -82,18 +82,19 @@ const Home: NextPage = () => {
                     !user && 'bg-welcome bg-no-repeat bg-center bg-blue-500'
                 }`}
             >
-                {quizData ? (
-                    <Quiz
-                        refetch={refetchQuiz}
-                        correctChoice={quizData.correctChoice}
-                        question={quizData.question}
-                        answers={quizData.choices}
-                        id={quizData.id}
-                        deleteQuiz={deleteQuiz}
-                    />
-                ) : (
-                    <CreateQuiz createQuiz={createQuiz} />
-                )}
+                {user &&
+                    (quizData ? (
+                        <Quiz
+                            refetch={refetchQuiz}
+                            correctChoice={quizData.correctChoice}
+                            question={quizData.question}
+                            answers={quizData.choices}
+                            id={quizData.id}
+                            deleteQuiz={deleteQuiz}
+                        />
+                    ) : (
+                        <CreateQuiz createQuiz={createQuiz} />
+                    ))}
             </div>
         </div>
     );
