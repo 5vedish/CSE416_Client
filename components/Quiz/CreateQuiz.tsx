@@ -7,7 +7,6 @@ export default function CreateQuiz({
 }) {
     return (
         <div className="mb-4 space-x-2">
-            <Navbar />
             <button
                 type="button"
                 onClick={() => {

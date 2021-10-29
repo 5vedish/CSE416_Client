@@ -1,7 +1,9 @@
 import { Menu } from '@headlessui/react';
 import { ChevronDownIcon, UserIcon } from '@heroicons/react/solid';
+import { useAuth } from './AuthProvider';
 
 export default function Dropdown() {
+    const { logOut } = useAuth();
     return (
         <div className="">
             <Menu as="div" className="relative inline-block text-left">
@@ -51,6 +53,7 @@ export default function Dropdown() {
                                             ? 'text-gray-300'
                                             : 'text-gray-900'
                                     } group flex rounded-md items-center w-full px-3 py-3 text-sm`}
+                                    onClick={logOut}
                                 >
                                     Sign Out
                                 </button>

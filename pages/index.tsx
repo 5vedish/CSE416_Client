@@ -19,6 +19,8 @@ const Home: NextPage = () => {
     const [quizId, setQuizId] = useState(-1);
     const { user } = useAuth();
 
+    console.log(user);
+
     const refetchQuiz = async () => {
         await httpClient
             .get(`/questions/${quizId}`)

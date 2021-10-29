@@ -36,7 +36,6 @@ export default function Quiz({
 
     return (
         <div className="w-full h-screen bg-blue-200">
-            <Navbar />
             <form className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <Question refetch={refetch} text={question} id={id} />
                 {answers.map((ans, index) => (
