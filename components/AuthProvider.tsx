@@ -63,7 +63,7 @@ function useAuthProvider() {
     const getUser = async () => {
         try {
             setLoading(true);
-            const response = await httpClient.get<any>('/me');
+            const response = await httpClient.get<any>('/me', { withCredentials: true });
             if (response.data) {
                 setUser(response.data);
             }
@@ -74,7 +74,7 @@ function useAuthProvider() {
     const updateUser = async (data: UpdateType) => {
         // update password or update info
         try {
-            await httpClient.patch<any>('/me', data);
+            await httpClient.patch<any>('/me', data, { withCredentials: true });
             if (!('password' in data)) {
                 setUser(data);
             }
@@ -85,7 +85,7 @@ function useAuthProvider() {
     const signUp = async (data: SignupType) => {
         try {
             console.log(data);
-            await httpClient.post<any>('/users', data);
+            await httpClient.post<any>('/users', data, { withCredentials: true });
             router.push('/');
             return 200;
         } catch (e: any) {
@@ -96,7 +96,7 @@ function useAuthProvider() {
     const logIn = async (data: LogInType) => {
         try {
             setLoading(true);
-            const response = await httpClient.post<any>('/sessions', data);
+            const response = await httpClient.post<any>('/sessions', data, { withCredentials: true });
             setUser(response.data);
             setLoading(false);
             router.push('/');
@@ -108,7 +108,7 @@ function useAuthProvider() {
 
     const logOut = async () => {
         try {
-            await httpClient.delete<any>('/me/sessions');
+            await httpClient.delete<any>('/me/sessions', { withCredentials: true });
             setUser(undefined);
         } catch (e: any) {}
         router.push('/');
