@@ -6,14 +6,14 @@ export default function Navbar() {
     return (
         <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <span className="font-extrabold text-xl">QIZ</span>
+                <span className="text-4xl font-logo">Qiz</span>
             </div>
             <div>
                 <button>
-                    <PlusIcon className="h-5 w-5 text-white" />
+                    <PlusIcon className="invisible h-5 w-5 text-white" />
                 </button>
             </div>
-            <div className="shadow flex">
+            <div className="invisible shadow flex">
                 <input
                     className="w-full rounded p-2"
                     type="text"
@@ -24,7 +24,7 @@ export default function Navbar() {
                 </button>
             </div>
             <div>
-                <a href="#" className="text-white">
+                <a href="#" className="invisible text-white">
                     Shop
                 </a>
             </div>
