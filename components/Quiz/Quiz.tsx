@@ -1,10 +1,10 @@
 import React, { useState, SetStateAction } from 'react';
-import AnswerChoice from '../AnswerChoice1';
+import AnswerChoice from '../Question/AnswerChoice';
 import DeleteQuiz from './DeleteQuiz';
-import Question from '../Question';
+import Question from '../Question/Question';
 import Submit from './Submit';
+import axios from 'axios';
 import Navbar from '../Navbar';
-import FormWrapper from '../FormWrapper';
 
 export default function Quiz({
     question,
@@ -36,9 +36,7 @@ export default function Quiz({
 
     return (
         <div className="w-full h-screen bg-blue-200">
-            <div>
-                <p>BKAHHHHH</p>
-            </div>
+            <Navbar />
             <form className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <Question refetch={refetch} text={question} id={id} />
                 {answers.map((ans, index) => (
@@ -50,6 +48,7 @@ export default function Quiz({
                         selectedIndex={answerChosen}
                     />
                 ))}
+
                 <Submit
                     choice={answerChosen}
                     func={submit}

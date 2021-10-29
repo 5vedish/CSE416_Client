@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
 import { useCallback, useEffect, useState } from 'react';
-import Quiz from '../components/Quiz';
-import CreateQuiz from '../components/CreateQuiz';
+import Quiz from '../components/Quiz/Quiz';
+import CreateQuiz from '../components/Quiz/CreateQuiz';
 import { httpClient } from '../lib/axios';
 import { useAuth } from '../components/AuthProvider';
 import Image from 'next/image';
