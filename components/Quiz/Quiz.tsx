@@ -5,6 +5,7 @@ import Question from '../Question/Question';
 import Submit from './Submit';
 import axios from 'axios';
 import Navbar from '../Navbar';
+import { httpClient } from '../../lib/axios';
 
 export default function Quiz({
     question,
@@ -23,6 +24,7 @@ export default function Quiz({
 }) {
     const [answerChosen, setChosen] = useState(-1);
     const [correct, setCorrect] = useState<boolean | null>(null);
+    const [choices, setChoices] = useState(answers); // editing answer set
     const func = async (num: number) => {
         if (answerChosen == num) {
             setChosen(-1);
@@ -34,6 +36,15 @@ export default function Quiz({
         setCorrect(answerChosen === correctChoice);
     };
 
+    const editChoices = async (newChoice: string, index: number) => {
+        setChoices(choices.splice(index, 1, newChoice));
+        const result = await httpClient.put(`/questions/${id}`, {
+            question,
+            choices,
+            correctChoice,
+        });
+    };
+
     return (
         <div className="w-full h-screen bg-blue-200">
             <Navbar />
@@ -41,11 +52,13 @@ export default function Quiz({
                 <Question refetch={refetch} text={question} id={id} />
                 {answers.map((ans, index) => (
                     <AnswerChoice
+                        refetch={refetch}
                         key={ans + index}
                         text={ans}
                         index={index}
                         func={func}
                         selectedIndex={answerChosen}
+                        editChoices={editChoices}
                     />
                 ))}
 
