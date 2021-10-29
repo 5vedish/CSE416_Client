@@ -22,17 +22,21 @@ const Register: NextPage = () => {
         formState: { errors },
     } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        const answerResult: AxiosResponse<{ id: number }> =
-            await httpClient.post('/user', {
-                displayName: data.displayName,
-                email: data.email,
-                password: data.password,
-            });
-        if (!answerResult) {
-            console.log('error');
-            return;
+        try {
+            const answerResult: AxiosResponse<{ id: number }> =
+                await httpClient.post('/users', {
+                    displayName: data.displayName,
+                    email: data.email,
+                    password: data.password,
+                });
+            if (!answerResult) {
+                console.log('error');
+                return;
+            }
+            console.log(answerResult.data);
+        } catch (err) {
+            console.log(err);
         }
-        console.log(answerResult.data);
     };
 
     const [passwordShown, setPasswordShown] = useState(false);

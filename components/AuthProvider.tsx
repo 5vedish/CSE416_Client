@@ -49,7 +49,7 @@ function useAuthProvider() {
 
     const logIn = async (data: LogInType) => {
         console.log(data);
-        httpClient.post('/sessions', data);
+        httpClient.post('/sessions', data, { withCredentials: true });
     };
 
     const logOut = () => {};
