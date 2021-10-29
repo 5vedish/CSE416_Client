@@ -23,7 +23,7 @@ const Register: NextPage = () => {
     } = useForm<Inputs>();
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         const answerResult: AxiosResponse<{ id: number }> =
-            await httpClient.post('/user', {
+            await httpClient.post('/users', {
                 displayName: data.displayName,
                 email: data.email,
                 password: data.password,
