@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { httpClient } from '../lib/axios';
 
 type User = { id: string; displayName: string; email: string };
 
@@ -45,8 +47,9 @@ function useAuthProvider() {
 
     const signUp = () => {};
 
-    const logIn = (data: LogInType) => {
+    const logIn = async (data: LogInType) => {
         console.log(data);
+        httpClient.post('/sessions', data);
     };
 
     const logOut = () => {};
