@@ -47,7 +47,7 @@ export default function AnswerChoice({
                     ></input>
                 ) : (
                     <label
-                        className="text-center block text-gray-700 text-lg font-bold mb-2"
+                        className="text-center block text-gray-700 text-lg font-bold mb-2 w-64 cursor-pointer hover:bg-gray-300"
                         onClick={() => setIsEditing(true)}
                     >
                         {text}
