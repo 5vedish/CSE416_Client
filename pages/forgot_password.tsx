@@ -1,9 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
-import { useCallback, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import FormWrapper from '../components/FormWrapper';
+import FormWrapper from '../components/Wrapper/FormWrapper';
 
 type ForgotPasswordInputs = {
     email: string;
