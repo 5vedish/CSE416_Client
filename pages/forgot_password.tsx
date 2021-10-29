@@ -5,6 +5,7 @@ import FormWrapper from '../components/forms/FormWrapper';
 import FormHeader from '../components/forms/FormHeader';
 import FormField from '../components/forms/FormField';
 import FormSubmit from '../components/forms/FormSubmit';
+import { useAuth } from '../components/AuthProvider';
 
 type ForgotPasswordInputs = {
     email: string;
@@ -13,8 +14,10 @@ type ForgotPasswordInputs = {
 const ForgotPassword: NextPage = () => {
     const form = useForm<ForgotPasswordInputs>();
     const { handleSubmit, watch } = form;
-    const onSubmit: SubmitHandler<ForgotPasswordInputs> = (data) =>
-        console.log(data);
+    const { requestPasswordReset } = useAuth();
+    const onSubmit: SubmitHandler<ForgotPasswordInputs> = async ({ email }) => {
+        await requestPasswordReset(email);
+    };
 
     return (
         <FormWrapper>

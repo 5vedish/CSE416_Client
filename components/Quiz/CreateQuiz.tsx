@@ -6,7 +6,7 @@ export default function CreateQuiz({
     createQuiz: () => Promise<void>;
 }) {
     return (
-        <div className="mb-4 space-x-2">
+        <div className="m-10 space-x-2">
             <button
                 type="button"
                 onClick={() => {

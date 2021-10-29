@@ -2,7 +2,6 @@ import axios from 'axios';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { httpClient } from '../lib/axios';
-import cookie from 'js-cookie';
 
 type User = { displayName: string; email: string };
 
@@ -11,14 +10,28 @@ type LogInType = {
     password: string;
 };
 
+type SignupType = {
+    email: string;
+    displayName: string;
+    password: string;
+};
+
+type UpdateType =
+    | {
+          email: string;
+          displayName: string;
+      }
+    | { password: string };
+
 type AuthContextValue = {
     user: User | undefined;
     loading: boolean;
-    signUp: () => Promise<void>;
+    signUp: (data: SignupType) => Promise<number>;
     logIn: (data: LogInType) => Promise<number>;
     logOut: () => Promise<void>;
-    requestPasswordReset: () => Promise<void>;
-    resetPassword: () => Promise<void>;
+    updateUser: (data: UpdateType) => Promise<void>;
+    requestPasswordReset: (email: string) => Promise<void>;
+    resetPassword: (token: string, password: string) => Promise<void>;
 };
 
 const AuthContext = React.createContext<AuthContextValue | undefined>(
@@ -58,7 +71,27 @@ function useAuthProvider() {
         } catch (e: any) {}
     };
 
-    const signUp = async () => {};
+    const updateUser = async (data: UpdateType) => {
+        // update password or update info
+        try {
+            await httpClient.patch<any>('/me', data);
+            if (!('password' in data)) {
+                setUser(data);
+            }
+            router.push('/');
+        } catch (e: any) {}
+    };
+
+    const signUp = async (data: SignupType) => {
+        try {
+            console.log(data);
+            await httpClient.post<any>('/users', data);
+            router.push('/');
+            return 200;
+        } catch (e: any) {
+            return e.status;
+        }
+    };
 
     const logIn = async (data: LogInType) => {
         try {
@@ -81,9 +114,23 @@ function useAuthProvider() {
         router.push('/');
     };
 
-    const requestPasswordReset = async () => {};
+    const requestPasswordReset = async (email: string) => {
+        try {
+            await httpClient.post<any>('/password_resets', { email });
+        } catch (e: any) {}
+        router.push('/');
+    };
 
-    const resetPassword = async () => {};
+    const resetPassword = async (token: string, password: string) => {
+        try {
+            await httpClient.put('/password_resets', {
+                password,
+                token,
+            });
+        } catch (e: any) {}
+
+        router.push('/');
+    };
 
     useEffect(() => {
         getUser();
@@ -95,6 +142,7 @@ function useAuthProvider() {
         signUp,
         logIn,
         logOut,
+        updateUser,
         requestPasswordReset,
         resetPassword,
     };

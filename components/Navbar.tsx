@@ -8,8 +8,10 @@ export default function Navbar() {
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-blue-500 py-2 pl-6 pr-2">
-            <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <span className="text-4xl font-logo">Qiz</span>
+            <div className="flex items-center flex-shrink-0 text-white mr-6 hover:text-gray-200">
+                <Link href="/">
+                    <a className="text-4xl font-logo">Qiz</a>
+                </Link>
             </div>
             <div>
                 <button>

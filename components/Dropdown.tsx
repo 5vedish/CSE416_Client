@@ -23,7 +23,7 @@ export default function Dropdown() {
                                         active
                                             ? 'text-gray-300'
                                             : 'text-gray-900'
-                                    } group flex rounded-md items-center w-full px-3 py-3 text-sm`}
+                                    } group flex rounded-md items-center w-full px-3 py-3 text-sm hover:text-gray-200`}
                                 >
                                     Profile
                                 </button>
@@ -39,7 +39,7 @@ export default function Dropdown() {
                                             active
                                                 ? 'text-gray-300'
                                                 : 'text-gray-900'
-                                        } group flex rounded-md items-center w-full px-3 py-3 text-sm`}
+                                        } group flex rounded-md items-center w-full px-3 py-3 text-sm hover:text-gray-200`}
                                     >
                                         Account
                                     </a>
@@ -55,7 +55,7 @@ export default function Dropdown() {
                                         active
                                             ? 'text-gray-300'
                                             : 'text-gray-900'
-                                    } group flex rounded-md items-center w-full px-3 py-3 text-sm`}
+                                    } group flex rounded-md items-center w-full px-3 py-3 text-sm hover:text-gray-200`}
                                     onClick={logOut}
                                 >
                                     Sign Out

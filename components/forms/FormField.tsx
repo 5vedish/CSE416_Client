@@ -5,6 +5,7 @@ const FormField = ({
     form,
     formKey,
     label,
+    defaultValue,
     labelStyle,
     validate,
     required,
@@ -12,6 +13,7 @@ const FormField = ({
     form: UseFormReturn<any, object>;
     formKey: string;
     label: string;
+    defaultValue?: string;
     labelStyle?: string;
     required?: string | ValidationRule<boolean>;
     validate?: Validate<string> | Record<string, Validate<string>>;
@@ -31,13 +33,14 @@ const FormField = ({
             </label>
             <div className="relative">
                 <input
-                    {...register('displayName', {
+                    {...register(formKey, {
                         required,
                         validate,
                     })}
                     className={`shadow appearance-none ${
                         errors[formKey] ? 'border-red-500' : 'border-gray-300'
                     } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                    defaultValue={defaultValue ?? ''}
                 />
             </div>
             <span className="text-red-500 text-sm">

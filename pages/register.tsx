@@ -3,12 +3,11 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import FormWrapper from '../components/forms/FormWrapper';
 
-import { AxiosResponse } from 'axios';
-import { httpClient } from '../lib/axios';
 import PasswordField from '../components/forms/PasswordField';
 import FormField from '../components/forms/FormField';
 import FormHeader from '../components/forms/FormHeader';
 import FormSubmit from '../components/forms/FormSubmit';
+import { useAuth } from '../components/AuthProvider';
 
 type RegisterInputs = {
     password: string;
@@ -18,23 +17,23 @@ type RegisterInputs = {
 };
 
 const Register: NextPage = () => {
+    const { signUp } = useAuth();
     const form = useForm<RegisterInputs>();
     const { handleSubmit, watch } = form;
-    const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
-        try {
-            const answerResult: AxiosResponse<{ id: number }> =
-                await httpClient.post('/users', {
-                    displayName: data.displayName,
-                    email: data.email,
-                    password: data.password,
-                });
-            if (!answerResult) {
-                console.log('error');
-                return;
-            }
-            console.log(answerResult.data);
-        } catch (err) {
-            console.log(err);
+    const [error, setError] = useState('');
+    const onSubmit: SubmitHandler<RegisterInputs> = async ({
+        email,
+        password,
+        displayName,
+    }) => {
+        console.log(email);
+        const result = await signUp({
+            email: email,
+            password: password,
+            displayName: displayName,
+        });
+        if (result !== 200) {
+            setError('Error creating an account, email already in use.');
         }
     };
 
@@ -75,6 +74,13 @@ const Register: NextPage = () => {
                     }
                 />
                 <FormSubmit label="Create account" />
+                <div
+                    className={`text-red-500 mb-4 ${
+                        error ? 'visible' : 'invisible'
+                    }`}
+                >
+                    {error}
+                </div>
             </form>
         </FormWrapper>
     );

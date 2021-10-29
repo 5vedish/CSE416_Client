@@ -7,6 +7,9 @@ import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 import FormHeader from '../components/forms/FormHeader';
 import PasswordField from '../components/forms/PasswordField';
 import FormSubmit from '../components/forms/FormSubmit';
+import { useRouter } from 'next/router';
+import { httpClient } from '../lib/axios';
+import { useAuth } from '../components/AuthProvider';
 
 type Inputs = {
     password: string;
@@ -16,7 +19,14 @@ type Inputs = {
 const ResetPassword: NextPage = () => {
     const form = useForm<Inputs>();
     const { handleSubmit, watch } = form;
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+    const router = useRouter();
+    const { resetPassword } = useAuth();
+    const onSubmit: SubmitHandler<Inputs> = async ({ password }) => {
+        const { token } = router.query;
+        if (token) {
+            await resetPassword(token as string, password);
+        }
+    };
 
     return (
         <FormWrapper>
