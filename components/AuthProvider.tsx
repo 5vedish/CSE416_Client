@@ -1,8 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import router from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { httpClient } from '../lib/axios';
+import cookie from 'js-cookie';
 
-type User = { id: string; displayName: string; email: string };
+type User = { displayName: string; email: string };
 
 type LogInType = {
     email: string;
@@ -12,11 +14,11 @@ type LogInType = {
 type AuthContextValue = {
     user: User | undefined;
     loading: boolean;
-    signUp: () => void;
-    logIn: (data: LogInType) => void;
-    logOut: () => void;
-    requestPasswordReset: () => void;
-    resetPassword: () => void;
+    signUp: () => Promise<void>;
+    logIn: (data: LogInType) => Promise<number>;
+    logOut: () => Promise<void>;
+    requestPasswordReset: () => Promise<void>;
+    resetPassword: () => Promise<void>;
 };
 
 const AuthContext = React.createContext<AuthContextValue | undefined>(
@@ -45,23 +47,47 @@ function useAuthProvider() {
     const [user, setUser] = useState<User | undefined>();
     const [loading, setLoading] = useState(true);
 
-    const signUp = () => {};
-
-    const logIn = async (data: LogInType) => {
-        console.log(data);
-        const response = await httpClient.post<any>('/sessions', data, {
-            withCredentials: true,
-        });
-        console.log('blah');
-        console.log(response.data);
-        setUser(response.data);
+    const getUser = async () => {
+        try {
+            setLoading(true);
+            const response = await httpClient.get<any>('/me');
+            if (response.data) {
+                setUser(response.data);
+            }
+            setLoading(false);
+        } catch (e: any) {}
     };
 
-    const logOut = () => {};
+    const signUp = async () => {};
 
-    const requestPasswordReset = () => {};
+    const logIn = async (data: LogInType) => {
+        try {
+            setLoading(true);
+            const response = await httpClient.post<any>('/sessions', data);
+            setUser(response.data);
+            setLoading(false);
+            router.push('/');
+            return 200;
+        } catch (e: any) {
+            return e.status;
+        }
+    };
 
-    const resetPassword = () => {};
+    const logOut = async () => {
+        try {
+            await httpClient.delete<any>('/me/sessions');
+            setUser(undefined);
+        } catch (e: any) {}
+        router.push('/');
+    };
+
+    const requestPasswordReset = async () => {};
+
+    const resetPassword = async () => {};
+
+    useEffect(() => {
+        getUser();
+    }, []);
 
     return {
         user,
