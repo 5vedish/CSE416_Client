@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FormWrapper from '../components/wrapper/FormWrapper';
+import FormWrapper from '../components/forms/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 import FormHeader from '../components/forms/FormHeader';

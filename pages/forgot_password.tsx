@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import FormWrapper from '../components/wrapper/FormWrapper';
+import FormWrapper from '../components/forms/FormWrapper';
 import FormHeader from '../components/forms/FormHeader';
 import FormField from '../components/forms/FormField';
 import FormSubmit from '../components/forms/FormSubmit';

@@ -34,9 +34,7 @@ const PasswordField = ({
                         validate,
                     })}
                     className={`shadow appearance-none ${
-                        errors[formKey]?.type === 'validate'
-                            ? 'border-red-500'
-                            : 'border-gray-300'
+                        errors[formKey] ? 'border-red-500' : 'border-gray-300'
                     } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     type={passwordShown ? 'text' : 'password'}
                 />

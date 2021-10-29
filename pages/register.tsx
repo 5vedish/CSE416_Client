@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FormWrapper from '../components/wrapper/FormWrapper';
+import FormWrapper from '../components/forms/FormWrapper';
 
 import { AxiosResponse } from 'axios';
 import { httpClient } from '../lib/axios';

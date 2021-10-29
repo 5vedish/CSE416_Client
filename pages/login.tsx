@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import FormWrapper from '../components/wrapper/FormWrapper';
+import FormWrapper from '../components/forms/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
 import { useAuth } from '../components/AuthProvider';
@@ -10,6 +10,7 @@ import PasswordField from '../components/forms/PasswordField';
 import FormField from '../components/forms/FormField';
 import FormHeader from '../components/forms/FormHeader';
 import FormSubmit from '../components/forms/FormSubmit';
+import Link from 'next/link';
 
 type Inputs = {
     email: string;
@@ -47,6 +48,11 @@ const Login: NextPage = () => {
                     label="Password"
                     eyeButton
                 />
+                <Link href="/forgot_password" passHref>
+                    <div className="text-gray-400 hover:underline cursor-pointer select-none mb-4">
+                        Forgot password?
+                    </div>
+                </Link>
                 <FormSubmit label="Login" />
             </form>
         </FormWrapper>
