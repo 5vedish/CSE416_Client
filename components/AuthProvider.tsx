@@ -49,12 +49,12 @@ function useAuthProvider() {
 
     const getUser = async () => {
         try {
-            const response = await httpClient.get<any>('/me', {
-                withCredentials: true,
-            });
+            setLoading(true);
+            const response = await httpClient.get<any>('/me');
             if (response.data) {
                 setUser(response.data);
             }
+            setLoading(false);
         } catch (e: any) {}
     };
 
@@ -62,10 +62,10 @@ function useAuthProvider() {
 
     const logIn = async (data: LogInType) => {
         try {
-            const response = await httpClient.post<any>('/sessions', data, {
-                withCredentials: true,
-            });
+            setLoading(true);
+            const response = await httpClient.post<any>('/sessions', data);
             setUser(response.data);
+            setLoading(false);
             router.push('/');
             return 200;
         } catch (e: any) {
@@ -75,9 +75,7 @@ function useAuthProvider() {
 
     const logOut = async () => {
         try {
-            await httpClient.delete<any>('/me/sessions', {
-                withCredentials: true,
-            });
+            await httpClient.delete<any>('/me/sessions');
             setUser(undefined);
         } catch (e: any) {}
         router.push('/');

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 export default function AnswerChoice({
     text,
     index,
-    func,
+    selectChoice,
     selectedIndex,
     editChoices,
     refetch,
 }: {
     text: string;
     index: number;
-    func: (num: number) => Promise<void>;
+    selectChoice: (num: number) => void;
     selectedIndex: number;
     editChoices: (newChoice: string, index: number) => Promise<void>;
     refetch: () => Promise<void>;
@@ -29,7 +29,7 @@ export default function AnswerChoice({
                 type="button"
                 onClick={() => {
                     setCount(count + 1);
-                    func(index);
+                    selectChoice(index);
                 }}
                 className={`text-left w-full ${
                     selectedIndex === index
@@ -48,7 +48,6 @@ export default function AnswerChoice({
                 ) : (
                     <label
                         className="text-center block text-gray-700 text-lg font-bold mb-2"
-                        htmlFor="username"
                         onClick={() => setIsEditing(true)}
                     >
                         {text}

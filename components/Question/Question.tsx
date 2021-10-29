@@ -5,10 +5,14 @@ export default function Question({
     text,
     id,
     refetch,
+    choices,
+    correctChoice,
 }: {
     text: string;
     id: number;
     refetch: () => Promise<void>;
+    choices: string[];
+    correctChoice: number;
 }) {
     const [isEditing, setEditing] = useState(false);
 
@@ -16,6 +20,8 @@ export default function Question({
         console.log(id);
         await httpClient.put(`/questions/${id}`, {
             question: e.currentTarget.value,
+            choices,
+            correctChoice,
         });
         setEditing(false);
         await refetch();
@@ -34,7 +40,6 @@ export default function Question({
             ) : (
                 <label
                     className="text-center block text-gray-700 text-lg font-bold mb-2"
-                    htmlFor="username"
                     onClick={() => setEditing(true)}
                 >
                     {text}
