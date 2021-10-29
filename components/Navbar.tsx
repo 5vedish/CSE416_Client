@@ -1,10 +1,13 @@
 import Dropdown from './Dropdown';
 import { SearchIcon, PlusIcon } from '@heroicons/react/solid';
+import { useAuth } from './AuthProvider';
+import Link from 'next/link';
 
 export default function Navbar() {
-    // referenced https://v1.tailwindcss.com/components/navigation
+    const { user } = useAuth();
+
     return (
-        <nav className="flex items-center justify-between flex-wrap bg-blue-500 p-6">
+        <nav className="flex items-center justify-between flex-wrap bg-blue-500 py-2 pl-6 pr-2">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
                 <span className="text-4xl font-logo">Qiz</span>
             </div>
@@ -29,7 +32,26 @@ export default function Navbar() {
                 </a>
             </div>
             <div>
-                <Dropdown />
+                {user ? (
+                    <Dropdown />
+                ) : (
+                    <div className="space-x-4 text-white mr-4">
+                        <Link href="/login">
+                            <a className="font-semibold hover:text-gray-300">
+                                Sign In
+                            </a>
+                        </Link>
+
+                        <Link href="/register">
+                            <a
+                                onClick={() => {}}
+                                className="border-2 border-white hover:border-gray-300 hover:text-gray-300 font-semibold rounded-md px-2 py-1"
+                            >
+                                Sign Up
+                            </a>
+                        </Link>
+                    </div>
+                )}
             </div>
         </nav>
     );

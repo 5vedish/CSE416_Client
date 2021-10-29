@@ -9,6 +9,9 @@ module.exports = {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
                 logo: ['Libre Franklin', ...defaultTheme.fontFamily.sans],
             },
+            backgroundImage: {
+                welcome: "url('/splash_art.svg')",
+            },
         },
     },
     variants: {

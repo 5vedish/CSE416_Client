@@ -17,7 +17,7 @@ interface Quiz {
 
 const Home: NextPage = () => {
     const [quizId, setQuizId] = useState(-1);
-    const { loading } = useAuth();
+    const { user } = useAuth();
 
     const refetchQuiz = async () => {
         await httpClient
@@ -72,22 +72,28 @@ const Home: NextPage = () => {
     }, [quizId, memoizedRefetch]);
 
     return (
-        <div className="h-screen bg-blue-500">
+        <div className="h-screen overflow-hidden">
             <Navbar />
-            {loading ? (
-                <Image src="/splash_art.svg" layout="fill" />
-            ) : quizData ? (
-                <Quiz
-                    refetch={refetchQuiz}
-                    correctChoice={quizData.correctChoice}
-                    question={quizData.question}
-                    answers={quizData.choices}
-                    id={quizData.id}
-                    deleteQuiz={deleteQuiz}
-                />
-            ) : (
-                <CreateQuiz createQuiz={createQuiz} />
-            )}
+
+            <div
+                className={`h-full ${
+                    !user && 'bg-welcome bg-no-repeat bg-center bg-blue-500'
+                }`}
+            >
+                {user &&
+                    (quizData ? (
+                        <Quiz
+                            refetch={refetchQuiz}
+                            correctChoice={quizData.correctChoice}
+                            question={quizData.question}
+                            answers={quizData.choices}
+                            id={quizData.id}
+                            deleteQuiz={deleteQuiz}
+                        />
+                    ) : (
+                        <CreateQuiz createQuiz={createQuiz} />
+                    ))}
+            </div>
         </div>
     );
 };

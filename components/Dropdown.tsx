@@ -1,17 +1,14 @@
 import { Menu } from '@headlessui/react';
 import { ChevronDownIcon, UserIcon } from '@heroicons/react/solid';
 
-// referenced https://headlessui.dev/react/menu
-// used profile icon from https://mui.com/components/material-icons/
-
 export default function Dropdown() {
     return (
         <div className="">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                    <Menu.Button className="inline-flex w-full px-4 py-2 text-white rounded-md">
-                        <UserIcon className="w-10 h-10 text-white" />
-                        <ChevronDownIcon className="w-10 h-10 ml-2 -mr-1" />
+                    <Menu.Button className="inline-flex w-full px-4 py-2 text-white rounded-md hover:text-gray-200">
+                        <UserIcon className="w-10 h-10" />
+                        <ChevronDownIcon className="w-10 h-10" />
                     </Menu.Button>
                 </div>
                 <Menu.Items className="absolute right-0 w-48 mt-2 origin-top-right bg-white divide-y rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
@@ -59,7 +56,7 @@ export default function Dropdown() {
                                 </button>
                             )}
                         </Menu.Item>
-                    </div>
+                    </div>{' '}
                 </Menu.Items>
             </Menu>
         </div>
