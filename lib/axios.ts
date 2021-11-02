@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-export const httpClient = axios.create({
+const httpClient = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     timeout: 10000,
     withCredentials: true,
 });
+
+export { httpClient };

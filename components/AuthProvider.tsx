@@ -113,6 +113,14 @@ function useAuthProvider() {
                     user: User;
                     session: Session;
                 };
+                console.log('setting session');
+                if (session.sessionCookieOptions.expires) {
+                    session.sessionCookieOptions.expires = new Date(
+                        session.sessionCookieOptions.expires,
+                    );
+                }
+
+                console.log(session);
                 setUser(user);
                 cookie.set(
                     'sessionId',
