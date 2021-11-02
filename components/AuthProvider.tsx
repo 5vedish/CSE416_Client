@@ -109,24 +109,24 @@ function useAuthProvider() {
             setLoading(true);
             const response = await httpClient.post<any>('/sessions', data);
             if (response.data) {
-                const { user, session } = response.data as {
-                    user: User;
-                    session: Session;
-                };
-                console.log('setting session');
-                if (session.sessionCookieOptions.expires) {
-                    session.sessionCookieOptions.expires = new Date(
-                        session.sessionCookieOptions.expires,
-                    );
-                }
+                // const { user, session } = response.data as {
+                //     user: User;
+                //     session: Session;
+                // };
+                // console.log('setting session');
+                // if (session.sessionCookieOptions.expires) {
+                //     session.sessionCookieOptions.expires = new Date(
+                //         session.sessionCookieOptions.expires,
+                //     );
+                // }
 
-                console.log(session);
-                setUser(user);
-                cookie.set(
-                    'sessionId',
-                    session.sessionId,
-                    session.sessionCookieOptions,
-                );
+                // console.log(session);
+                setUser(response.data.user);
+                // cookie.set(
+                //     'sessionId',
+                //     session.sessionId,
+                //     session.sessionCookieOptions,
+                // );
                 setLoading(false);
                 router.push('/');
                 return 200;
