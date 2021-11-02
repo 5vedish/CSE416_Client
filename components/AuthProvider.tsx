@@ -3,7 +3,14 @@ import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { httpClient } from '../lib/axios';
 
+import cookie from 'js-cookie';
+
 type User = { displayName: string; email: string };
+
+type Session = {
+    sessionId: string;
+    sessionCookieOptions: cookie.CookieAttributes;
+};
 
 type LogInType = {
     email: string;
@@ -97,10 +104,21 @@ function useAuthProvider() {
         try {
             setLoading(true);
             const response = await httpClient.post<any>('/sessions', data);
-            setUser(response.data);
-            setLoading(false);
-            router.push('/');
-            return 200;
+            if (response.data) {
+                const { user, session } = response.data as {
+                    user: User;
+                    session: Session;
+                };
+                setUser(user);
+                cookie.set(
+                    'sessionId',
+                    session.sessionId,
+                    session.sessionCookieOptions,
+                );
+                setLoading(false);
+                router.push('/');
+                return 200;
+            }
         } catch (e: any) {
             return e.status;
         }
