@@ -23,9 +23,25 @@ export default function QuizCard({
                 </div>
                 <div>
                     <span>Difficulty: </span>
-                    <span className="font-extrabold text-red-500">
-                        {difficulty}
-                    </span>
+                    {
+                        {
+                            Hard: (
+                                <span className="font-extrabold text-red-500">
+                                    {difficulty}
+                                </span>
+                            ),
+                            Medium: (
+                                <span className="font-extrabold text-blue-500">
+                                    {difficulty}
+                                </span>
+                            ),
+                            Easy: (
+                                <span className="font-extrabold text-green-500">
+                                    {difficulty}
+                                </span>
+                            ),
+                        }[difficulty]
+                    }
                 </div>
             </div>
         </div>

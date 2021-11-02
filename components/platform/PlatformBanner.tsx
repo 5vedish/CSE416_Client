@@ -1,4 +1,5 @@
-import { StarIcon } from '@heroicons/react/solid';
+import React from 'react';
+import GenerateStars from './GenerateStars';
 
 export default function PlatformBanner({
     title,
@@ -16,31 +17,7 @@ export default function PlatformBanner({
                     <div className="font-logo font text-xl"> {title} </div>
                     <div className="m-2"> by {author} </div>
                 </div>
-                {stars > 0 ? (
-                    <StarIcon className="inline-block w-5 h-5" />
-                ) : (
-                    <div />
-                )}
-                {stars > 1 ? (
-                    <StarIcon className="inline-block w-5 h-5" />
-                ) : (
-                    <div />
-                )}
-                {stars > 2 ? (
-                    <StarIcon className="inline-block w-5 h-5" />
-                ) : (
-                    <div />
-                )}
-                {stars > 3 ? (
-                    <StarIcon className="inline-block w-5 h-5" />
-                ) : (
-                    <div />
-                )}
-                {stars > 4 ? (
-                    <StarIcon className="inline-block w-5 h-5" />
-                ) : (
-                    <div />
-                )}
+                <GenerateStars stars={3} />
             </div>
         </div>
     );
