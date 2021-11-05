@@ -6,6 +6,7 @@ export default function AnswerChoice({
     selectedIndex,
     editChoices,
     refetch,
+    edit,
 }: {
     text: string;
     index: number;
@@ -13,6 +14,7 @@ export default function AnswerChoice({
     selectedIndex: number;
     editChoices: (newChoice: string, index: number) => Promise<void>;
     refetch: () => Promise<void>;
+    edit?: boolean;
 }) {
     const [count, setCount] = useState(0);
     const [isEditing, setIsEditing] = useState(false);
@@ -37,7 +39,7 @@ export default function AnswerChoice({
                         : 'bg-gray-50 hover:bg-gray-100'
                 }  text-black font-bold py-2 px-4 rounded`}
             >
-                {isEditing ? (
+                {isEditing && edit ? (
                     <input
                         className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
                         onBlur={handleEdit}

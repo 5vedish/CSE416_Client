@@ -7,6 +7,8 @@ import axios from 'axios';
 import Navbar from '../Navbar';
 import { httpClient } from '../../lib/axios';
 import { useRouter } from 'next/router';
+import CreateButton from './CreateButton';
+import Link from 'next/link';
 
 export default function Quiz({
     quizId,
@@ -16,6 +18,7 @@ export default function Quiz({
     correctChoice,
     refetch,
     deleteQuiz,
+    edit,
 }: {
     quizId: number;
     question: string;
@@ -24,6 +27,7 @@ export default function Quiz({
     correctChoice: number;
     refetch: () => Promise<void>;
     deleteQuiz: () => Promise<void>;
+    edit?: boolean;
 }) {
     const [answerChosen, setChosen] = useState(-1);
     const [correct, setCorrect] = useState<boolean | null>(null);
@@ -90,6 +94,7 @@ export default function Quiz({
                     id={questionId}
                     choices={answers}
                     correctChoice={answerChosen}
+                    edit={edit}
                 />
                 {answers.map((ans, index) => (
                     <AnswerChoice
@@ -98,19 +103,22 @@ export default function Quiz({
                         text={ans}
                         index={index}
                         selectChoice={(num) => {
-                            setChosen(num);
+                            if (!edit) setChosen(num);
                         }}
                         selectedIndex={answerChosen}
                         editChoices={editChoices}
+                        edit={edit}
                     />
                 ))}
+                {!edit && (
+                    <Submit
+                        choice={answerChosen}
+                        func={submit}
+                        setChosen={setChosen}
+                        setCorrect={setCorrect}
+                    />
+                )}
 
-                <Submit
-                    choice={answerChosen}
-                    func={submit}
-                    setChosen={setChosen}
-                    setCorrect={setCorrect}
-                />
                 {correct !== null &&
                     (correct ? (
                         <p className="font-bold text-3xl text-green-400">
@@ -121,15 +129,29 @@ export default function Quiz({
                             Incorrect. Try Again?
                         </p>
                     ))}
-                <DeleteQuiz deleteQuiz={deleteQuiz} />
-                <label className="font-bold text-xl">Set Correct Choice</label>
-                <input
-                    className="appearance-none ml-4 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                    onBlur={handleEdit}
-                    defaultValue={correctChoice}
-                    type="text"
-                    autoFocus={true}
-                ></input>
+
+                {edit && (
+                    <>
+                        <Link href="/" passHref>
+                            <a>
+                                <CreateButton
+                                    label={'Finish editing'}
+                                    create={async () => {}}
+                                />
+                            </a>
+                        </Link>
+                        <label className="font-bold text-xl">
+                            Set Correct Choice
+                        </label>
+                        <input
+                            className="appearance-none ml-4 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                            onBlur={handleEdit}
+                            defaultValue={correctChoice}
+                            type="text"
+                            autoFocus={true}
+                        ></input>
+                    </>
+                )}
             </form>
         </div>
     );

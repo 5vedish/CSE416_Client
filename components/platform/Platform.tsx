@@ -30,6 +30,7 @@ export default function Platform({
                             time={quiz.maxTime}
                             questions={quiz.questions.length}
                             difficulty={quiz.difficulty}
+                            quizId={quiz.id}
                         />
                     ))}
                     <CreateButton label="Add Quiz" create={createQuiz} />

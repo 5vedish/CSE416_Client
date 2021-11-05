@@ -50,6 +50,7 @@ const QuizPage: NextPage = () => {
                     answers={questionData.choices}
                     refetch={refetch}
                     deleteQuiz={async () => {}}
+                    edit={Boolean(router.query.edit)}
                 />
             )}
         </>
