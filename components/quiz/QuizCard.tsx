@@ -31,7 +31,7 @@ export default function QuizCard({
                                 </span>
                             ),
                             Medium: (
-                                <span className="font-extrabold text-blue-500">
+                                <span className="font-extrabold text-yellow-500">
                                     {difficulty}
                                 </span>
                             ),
