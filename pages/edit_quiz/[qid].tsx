@@ -2,8 +2,11 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Menu } from '@headlessui/react';
+import { httpClient } from '../lib/axios';
+import { useRouter } from 'next/router';
 
 const EditQuiz: NextPage = () => {
+    const router = useRouter();
     const [title, setTitle] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [totalTime, setTotalTime] = useState(0);
@@ -17,6 +20,8 @@ const EditQuiz: NextPage = () => {
         setTotalTime(parseInt(e.currentTarget.value));
         console.log(e.currentTarget.value);
     };
+
+    const handleSave = async () => {};
 
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
@@ -96,13 +101,20 @@ const EditQuiz: NextPage = () => {
                 </div>
             </div>
 
-            <div className="flex items-center justify-center mt-8">
+            <div className="flex flex-col items-center justify-center mt-8">
                 <input
                     className="appearance-none border-2 border-gray-200 rounded w-1/8 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mr-8"
-                    onBlur={handleEdit}
+                    onBlur={handleTimeEdit}
                     defaultValue={'Time Remaining'}
                     type="text"
                 ></input>
+
+                <button
+                    className="w-auto h-auto justify-self-center p-2 bg-blue-500 text-white font-bold border rounded-lg mt-4"
+                    onClick={handleSave}
+                >
+                    Save Changes
+                </button>
             </div>
         </div>
     );
