@@ -29,6 +29,7 @@ const EditQuiz: NextPage = () => {
         await httpClient.put('/quizzes', {
             quizId: qid,
             title: title,
+            totalTime: totalTime,
             difficulty: difficulty,
         });
     };
