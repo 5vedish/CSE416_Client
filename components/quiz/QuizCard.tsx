@@ -1,4 +1,5 @@
 import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+import Link from 'next/link';
 
 export default function QuizCard({
     title,
@@ -13,6 +14,7 @@ export default function QuizCard({
     difficulty: string;
     quizId: number;
 }) {
+    console.log(quizId);
     return (
         <div className="flex justify-center py-8">
             <div className="rounded-xl w-10/12 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -49,7 +51,11 @@ export default function QuizCard({
                 </div>
                 <div className="flex-inline flex-row flex mt-2">
                     <button className="mr-2 hover:bg-gray-300">
-                        <PencilAltIcon className="w-8 h-8"></PencilAltIcon>
+                        <Link href={`/edit_quiz/${quizId}`} passHref>
+                            <a>
+                                <PencilAltIcon className="w-8 h-8"></PencilAltIcon>
+                            </a>
+                        </Link>
                     </button>
 
                     <button>

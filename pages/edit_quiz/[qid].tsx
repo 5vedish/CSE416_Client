@@ -8,10 +8,12 @@ import { useRouter } from 'next/router';
 const EditQuiz: NextPage = () => {
     const router = useRouter();
     const [title, setTitle] = useState('');
-    const [difficulty, setDifficulty] = useState('');
+    const [difficulty, setDifficulty] = useState('Medium');
     const [totalTime, setTotalTime] = useState(0);
 
-    const { quizId } = router.query;
+    const { qid } = router.query;
+
+    console.log(qid);
 
     const handleEdit = async (e: React.FormEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
@@ -23,7 +25,13 @@ const EditQuiz: NextPage = () => {
         console.log(e.currentTarget.value);
     };
 
-    const handleSave = async () => {};
+    const handleSave = async () => {
+        await httpClient.put('/quizzes', {
+            quizId: qid,
+            title: title,
+            difficulty: difficulty,
+        });
+    };
 
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
