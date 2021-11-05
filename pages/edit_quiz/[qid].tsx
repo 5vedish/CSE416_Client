@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import { Menu } from '@headlessui/react';
-import { httpClient } from '../lib/axios';
+import { httpClient } from '../../lib/axios';
 import { useRouter } from 'next/router';
 
 const EditQuiz: NextPage = () => {
@@ -10,6 +10,8 @@ const EditQuiz: NextPage = () => {
     const [title, setTitle] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [totalTime, setTotalTime] = useState(0);
+
+    const { quizId } = router.query;
 
     const handleEdit = async (e: React.FormEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);

@@ -31,7 +31,12 @@ const UpdateContact: NextPage = () => {
         },
     ];
     return (
-        <Platform author="Your Mom" title="You're a simp" quizzes={quizzes} />
+        <Platform
+            createQuiz={async () => {}}
+            author="Your Mom"
+            title="You're a simp"
+            quizzes={quizzes}
+        />
     );
 };
 
