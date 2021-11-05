@@ -1,16 +1,36 @@
+import { AxiosResponse } from 'axios';
+import { useRouter } from 'next/router';
+import { httpClient } from '../../lib/axios';
+
 export default function QuizCard({
+    id,
     title,
     time,
     questions,
     difficulty,
 }: {
+    id: number;
     title: string;
     time: number;
     questions: number;
     difficulty: string;
 }) {
+    const router = useRouter();
+    const startQuiz = async () => {
+        await httpClient
+            .post<{ attemptId: number }>(`/quizzes/${id}/attempts`)
+            .then((result) => {
+                if (result.data) {
+                    console.log(id);
+                    router.push(
+                        `/quizzes/${id}?attempt=${result.data.attemptId}`,
+                    );
+                }
+            })
+            .catch((e) => {});
+    };
     return (
-        <div className="flex justify-center py-8">
+        <div className="flex justify-center py-8" onClick={startQuiz}>
             <div className="rounded-xl w-10/12 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="text-center font-logo">{title}</div>
                 <div className="mt-8">

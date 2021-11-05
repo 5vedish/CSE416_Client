@@ -6,18 +6,21 @@ import Submit from './Submit';
 import axios from 'axios';
 import Navbar from '../Navbar';
 import { httpClient } from '../../lib/axios';
+import { useRouter } from 'next/router';
 
 export default function Quiz({
+    quizId,
     question,
     answers,
-    id,
+    questionId,
     correctChoice,
     refetch,
     deleteQuiz,
 }: {
+    quizId: number;
     question: string;
     answers: string[];
-    id: number;
+    questionId: number;
     correctChoice: number;
     refetch: () => Promise<void>;
     deleteQuiz: () => Promise<void>;
@@ -25,9 +28,14 @@ export default function Quiz({
     const [answerChosen, setChosen] = useState(-1);
     const [correct, setCorrect] = useState<boolean | null>(null);
     const [choices, setChoices] = useState(answers); // editing answer set
+    const router = useRouter();
     const submit = async () => {
-        console.log(answerChosen, correctChoice);
-        setCorrect(answerChosen === correctChoice);
+        const { attempt } = router.query;
+        await httpClient.patch(`/quizzes/${quizId}/attempts/${attempt}`, {
+            selectedChoices: [answerChosen],
+            endTime: new Date(),
+        });
+        router.push(`/quizzes/${quizId}/completed`);
     };
 
     const editChoices = async (newChoice: string, newChoiceIndex: number) => {
@@ -38,7 +46,7 @@ export default function Quiz({
             return choice;
         });
         console.log(newChoices);
-        await httpClient.put(`/questions/${id}`, {
+        await httpClient.put(`/questions/${questionId}`, {
             question,
             choices: newChoices,
             correctChoice,
@@ -58,8 +66,8 @@ export default function Quiz({
             return;
         }
 
-        console.log(id);
-        await httpClient.put(`/questions/${id}`, {
+        console.log(questionId);
+        await httpClient.put(`/questions/${questionId}`, {
             question,
             choices,
             correctChoice: e.currentTarget.value,
@@ -79,7 +87,7 @@ export default function Quiz({
                 <Question
                     refetch={refetch}
                     text={question}
-                    id={id}
+                    id={questionId}
                     choices={answers}
                     correctChoice={answerChosen}
                 />

@@ -1,4 +1,5 @@
 interface Question {
+    id: number;
     choices: string[];
     correctChoice: number;
     question: string;
@@ -17,4 +18,13 @@ interface Platform {
     owner: string;
     quizzes: Quiz[];
     title: string;
+}
+
+interface QuizAttempt {
+    questionsCompleted: number;
+    questionsCorrect: number;
+    totalQuestions: number;
+    startTime: Date;
+    endTime: Date;
+    difficulty: string;
 }

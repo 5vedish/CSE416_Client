@@ -25,6 +25,7 @@ export default function Platform({
                     {quizzes.map((quiz) => (
                         <QuizCard
                             key={quiz.id}
+                            id={quiz.id}
                             title={quiz.title}
                             time={quiz.maxTime}
                             questions={quiz.questions.length}
