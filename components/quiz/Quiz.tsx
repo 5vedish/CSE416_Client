@@ -6,28 +6,40 @@ import Submit from './Submit';
 import axios from 'axios';
 import Navbar from '../Navbar';
 import { httpClient } from '../../lib/axios';
+import { useRouter } from 'next/router';
+import CreateButton from './CreateButton';
+import Link from 'next/link';
 
 export default function Quiz({
+    quizId,
     question,
     answers,
-    id,
+    questionId,
     correctChoice,
     refetch,
     deleteQuiz,
+    edit,
 }: {
+    quizId: number;
     question: string;
     answers: string[];
-    id: number;
+    questionId: number;
     correctChoice: number;
     refetch: () => Promise<void>;
     deleteQuiz: () => Promise<void>;
+    edit?: boolean;
 }) {
     const [answerChosen, setChosen] = useState(-1);
     const [correct, setCorrect] = useState<boolean | null>(null);
     const [choices, setChoices] = useState(answers); // editing answer set
+    const router = useRouter();
     const submit = async () => {
-        console.log(answerChosen, correctChoice);
-        setCorrect(answerChosen === correctChoice);
+        const { attempt } = router.query;
+        await httpClient.patch(`/quizzes/${quizId}/attempts/${attempt}`, {
+            selectedChoices: [answerChosen],
+            endTime: new Date(),
+        });
+        router.push(`/quizzes/${quizId}/completed`);
     };
 
     const editChoices = async (newChoice: string, newChoiceIndex: number) => {
@@ -38,7 +50,7 @@ export default function Quiz({
             return choice;
         });
         console.log(newChoices);
-        await httpClient.put(`/questions/${id}`, {
+        await httpClient.put(`/questions/${questionId}`, {
             question,
             choices: newChoices,
             correctChoice,
@@ -58,8 +70,8 @@ export default function Quiz({
             return;
         }
 
-        console.log(id);
-        await httpClient.put(`/questions/${id}`, {
+        console.log(questionId);
+        await httpClient.put(`/questions/${questionId}`, {
             question,
             choices,
             correctChoice: e.currentTarget.value,
@@ -79,9 +91,10 @@ export default function Quiz({
                 <Question
                     refetch={refetch}
                     text={question}
-                    id={id}
+                    id={questionId}
                     choices={answers}
                     correctChoice={answerChosen}
+                    edit={edit}
                 />
                 {answers.map((ans, index) => (
                     <AnswerChoice
@@ -90,19 +103,22 @@ export default function Quiz({
                         text={ans}
                         index={index}
                         selectChoice={(num) => {
-                            setChosen(num);
+                            if (!edit) setChosen(num);
                         }}
                         selectedIndex={answerChosen}
                         editChoices={editChoices}
+                        edit={edit}
                     />
                 ))}
+                {!edit && (
+                    <Submit
+                        choice={answerChosen}
+                        func={submit}
+                        setChosen={setChosen}
+                        setCorrect={setCorrect}
+                    />
+                )}
 
-                <Submit
-                    choice={answerChosen}
-                    func={submit}
-                    setChosen={setChosen}
-                    setCorrect={setCorrect}
-                />
                 {correct !== null &&
                     (correct ? (
                         <p className="font-bold text-3xl text-green-400">
@@ -113,15 +129,29 @@ export default function Quiz({
                             Incorrect. Try Again?
                         </p>
                     ))}
-                <DeleteQuiz deleteQuiz={deleteQuiz} />
-                <label className="font-bold text-xl">Set Correct Choice</label>
-                <input
-                    className="appearance-none ml-4 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                    onBlur={handleEdit}
-                    defaultValue={correctChoice}
-                    type="text"
-                    autoFocus={true}
-                ></input>
+
+                {edit && (
+                    <>
+                        <Link href="/" passHref>
+                            <a>
+                                <CreateButton
+                                    label={'Finish editing'}
+                                    create={async () => {}}
+                                />
+                            </a>
+                        </Link>
+                        <label className="font-bold text-xl">
+                            Set Correct Choice
+                        </label>
+                        <input
+                            className="appearance-none ml-4 border-2 border-gray-200 rounded w-64 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                            onBlur={handleEdit}
+                            defaultValue={correctChoice}
+                            type="text"
+                            autoFocus={true}
+                        ></input>
+                    </>
+                )}
             </form>
         </div>
     );
