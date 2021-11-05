@@ -1,77 +1,83 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
 import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/quiz/Quiz';
-import CreateQuiz from '../components/quiz/CreateQuiz';
+import CreateButton from '../components/quiz/CreateButton';
 import { httpClient } from '../lib/axios';
 import { useAuth } from '../components/AuthProvider';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
-
-interface Quiz {
-    id: number;
-    choices: [string];
-    correctChoice: number;
-    question: string;
-}
+import Platform from '../components/platform/Platform';
 
 const Home: NextPage = () => {
-    const [quizId, setQuizId] = useState(-1);
+    const [platformId, setPlatformId] = useState(-1);
+    const [platformData, setPlatformData] = useState<Platform | null>(null);
     const { user } = useAuth();
 
-    console.log(user);
+    const refetchPlatform = async () => {
+        if (platformId > 0) {
+            await httpClient
+                .get<Platform>(`/platforms/${platformId}`)
+                .then((result) => {
+                    if (result.data) {
+                        setPlatformData(result.data);
+                    }
+                })
+                .catch((e) => {
+                    setPlatformId(-1);
+                    setPlatformData(null);
+                });
+        }
+    };
 
-    const refetchQuiz = async () => {
+    const refetchPlatformId = async () => {
         await httpClient
-            .get(`/questions/${quizId}`)
-            .then((answerResult) => {
-                if (answerResult.data) {
-                    const quiz: Quiz = answerResult.data;
-                    setQuizData(quiz);
+            .get<{ platformId: number }>('/me/platform')
+            .then((result) => {
+                if (result.data) {
+                    setPlatformId(result.data.platformId);
                 }
             })
             .catch((e) => {
-                return;
+                setPlatformId(-1);
             });
     };
 
-    const memoizedRefetch = useCallback(refetchQuiz, [quizId]);
+    const createPlatform = async () => {
+        await httpClient.post<{ title: string }>('/platforms', {
+            title: 'New Platform',
+        });
+        await refetchPlatformId();
+    };
+
+    const deletePlatform = async () => {
+        if (platformId < 0) return;
+        await httpClient.delete(`/platforms/${platformId}`);
+        setPlatformId(-1);
+    };
 
     const createQuiz = async () => {
-        const answerResult: AxiosResponse<{ id: number }> =
-            await httpClient.post('/questions', {
-                question: 'Edit question text',
-                choices: ['correct', 'inccorect', 'incorrect', 'incorrect'],
-                correctChoice: 0,
+        if (platformId > 0) {
+            await httpClient.post<{ platformId: number }>('/quizzes', {
+                platformId: platformId,
             });
-        if (!answerResult) {
-            console.log('error');
-            return;
+            await refetchPlatform();
         }
-        console.log(answerResult.data);
-        setQuizId(answerResult.data.id);
     };
 
-    const deleteQuiz = async () => {
-        if (quizId < 0) return;
-        await httpClient.delete(`/questions/${quizId}`);
-        setQuizId(-1);
-    };
+    const memoizedRefetch = useCallback(refetchPlatform, [platformId]);
 
     useEffect(() => {
-        const savedId = localStorage.getItem('quizId');
-        if (savedId) setQuizId(parseInt(savedId));
+        (async () => {
+            await refetchPlatformId();
+        })();
     }, []);
-    const [quizData, setQuizData] = useState<Quiz | null>(null);
 
     useEffect(() => {
-        if (quizId > 0) {
-            memoizedRefetch();
-        } else {
-            setQuizData(null);
-        }
-        localStorage.setItem('quizId', quizId.toString());
-    }, [quizId, memoizedRefetch]);
+        (async () => {
+            await memoizedRefetch();
+        })();
+    }, [platformId, memoizedRefetch]);
 
     return (
         <div className="h-screen overflow-hidden">
@@ -83,17 +89,18 @@ const Home: NextPage = () => {
                 }`}
             >
                 {user &&
-                    (quizData ? (
-                        <Quiz
-                            refetch={refetchQuiz}
-                            correctChoice={quizData.correctChoice}
-                            question={quizData.question}
-                            answers={quizData.choices}
-                            id={quizData.id}
-                            deleteQuiz={deleteQuiz}
+                    (platformData ? (
+                        <Platform
+                            quizzes={platformData.quizzes}
+                            title={platformData.title}
+                            author={platformData.owner}
+                            createQuiz={createQuiz}
                         />
                     ) : (
-                        <CreateQuiz createQuiz={createQuiz} />
+                        <CreateButton
+                            create={createPlatform}
+                            label="Create Platform"
+                        />
                     ))}
             </div>
         </div>

@@ -5,7 +5,7 @@ export default function QuizCard({
     difficulty,
 }: {
     title: string;
-    time: string;
+    time: number;
     questions: number;
     difficulty: string;
 }) {

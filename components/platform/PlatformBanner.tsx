@@ -8,7 +8,7 @@ export default function PlatformBanner({
 }: {
     title: String;
     author: String;
-    stars: number;
+    stars?: number;
 }) {
     return (
         <div>
@@ -17,7 +17,7 @@ export default function PlatformBanner({
                     <div className="font-logo font text-xl"> {title} </div>
                     <div className="m-2"> by {author} </div>
                 </div>
-                <GenerateStars stars={3} />
+                {stars && <GenerateStars stars={stars} />}
             </div>
         </div>
     );
