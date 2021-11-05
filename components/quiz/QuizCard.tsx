@@ -1,13 +1,17 @@
+import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
+
 export default function QuizCard({
     title,
     time,
     questions,
     difficulty,
+    quizId,
 }: {
     title: string;
     time: number;
     questions: number;
     difficulty: string;
+    quizId: number;
 }) {
     return (
         <div className="flex justify-center py-8">
@@ -42,6 +46,15 @@ export default function QuizCard({
                             ),
                         }[difficulty]
                     }
+                </div>
+                <div className="flex-inline flex-row flex mt-2">
+                    <button className="mr-2 hover:bg-gray-300">
+                        <PencilAltIcon className="w-8 h-8"></PencilAltIcon>
+                    </button>
+
+                    <button>
+                        <TrashIcon className="w-8 h-8 hover:bg-gray-300"></TrashIcon>
+                    </button>
                 </div>
             </div>
         </div>
