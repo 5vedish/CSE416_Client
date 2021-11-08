@@ -1,5 +1,9 @@
 import Dropdown from './Dropdown';
-import { SearchIcon, PlusIcon } from '@heroicons/react/solid';
+import {
+    SearchIcon,
+    PlusIcon,
+    CurrencyDollarIcon,
+} from '@heroicons/react/solid';
 import { useAuth } from './AuthProvider';
 import Link from 'next/link';
 
@@ -18,7 +22,7 @@ export default function Navbar() {
                     <PlusIcon className="invisible h-5 w-5 text-white" />
                 </button>
             </div>
-            <div className="invisible shadow flex">
+            <div className="shadow flex">
                 <input
                     className="w-full rounded p-2"
                     type="text"
@@ -29,9 +33,14 @@ export default function Navbar() {
                 </button>
             </div>
             <div>
-                <a href="#" className="invisible text-white">
-                    Shop
-                </a>
+                <span>
+                    <button>
+                        <CurrencyDollarIcon className="h-5  w-5 text-white" />
+                    </button>
+                </span>
+                <span className="align-text-bottom font-logo text-white">
+                    123
+                </span>
             </div>
             <div>
                 {user ? (
