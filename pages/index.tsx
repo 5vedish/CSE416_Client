@@ -95,6 +95,7 @@ const Home: NextPage = () => {
                             title={platformData.title}
                             author={platformData.owner}
                             createQuiz={createQuiz}
+                            rating={platformData.rating}
                         />
                     ) : (
                         <CreateButton
