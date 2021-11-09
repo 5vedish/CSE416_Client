@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../Navbar';
 import CreateButton from '../quiz/CreateButton';
 import QuizCard from '../quiz/QuizCard';
 import QuizWrapper from '../wrapper/QuizWrapper';

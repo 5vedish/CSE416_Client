@@ -4,7 +4,6 @@ import DeleteQuiz from './DeleteQuiz';
 import Question from '../question/Question';
 import Submit from './Submit';
 import axios from 'axios';
-import Navbar from '../Navbar';
 import { httpClient } from '../../lib/axios';
 import { useRouter } from 'next/router';
 import CreateButton from './CreateButton';

@@ -7,7 +7,7 @@ import {
 import { useAuth } from './AuthProvider';
 import Link from 'next/link';
 
-export default function Navbar() {
+export default function Navbar({ currency }: { currency: boolean }) {
     const { user } = useAuth();
 
     return (
@@ -22,7 +22,7 @@ export default function Navbar() {
                     <PlusIcon className="invisible h-5 w-5 text-white" />
                 </button>
             </div>
-            <div className="shadow flex">
+            {/* <div className="shadow flex">
                 <input
                     className="w-full rounded p-2"
                     type="text"
@@ -31,17 +31,21 @@ export default function Navbar() {
                 <button className="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
                     <SearchIcon className="h-5 w-5 text-black" />
                 </button>
-            </div>
-            <div>
-                <span>
-                    <button>
-                        <CurrencyDollarIcon className="h-5  w-5 text-white" />
-                    </button>
-                </span>
-                <span className="align-text-bottom font-logo text-white">
-                    123
-                </span>
-            </div>
+            </div> */}
+            {currency ? (
+                <div>
+                    <span>
+                        <button>
+                            <CurrencyDollarIcon className="h-5  w-5 text-white" />
+                        </button>
+                    </span>
+                    <span className="align-text-bottom font-logo text-white">
+                        69420
+                    </span>
+                </div>
+            ) : (
+                <div />
+            )}
             <div>
                 {user ? (
                     <Dropdown />

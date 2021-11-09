@@ -60,7 +60,7 @@ const QuizCompleted: NextPage = () => {
     const statStyle = 'inline-flex justify-self-start text-sm';
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
-            <Navbar />
+            <Navbar currency={true} />
             <div className="flex flex-col items-center w-screen">
                 <p className="font-logo font-bold lg:text-2xl mt-8">
                     Quiz Completed!

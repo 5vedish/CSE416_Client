@@ -81,7 +81,7 @@ const Home: NextPage = () => {
 
     return (
         <div className="h-screen overflow-hidden">
-            <Navbar />
+            <Navbar currency={true} />
 
             <div
                 className={`h-full ${

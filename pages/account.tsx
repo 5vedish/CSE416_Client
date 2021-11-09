@@ -35,7 +35,7 @@ const UpdateContact: NextPage = () => {
 
     return (
         <div className="min-h-full">
-            <Navbar />
+            <Navbar currency={false} />
             <div className="w-full h-screen bg-gray-100">
                 <div className="flex justify-center py-10">
                     <form
