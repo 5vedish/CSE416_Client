@@ -18,6 +18,7 @@ interface Platform {
     owner: string;
     quizzes: Quiz[];
     title: string;
+    rating: number;
 }
 
 interface QuizAttempt {

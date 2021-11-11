@@ -38,7 +38,7 @@ const OwnProfile: NextPage = () => {
     }, []);
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
-            <Navbar />
+            <Navbar currency={true} />
             <div className="flex flex-row flex-inline w-full justify-center mt-16 font-logo lg:text-4xl items-center">
                 <p>{displayName}</p>
                 <CurrencyDollarIcon className="ml-4 w-10 h-10" />

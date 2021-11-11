@@ -1,9 +1,5 @@
 import type { NextPage } from 'next';
 import React from 'react';
-import Navbar from '../components/Navbar';
-import QuizWrapper from '../components/wrapper/QuizWrapper';
-import QuizCard from '../components/quiz/QuizCard';
-import PlatformBanner from '../components/platform/PlatformBanner';
 import Platform from '../components/platform/Platform';
 
 const UpdateContact: NextPage = () => {
@@ -36,6 +32,7 @@ const UpdateContact: NextPage = () => {
             author="Your Mom"
             title="You're a simp"
             quizzes={quizzes}
+            rating={0}
         />
     );
 };

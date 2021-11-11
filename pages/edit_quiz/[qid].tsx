@@ -36,7 +36,7 @@ const EditQuiz: NextPage = () => {
 
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
-            <Navbar />
+            <Navbar currency={false} />
 
             <div className="flex items-center justify-center mt-8">
                 <input

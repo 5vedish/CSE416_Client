@@ -40,7 +40,7 @@ const QuizPage: NextPage = () => {
     }, [router.query, memoizedRefetch]);
     return (
         <>
-            <Navbar />
+            <Navbar currency={true} />
             {questionData && (
                 <Quiz
                     quizId={quizId}
