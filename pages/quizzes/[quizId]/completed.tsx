@@ -29,6 +29,9 @@ const QuizCompleted: NextPage = () => {
             );
             const quizResult = result.data;
 
+            console.log('HERE');
+            console.log(quizResult.userId);
+
             setDifficulty(quizResult.difficulty);
 
             switch (quizResult.difficulty) {
@@ -52,6 +55,11 @@ const QuizCompleted: NextPage = () => {
             setQuestionsCompleted(quizResult.questionsCompleted);
             setQuestionsCorrect(quizResult.questionsCorrect);
             setTotalQuestions(quizResult.totalQuestions);
+
+            await httpClient.put(`/users/rewards/${quizResult.userId}`, {
+                currency: questionsCorrect * 500,
+                experience: questionsCorrect * 500,
+            });
         })();
     }, []);
 
