@@ -92,11 +92,12 @@ export default function QuizContainer({
             ) : null}
 
             <button
-                className="h-12 w-20 mt-12 flex justify-center items-center bg-blue-500 rounded-md  disabled:invisible shadow-md text-white hover:bg-blue-700"
-                onClick={submitAttempt}
-                disabled={edit}
+                className="h-12 w-20 mt-12 flex justify-center items-center bg-blue-500 rounded-md shadow-md text-white hover:bg-blue-700"
+                onClick={() => {
+                    edit ? router.back() : submitAttempt();
+                }}
             >
-                <p className="font-bold">{edit ? 'Save' : 'Submit'}</p>
+                <p className="font-bold">{edit ? 'Done' : 'Submit'}</p>
             </button>
         </div>
     );
