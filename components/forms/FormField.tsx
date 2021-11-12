@@ -9,6 +9,7 @@ const FormField = ({
     labelStyle,
     validate,
     required,
+    isNumber,
 }: {
     form: UseFormReturn<any, object>;
     formKey: string;
@@ -17,6 +18,7 @@ const FormField = ({
     labelStyle?: string;
     required?: string | ValidationRule<boolean>;
     validate?: Validate<string> | Record<string, Validate<string>>;
+    isNumber?: boolean;
 }) => {
     const {
         register,
@@ -41,6 +43,7 @@ const FormField = ({
                         errors[formKey] ? 'border-red-500' : 'border-gray-300'
                     } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                     defaultValue={defaultValue ?? ''}
+                    type={isNumber ? 'number' : 'text'}
                 />
             </div>
             <span className="text-red-500 text-sm">

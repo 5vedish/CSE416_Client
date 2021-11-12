@@ -7,6 +7,7 @@ import { PlatformSortDropdown } from './PlatformSortDropdown';
 import { httpClient } from '../lib/axios';
 import { SearchIcon, StarIcon } from '@heroicons/react/solid';
 import { UserSortDropdown } from './UserSortDropdown';
+import { RatingView } from 'react-simple-star-rating';
 
 export function SearchResults() {
     const [categories, setCategories] = useState<{
@@ -170,31 +171,11 @@ export function SearchResults() {
                                                 </div>
                                                 <div className="flex justify-between px-4 py-4 sm:px-6">
                                                     <div className="flex-shrink-0 flex pr-5">
-                                                        {[
-                                                            ...Array(
-                                                                result.rating,
-                                                            ),
-                                                        ].map((_, idx) => (
-                                                            <StarIcon
-                                                                key={`${result.id}-${idx}`}
-                                                                className="h-5 w-5 text-yellow-400"
-                                                                aria-hidden="true"
-                                                            />
-                                                        ))}
-                                                        {[
-                                                            ...Array(
-                                                                5 -
-                                                                    result.rating,
-                                                            ),
-                                                        ].map((_, idx) => (
-                                                            <StarIcon
-                                                                key={`${
-                                                                    result.id
-                                                                }-${5 - idx}`}
-                                                                className="h-5 w-5 text-gray-300"
-                                                                aria-hidden="true"
-                                                            />
-                                                        ))}
+                                                        <RatingView
+                                                            ratingValue={
+                                                                result.rating
+                                                            }
+                                                        />
                                                     </div>
                                                 </div>
                                             </div>
