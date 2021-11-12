@@ -9,9 +9,7 @@ export function UserSortDropdown({
     setDesc,
 }: {
     setCriterion: React.Dispatch<
-        React.SetStateAction<
-            'displayName' | 'currency' | 'level' | 'experience'
-        >
+        React.SetStateAction<'displayName' | 'currency' | 'level'>
     >;
     setDesc: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -147,42 +145,6 @@ export function UserSortDropdown({
                                     }}
                                 >
                                     Level descending
-                                </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    className={clsx(
-                                        active
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                    )}
-                                    onClick={() => {
-                                        setCriterion('experience');
-                                        setDesc(false);
-                                    }}
-                                >
-                                    Experience ascending
-                                </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    className={clsx(
-                                        active
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                    )}
-                                    onClick={() => {
-                                        setCriterion('experience');
-                                        setDesc(true);
-                                    }}
-                                >
-                                    Experience descending
                                 </a>
                             )}
                         </Menu.Item>

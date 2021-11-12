@@ -29,11 +29,11 @@ export function SearchResults() {
     });
     const [currentCategory, setCurrentCategory] =
         useState<keyof typeof categories>('Platforms');
-    const [platformCriterion, setCriterion] = useState<
-        'title' | 'rating' | 'likes'
-    >('title');
+    const [platformCriterion, setCriterion] = useState<'title' | 'rating'>(
+        'title',
+    );
     const [userCriterion, setUserCriterion] = useState<
-        'displayName' | 'currency' | 'level' | 'experience'
+        'displayName' | 'currency' | 'level'
     >('displayName');
     const [desc, setDesc] = useState(false);
 
@@ -184,7 +184,26 @@ export function SearchResults() {
                                         key={`profile-${result.id}`}
                                         href={`/users/${result.id}`}
                                     >
-                                        <li>{result.displayName}</li>
+                                        <li>
+                                            <div className="bg-white overflow-hidden shadow rounded-lg">
+                                                <div className="flex justify-center px-4 py-5 sm:px-6">
+                                                    <span className="font-semibold mr-1">
+                                                        {result.displayName}
+                                                    </span>
+                                                </div>
+                                                <div className="px-4 py-5 sm:p-6">
+                                                    {/* Content goes here */}
+                                                </div>
+                                                <div className="flex justify-between px-4 py-4 sm:px-6">
+                                                    <div>
+                                                        Lv. {result.level}
+                                                    </div>
+                                                    <div>
+                                                        ${result.currency}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
                                     </Link>
                                 ),
                             )}
