@@ -9,7 +9,7 @@ import PasswordField from '../components/forms/PasswordField';
 import FormSubmit from '../components/forms/FormSubmit';
 import { useRouter } from 'next/router';
 import { httpClient } from '../lib/axios';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/utils/AuthProvider';
 
 type Inputs = {
     password: string;
