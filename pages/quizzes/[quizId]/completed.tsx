@@ -28,6 +28,7 @@ const QuizCompleted: NextPage = () => {
                 `/quizzes/${quizId}/attempts`,
             );
             const quizResult = result.data;
+            console.log('dbg: ', result.data);
 
             console.log('HERE');
             console.log(quizResult.userId);
@@ -57,8 +58,8 @@ const QuizCompleted: NextPage = () => {
             setTotalQuestions(quizResult.totalQuestions);
 
             await httpClient.put(`/users/rewards/${quizResult.userId}`, {
-                currency: questionsCorrect * 500,
-                experience: questionsCorrect * 500,
+                currency: quizResult.questionsCorrect * 500,
+                experience: quizResult.questionsCorrect * 500,
             });
         })();
     }, []);
