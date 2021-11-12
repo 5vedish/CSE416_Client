@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
 import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/quiz/Quiz';
-import CreateButton from '../components/quiz/CreateButton';
+import CreateButton from '../components/platform/CreateButton';
 import { httpClient } from '../lib/axios';
 import { useAuth } from '../components/AuthProvider';
 import Image from 'next/image';

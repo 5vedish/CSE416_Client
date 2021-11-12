@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateButton from '../quiz/CreateButton';
+import CreateButton from './CreateButton';
 import QuizCard from '../quiz/QuizCard';
 import QuizWrapper from '../wrapper/QuizWrapper';
 import GenerateStars from './GenerateStars';
