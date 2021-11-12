@@ -5,7 +5,7 @@ import FormWrapper from '../components/forms/FormWrapper';
 import FormHeader from '../components/forms/FormHeader';
 import FormField from '../components/forms/FormField';
 import FormSubmit from '../components/forms/FormSubmit';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/utils/AuthProvider';
 
 type ForgotPasswordInputs = {
     email: string;
