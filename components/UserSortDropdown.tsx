@@ -4,12 +4,14 @@ import { ChevronDownIcon, AdjustmentsIcon } from '@heroicons/react/solid';
 
 import clsx from 'clsx';
 
-export function SortDropdown({
+export function UserSortDropdown({
     setCriterion,
     setDesc,
 }: {
     setCriterion: React.Dispatch<
-        React.SetStateAction<'title' | 'rating' | 'likes'>
+        React.SetStateAction<
+            'displayName' | 'currency' | 'level' | 'experience'
+        >
     >;
     setDesc: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -50,11 +52,11 @@ export function SortDropdown({
                                         'block px-4 py-2 text-sm',
                                     )}
                                     onClick={() => {
-                                        setCriterion('rating');
+                                        setCriterion('displayName');
                                         setDesc(false);
                                     }}
                                 >
-                                    Rating ascending
+                                    Display name ascending
                                 </a>
                             )}
                         </Menu.Item>
@@ -68,11 +70,11 @@ export function SortDropdown({
                                         'block px-4 py-2 text-sm',
                                     )}
                                     onClick={() => {
-                                        setCriterion('rating');
+                                        setCriterion('displayName');
                                         setDesc(true);
                                     }}
                                 >
-                                    Rating descending
+                                    Display name descending
                                 </a>
                             )}
                         </Menu.Item>
@@ -86,11 +88,11 @@ export function SortDropdown({
                                         'block px-4 py-2 text-sm',
                                     )}
                                     onClick={() => {
-                                        setCriterion('title');
+                                        setCriterion('currency');
                                         setDesc(false);
                                     }}
                                 >
-                                    Title ascending
+                                    Currency ascending
                                 </a>
                             )}
                         </Menu.Item>
@@ -104,11 +106,11 @@ export function SortDropdown({
                                         'block px-4 py-2 text-sm',
                                     )}
                                     onClick={() => {
-                                        setCriterion('title');
+                                        setCriterion('currency');
                                         setDesc(true);
                                     }}
                                 >
-                                    Title descending
+                                    Currency descending
                                 </a>
                             )}
                         </Menu.Item>
@@ -122,11 +124,11 @@ export function SortDropdown({
                                         'block px-4 py-2 text-sm',
                                     )}
                                     onClick={() => {
-                                        setCriterion('likes');
+                                        setCriterion('level');
                                         setDesc(false);
                                     }}
                                 >
-                                    Likes ascending
+                                    Level ascending
                                 </a>
                             )}
                         </Menu.Item>
@@ -140,11 +142,47 @@ export function SortDropdown({
                                         'block px-4 py-2 text-sm',
                                     )}
                                     onClick={() => {
-                                        setCriterion('likes');
+                                        setCriterion('level');
                                         setDesc(true);
                                     }}
                                 >
-                                    Likes descending
+                                    Level descending
+                                </a>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item>
+                            {({ active }) => (
+                                <a
+                                    className={clsx(
+                                        active
+                                            ? 'bg-gray-100 text-gray-900'
+                                            : 'text-gray-700',
+                                        'block px-4 py-2 text-sm',
+                                    )}
+                                    onClick={() => {
+                                        setCriterion('experience');
+                                        setDesc(false);
+                                    }}
+                                >
+                                    Experience ascending
+                                </a>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item>
+                            {({ active }) => (
+                                <a
+                                    className={clsx(
+                                        active
+                                            ? 'bg-gray-100 text-gray-900'
+                                            : 'text-gray-700',
+                                        'block px-4 py-2 text-sm',
+                                    )}
+                                    onClick={() => {
+                                        setCriterion('experience');
+                                        setDesc(true);
+                                    }}
+                                >
+                                    Experience descending
                                 </a>
                             )}
                         </Menu.Item>
