@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Tab } from '@headlessui/react';
 
 import clsx from 'clsx';
+import Link from 'next/link';
 import { PlatformSortDropdown } from './PlatformSortDropdown';
 import { httpClient } from '../lib/axios';
 import { StarIcon } from '@heroicons/react/solid';
@@ -16,6 +17,7 @@ export function SearchResults() {
             owner: { displayName: string };
         }[];
         Profiles: {
+            id: string;
             displayName: string;
             currency: number;
             experience: number;
@@ -123,56 +125,70 @@ export function SearchResults() {
                     {Object.values(categories).map((results, idx) => (
                         <Tab.Panel key={idx} className="rounded-xl p-3">
                             <ul className="grid grid-cols-3 gap-4">
-                                {results.map((result, idx) =>
-                                    'id' in result ? (
-                                        <li key={result.id}>
-                                            <div className="bg-white overflow-hidden shadow rounded-lg">
-                                                <div className="flex justify-center px-4 py-5 sm:px-6">
-                                                    <span className="font-semibold mr-1">
-                                                        {result.title}
-                                                    </span>
-                                                    <span className="font-medium text-gray-400">
-                                                        by{' '}
-                                                        {
-                                                            result.owner
-                                                                .displayName
-                                                        }
-                                                    </span>
-                                                </div>
-                                                <div className="px-4 py-5 sm:p-6">
-                                                    {/* Content goes here */}
-                                                </div>
-                                                <div className="flex justify-between px-4 py-4 sm:px-6">
-                                                    <div className="flex-shrink-0 flex pr-5">
-                                                        {[
-                                                            ...Array(
-                                                                result.rating,
-                                                            ),
-                                                        ].map((_, idx) => (
-                                                            <StarIcon
-                                                                key={idx}
-                                                                className="h-5 w-5 text-yellow-400"
-                                                                aria-hidden="true"
-                                                            />
-                                                        ))}
-                                                        {[
-                                                            ...Array(
-                                                                5 -
+                                {results.map((result) =>
+                                    'owner' in result ? (
+                                        <Link
+                                            key={`platform-${result.id}`}
+                                            href={`/platforms/${result.id}`}
+                                        >
+                                            <li>
+                                                <div className="bg-white overflow-hidden shadow rounded-lg">
+                                                    <div className="flex justify-center px-4 py-5 sm:px-6">
+                                                        <span className="font-semibold mr-1">
+                                                            {result.title}
+                                                        </span>
+                                                        <span className="font-medium text-gray-400">
+                                                            by{' '}
+                                                            {
+                                                                result.owner
+                                                                    .displayName
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className="px-4 py-5 sm:p-6">
+                                                        {/* Content goes here */}
+                                                    </div>
+                                                    <div className="flex justify-between px-4 py-4 sm:px-6">
+                                                        <div className="flex-shrink-0 flex pr-5">
+                                                            {[
+                                                                ...Array(
                                                                     result.rating,
-                                                            ),
-                                                        ].map((_, idx) => (
-                                                            <StarIcon
-                                                                key={5 - idx}
-                                                                className="h-5 w-5 text-gray-300"
-                                                                aria-hidden="true"
-                                                            />
-                                                        ))}
+                                                                ),
+                                                            ].map((_, idx) => (
+                                                                <StarIcon
+                                                                    key={`${result.id}-${idx}`}
+                                                                    className="h-5 w-5 text-yellow-400"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            ))}
+                                                            {[
+                                                                ...Array(
+                                                                    5 -
+                                                                        result.rating,
+                                                                ),
+                                                            ].map((_, idx) => (
+                                                                <StarIcon
+                                                                    key={`${
+                                                                        result.id
+                                                                    }-${
+                                                                        5 - idx
+                                                                    }`}
+                                                                    className="h-5 w-5 text-gray-300"
+                                                                    aria-hidden="true"
+                                                                />
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        </Link>
                                     ) : (
-                                        <li key={idx}>{result.displayName}</li>
+                                        <Link
+                                            key={`profile-${result.id}`}
+                                            href={`/users/${result.id}`}
+                                        >
+                                            <li>{result.displayName}</li>
+                                        </Link>
                                     ),
                                 )}
                             </ul>
