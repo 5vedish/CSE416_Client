@@ -6,7 +6,7 @@ import { useState } from 'react';
 import CreatePlatformModal from './platform/CreatePlatformModal';
 import { useModal } from './utils/ModalProvider';
 
-export default function Navbar() {
+export default function Navbar(props?: { hidePlus?: boolean }) {
     const { user } = useAuth();
 
     const { setIsOpen } = useModal();
@@ -19,12 +19,14 @@ export default function Navbar() {
                 </Link>
             </div>
             <div>
-                <button
-                    onClick={() => setIsOpen(true)}
-                    className="bg-gray-100 hover:bg-gray-300 text-blue-500 font-bold py-1 px-1 rounded inline-flex items-center"
-                >
-                    <PlusIcon className=" h-7 w-7 text-blue-500 " />
-                </button>
+                {!props?.hidePlus && (
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className="bg-gray-100 hover:bg-gray-300 text-blue-500 font-bold py-1 px-1 rounded inline-flex items-center"
+                    >
+                        <PlusIcon className=" h-7 w-7 text-blue-500 " />
+                    </button>
+                )}
             </div>
             <div className="invisible shadow flex">
                 <input

@@ -7,7 +7,7 @@ export default function Dropdown() {
     const { logOut } = useAuth();
     return (
         <div className="">
-            <Menu as="div" className="relative inline-block text-left">
+            <Menu as="div" className="z-10 relative inline-block text-left">
                 <div>
                     <Menu.Button className="inline-flex w-full px-4 py-2 text-white rounded-md hover:text-gray-200">
                         <UserIcon className="w-10 h-10" />
