@@ -6,7 +6,7 @@ import { useState } from 'react';
 import CreatePlatformModal from './platform/CreatePlatformModal';
 import { useModal } from './utils/ModalProvider';
 
-export default function Navbar(props?: { hidePlus?: boolean }) {
+export default function Navbar() {
     const { user } = useAuth();
 
     const { setIsOpen } = useModal();
@@ -19,7 +19,7 @@ export default function Navbar(props?: { hidePlus?: boolean }) {
                 </Link>
             </div>
             <div>
-                {!props?.hidePlus && (
+                {user && (
                     <button
                         onClick={() => setIsOpen(true)}
                         className="bg-gray-100 hover:bg-gray-300 text-blue-500 font-bold py-1 px-1 rounded inline-flex items-center"

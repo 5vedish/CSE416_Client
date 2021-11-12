@@ -25,6 +25,7 @@ const PlatformPage: NextPage = () => {
                     if (result.data) {
                         setPlatformData(result.data);
                     }
+                    console.log(result.data);
                 })
                 .catch((e) => {
                     setPlatformId(-1);
@@ -62,10 +63,13 @@ const PlatformPage: NextPage = () => {
                 {user &&
                     (platformData ? (
                         <Platform
+                            id={platformData.id}
                             quizzes={platformData.quizzes}
                             title={platformData.title}
                             author={platformData.owner}
+                            rating={platformData.rating}
                             createQuiz={createQuiz}
+                            refetch={memoizedRefetch}
                         />
                     ) : (
                         'Platform not found'
