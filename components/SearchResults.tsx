@@ -8,6 +8,7 @@ import { httpClient } from '../lib/axios';
 import { SearchIcon, StarIcon } from '@heroicons/react/solid';
 import { UserSortDropdown } from './UserSortDropdown';
 import { RatingView } from 'react-simple-star-rating';
+import { AxiosResponse } from 'axios';
 
 export function SearchResults() {
     const [categories, setCategories] = useState<{
@@ -56,6 +57,7 @@ export function SearchResults() {
                         sort_by: platformCriterion,
                         desc,
                         title: searchInput,
+                        per_page: 500,
                     },
                 });
 
@@ -72,6 +74,7 @@ export function SearchResults() {
                         sort_by: userCriterion,
                         desc,
                         name: searchInput,
+                        per_page: 500,
                     },
                 });
 
@@ -149,6 +152,7 @@ export function SearchResults() {
                                     <Link
                                         key={`platform-${result.id}`}
                                         href={`/platforms/${result.id}`}
+                                        passHref
                                     >
                                         <li>
                                             <div className="bg-white overflow-hidden shadow rounded-lg">
@@ -183,6 +187,7 @@ export function SearchResults() {
                                     <Link
                                         key={`profile-${result.id}`}
                                         href={`/users/${result.id}`}
+                                        passHref
                                     >
                                         <li>
                                             <div className="bg-white overflow-hidden shadow rounded-lg">

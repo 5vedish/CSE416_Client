@@ -68,11 +68,11 @@ const Home: NextPage = () => {
 
     const memoizedRefetch = useCallback(refetchPlatform, [platformId]);
 
-    useEffect(() => {
-        (async () => {
-            await refetchPlatformId();
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         await refetchPlatformId();
+    //     })();
+    // }, []);
 
     useEffect(() => {
         (async () => {
@@ -81,7 +81,7 @@ const Home: NextPage = () => {
     }, [platformId, memoizedRefetch]);
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div className="h-screen">
             <Navbar />
 
             <div
