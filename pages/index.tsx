@@ -81,7 +81,7 @@ const Home: NextPage = () => {
     }, [platformId, memoizedRefetch]);
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div className="h-screen">
             <Navbar />
 
             <div

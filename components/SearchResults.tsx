@@ -51,15 +51,15 @@ export function SearchResults() {
 
         (async () => {
             if (currentCategory === 'Platforms') {
-                const response: AxiosResponse<{ platforms: any }> =
-                    await httpClient.get('/platforms', {
-                        withCredentials: true,
-                        params: {
-                            sort_by: platformCriterion,
-                            desc,
-                            title: searchInput,
-                        },
-                    });
+                const response = await httpClient.get<any>('/platforms', {
+                    withCredentials: true,
+                    params: {
+                        sort_by: platformCriterion,
+                        desc,
+                        title: searchInput,
+                        per_page: 500,
+                    },
+                });
 
                 console.log(response.data.platforms);
 
@@ -74,6 +74,7 @@ export function SearchResults() {
                         sort_by: userCriterion,
                         desc,
                         name: searchInput,
+                        per_page: 500,
                     },
                 });
 
