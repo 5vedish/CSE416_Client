@@ -1,41 +1,18 @@
-import { NextPage } from 'next';
-import Navbar from '../components/Navbar';
-import { useEffect, useState } from 'react';
 import { CurrencyDollarIcon } from '@heroicons/react/solid';
-import { httpClient } from '../lib/axios';
+import React from 'react';
+import Navbar from './Navbar';
 
-const OwnProfile: NextPage = () => {
-    const userInfo = {
-        displayName: 'Jan Wik',
-        currency: 69420,
-        level: 54,
-        experience: 55000,
-    };
-
-    const [displayName, setDisplayName] = useState('');
-    const [currency, setCurrency] = useState(0);
-    const [level, setLevel] = useState(0);
-    const [experience, setExperience] = useState(0);
-
-    useEffect(() => {
-        (async function fetchUser() {
-            await httpClient
-                .get('/me')
-                .then((result) => {
-                    if (result.data) {
-                        const { displayName, currency, level, experience } =
-                            result.data;
-                        setDisplayName(displayName);
-                        setCurrency(currency);
-                        setLevel(level);
-                        setExperience(experience);
-                    }
-                })
-                .catch((e) => {
-                    return;
-                });
-        })();
-    }, []);
+const Profile = ({
+    displayName,
+    currency,
+    level,
+    experience,
+}: {
+    displayName: string;
+    currency: number;
+    level: number;
+    experience: number;
+}) => {
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
             <Navbar />
@@ -72,4 +49,4 @@ const OwnProfile: NextPage = () => {
     );
 };
 
-export default OwnProfile;
+export default Profile;

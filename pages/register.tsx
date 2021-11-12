@@ -7,7 +7,7 @@ import PasswordField from '../components/forms/PasswordField';
 import FormField from '../components/forms/FormField';
 import FormHeader from '../components/forms/FormHeader';
 import FormSubmit from '../components/forms/FormSubmit';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/utils/AuthProvider';
 
 type RegisterInputs = {
     password: string;

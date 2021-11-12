@@ -8,9 +8,7 @@ export function PlatformSortDropdown({
     setCriterion,
     setDesc,
 }: {
-    setCriterion: React.Dispatch<
-        React.SetStateAction<'title' | 'rating' | 'likes'>
-    >;
+    setCriterion: React.Dispatch<React.SetStateAction<'title' | 'rating'>>;
     setDesc: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
     return (
@@ -109,42 +107,6 @@ export function PlatformSortDropdown({
                                     }}
                                 >
                                     Title descending
-                                </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    className={clsx(
-                                        active
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                    )}
-                                    onClick={() => {
-                                        setCriterion('likes');
-                                        setDesc(false);
-                                    }}
-                                >
-                                    Likes ascending
-                                </a>
-                            )}
-                        </Menu.Item>
-                        <Menu.Item>
-                            {({ active }) => (
-                                <a
-                                    className={clsx(
-                                        active
-                                            ? 'bg-gray-100 text-gray-900'
-                                            : 'text-gray-700',
-                                        'block px-4 py-2 text-sm',
-                                    )}
-                                    onClick={() => {
-                                        setCriterion('likes');
-                                        setDesc(true);
-                                    }}
-                                >
-                                    Likes descending
                                 </a>
                             )}
                         </Menu.Item>

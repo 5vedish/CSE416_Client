@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import QuestionCard from './QuestionCard';
 import { PlusCircleIcon } from '@heroicons/react/solid';
-import EditQuizControls from './EditQuizControls';
 
 export default function QuizContainer({
     quizQuestions,
@@ -32,9 +31,7 @@ export default function QuizContainer({
     };
 
     return (
-        <div className="h-full min-h-screen w-full py-16 flex flex-col items-center bg-gray-100 overflow-y-auto">
-            {edit ? <EditQuizControls /> : null}
-
+        <div className="h-full w-full py-24 flex flex-col items-center bg-gray-100 overflow-y-auto">
             {quizQuestions.map((question, index) => (
                 <QuestionCard
                     key={index}

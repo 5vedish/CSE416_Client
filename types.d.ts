@@ -1,3 +1,15 @@
+interface User {
+    displayName: string;
+    currency: number;
+    experience: number;
+    level: number;
+    // createdPlatforms: {
+    //     id: number;
+    //     title: string;
+    //     rating: number;
+    // };
+}
+
 interface Question {
     id: number;
     choices: string[];
