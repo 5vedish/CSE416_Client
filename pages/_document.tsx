@@ -1,5 +1,7 @@
 // eslint-disable-next-line @next/next/no-document-import-in-page
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import CreatePlatformModal from '../components/platform/CreatePlatformModal';
+import { ModalProvider } from '../components/utils/ModalProvider';
 
 class MyDocument extends Document {
     render() {

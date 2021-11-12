@@ -4,7 +4,7 @@ import Navbar from '../../../components/Navbar';
 import { httpClient } from '../../../lib/axios';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
-import Quiz from '../../../components/quiz/Quiz';
+import { useAuth } from '../../../components/utils/AuthProvider';
 import QuizContainer from '../../../components/fixed_quiz/QuizContainer';
 
 const QuizPage: NextPage = () => {
@@ -12,6 +12,7 @@ const QuizPage: NextPage = () => {
     const [questionData, setQuestionData] = useState<Question | null>(null);
     const [quizId, setQuizId] = useState(-1);
 
+    const { user } = useAuth();
     const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
 
     const refetch = async () => {
@@ -43,8 +44,18 @@ const QuizPage: NextPage = () => {
     }, [router.query, memoizedRefetch]);
     return (
         <>
-            <Navbar currency={false} />
-            {questionData && (
+            <Navbar />
+            {user && questionData && (
+                // <Quiz
+                //     quizId={quizId}
+                //     questionId={questionData.id}
+                //     correctChoice={questionData.correctChoice}
+                //     question={questionData.question}
+                //     answers={questionData.choices}
+                //     refetch={refetch}
+                //     deleteQuiz={async () => {}}
+                //     edit={Boolean(router.query.edit)}
+                // />
                 <QuizContainer
                     quizQuestions={quizQuestions}
                     edit={Boolean(router.query.edit)}

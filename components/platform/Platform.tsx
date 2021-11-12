@@ -1,5 +1,6 @@
 import React from 'react';
-import CreateButton from './CreateButton';
+import Navbar from '../Navbar';
+import CreateButton from '../quiz/CreateButton';
 import QuizCard from '../quiz/QuizCard';
 import QuizWrapper from '../wrapper/QuizWrapper';
 import GenerateStars from './GenerateStars';
@@ -10,20 +11,16 @@ export default function Platform({
     author,
     quizzes,
     createQuiz,
-    deleteQuiz,
-    rating,
 }: {
     title: String;
     author: String;
     quizzes: Quiz[];
     createQuiz: () => Promise<void>;
-    deleteQuiz: (quizId: number) => Promise<void>;
-    rating: number;
 }) {
     return (
         <div className="min-h-full">
             <div className="w-full h-screen bg-gray-100">
-                <PlatformBanner title={title} author={author} stars={rating} />
+                <PlatformBanner title={title} author={author} />
                 <QuizWrapper>
                     {quizzes.map((quiz) => (
                         <QuizCard
@@ -34,7 +31,6 @@ export default function Platform({
                             questions={quiz.questions.length}
                             difficulty={quiz.difficulty}
                             quizId={quiz.id}
-                            deleteQuiz={deleteQuiz}
                         />
                     ))}
                     <CreateButton label="Add Quiz" create={createQuiz} />

@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react';
 import { ChevronDownIcon, UserIcon } from '@heroicons/react/solid';
-import { useAuth } from './AuthProvider';
+import { useAuth } from './utils/AuthProvider';
 import Link from 'next/link';
 
 export default function Dropdown() {

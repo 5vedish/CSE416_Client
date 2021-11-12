@@ -9,7 +9,7 @@ import FormSubmit from '../components/forms/FormSubmit';
 import PasswordField from '../components/forms/PasswordField';
 import { httpClient } from '../lib/axios';
 import router from 'next/router';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/utils/AuthProvider';
 
 type AccountInputs = {
     displayName: string;
@@ -35,7 +35,7 @@ const UpdateContact: NextPage = () => {
 
     return (
         <div className="min-h-full">
-            <Navbar currency={false} />
+            <Navbar />
             <div className="w-full h-screen bg-gray-100">
                 <div className="flex justify-center py-10">
                     <form
