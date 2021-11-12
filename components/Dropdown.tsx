@@ -18,22 +18,24 @@ export default function Dropdown() {
                     <div className="px-1 py-1 ">
                         <Menu.Item>
                             {({ active }) => (
-                                <button
-                                    className={`${
-                                        active
-                                            ? 'text-gray-300'
-                                            : 'text-gray-900'
-                                    } group flex rounded-md items-center w-full px-3 py-3 text-sm hover:text-gray-200`}
-                                >
-                                    Profile
-                                </button>
+                                <Link href="/users/me" passHref>
+                                    <a
+                                        className={`${
+                                            active
+                                                ? 'text-gray-300'
+                                                : 'text-gray-900'
+                                        } group flex rounded-md items-center w-full px-3 py-3 text-sm hover:text-gray-200`}
+                                    >
+                                        Profile
+                                    </a>
+                                </Link>
                             )}
                         </Menu.Item>
                     </div>
                     <div className="px-1 py-1">
                         <Menu.Item>
                             {({ active }) => (
-                                <Link href="/account">
+                                <Link href="/account" passHref>
                                     <a
                                         className={`${
                                             active
