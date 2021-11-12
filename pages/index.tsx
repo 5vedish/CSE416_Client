@@ -82,7 +82,7 @@ const Home: NextPage = () => {
 
     return (
         <div className="h-screen overflow-hidden">
-            <Navbar hidePlus={true} />
+            <Navbar />
 
             <div
                 className={`h-full ${

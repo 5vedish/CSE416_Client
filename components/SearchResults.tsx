@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { PlatformSortDropdown } from './PlatformSortDropdown';
 import { httpClient } from '../lib/axios';
-import { StarIcon } from '@heroicons/react/solid';
+import { SearchIcon, StarIcon } from '@heroicons/react/solid';
 import { UserSortDropdown } from './UserSortDropdown';
 
 export function SearchResults() {
@@ -36,6 +36,7 @@ export function SearchResults() {
         'displayName' | 'currency' | 'level'
     >('displayName');
     const [desc, setDesc] = useState(false);
+    const [searchInput, setSearchInput] = useState('');
 
     useEffect(() => {
         console.log(
@@ -53,6 +54,7 @@ export function SearchResults() {
                     params: {
                         sort_by: platformCriterion,
                         desc,
+                        title: searchInput,
                     },
                 });
 
@@ -68,6 +70,7 @@ export function SearchResults() {
                     params: {
                         sort_by: userCriterion,
                         desc,
+                        name: searchInput,
                     },
                 });
 
@@ -77,7 +80,7 @@ export function SearchResults() {
                 });
             }
         })();
-    }, [currentCategory, platformCriterion, desc]);
+    }, [searchInput, currentCategory, platformCriterion, desc]);
 
     return (
         <Tab.Group
@@ -87,11 +90,27 @@ export function SearchResults() {
                 );
             }}
         >
-            <Tab.List className="flex items-center justify-between space-x-8 space-x-1 rounded-xl">
+            <div className="my-4 relative">
+                <input
+                    type="text"
+                    name="search"
+                    id="search"
+                    placeholder="Search"
+                    className="shadow-sm focus:ring-blue-500 focus:blue-gray-500 block w-full pr-12 sm:text-sm border-gray-300 rounded-md"
+                    value={searchInput}
+                    onChange={(e) => {
+                        setSearchInput(e.target.value);
+                    }}
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center py-1.5 pr-1.5">
+                    <SearchIcon className="text-gray-400 h-5 w-5" />
+                </div>
+            </div>
+            <Tab.List className="flex items-center justify-between rounded-xl">
                 <span className="font-semibold">
                     {categories[currentCategory].length} results
                 </span>
-                <div className="flex space-x-8 space-x-1 rounded-xl">
+                <div className="flex space-x-8 rounded-xl">
                     {Object.keys(categories).map((category) => (
                         <Tab
                             key={category}
