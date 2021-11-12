@@ -17,8 +17,8 @@ export default function QuestionCard({
     recordChoice: (questionIndex: number, choice: number) => void;
     edit: boolean;
 }) {
-    const inputStlye =
-        'border-2 border-gray-200 rounded w-auto h-auto p-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500';
+    const inputStyle =
+        'border-2 border-gray-200 rounded h-auto p-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500';
     const [selected, setSelected] = useState(-1);
 
     const selectIndex = (num: number) => {
@@ -38,7 +38,7 @@ export default function QuestionCard({
                 {edit ? (
                     <div className="flex flex-row justify-between items-center w-full">
                         <input
-                            className={inputStlye}
+                            className={`w-3/4 ${inputStyle}`}
                             onBlur={() => {
                                 console.log('Handled');
                             }}
@@ -70,7 +70,7 @@ export default function QuestionCard({
                         Correct Answer Choice [1-4]:
                     </p>
                     <input
-                        className={inputStlye}
+                        className={`w-auto ${inputStyle}`}
                         onBlur={() => {
                             console.log('Handled');
                         }}
