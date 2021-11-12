@@ -32,13 +32,13 @@ const QuizCompleted: NextPage = () => {
             setDifficulty(quizResult.difficulty);
 
             switch (quizResult.difficulty) {
-                case 'Hard':
+                case 'HARD':
                     setDifficultyClass('text-red-500');
                     break;
-                case 'Medium':
+                case 'MEDIUM':
                     setDifficultyClass('text-yellow-500');
                     break;
-                case 'Easy':
+                case 'EASY':
                     setDifficultyClass('text-green-500');
             }
 
@@ -104,7 +104,18 @@ const QuizCompleted: NextPage = () => {
                         <p className="mr-2">Previous Best:</p>
                         <p className="text-blue-500 font-bold">{0}</p>
                     </div>
+                    <label className={`${headerStyle}`}> Stats </label>
+                    <hr className={`${dividerStyle}`}></hr>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Currency Earned:</p>
+                        <p className={`font-bold`}>{questionsCorrect * 500}</p>
+                    </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Experience Gained:</p>
+                        <p className={`font-bold`}>{questionsCorrect * 500}</p>
+                    </div>
                 </div>
+
                 <button className="mt-8 p-2 bg-blue-500 border rounded-lg shadow-lg font-bold text-white">
                     <Link href="/">Return To Platform</Link>
                 </button>

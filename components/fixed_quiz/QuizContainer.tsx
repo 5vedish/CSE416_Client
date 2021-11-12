@@ -3,6 +3,7 @@ import QuestionCard from './QuestionCard';
 import { PlusCircleIcon } from '@heroicons/react/solid';
 import EditQuizControls from './EditQuizControls';
 import { httpClient } from '../../lib/axios';
+import { useRouter } from 'next/router';
 
 export default function QuizContainer({
     quizQuestions,
@@ -28,18 +29,30 @@ export default function QuizContainer({
         setRecord({ ...record, [index]: choice });
     };
 
-    const calcScore = () => {
-        setScore(
-            quizQuestions.reduce(
-                (sum, { correctChoice }, index) =>
-                    correctChoice === record[index] ? sum + 1 : sum,
-                0,
-            ),
-        );
+    const router = useRouter();
 
-        console.log(
-            'Your score is ' + score + '/' + quizQuestions.length + '.',
-        );
+    const addQuestion = async () => {
+        await httpClient.post(`/questions/${quizId}`, {
+            question: 'What is the question you want to ask?',
+            choices: ['Choice 1', 'Choice 2', 'Choice 3', 'Choice 4'],
+            correctChoice: 0,
+        });
+
+        refetch();
+    };
+
+    const submitAttempt = async () => {
+        const ordered = Object.entries(record)
+            .sort((a, b) => (a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0))
+            .map(([_, v]) => v);
+
+        const { attempt } = router.query;
+
+        await httpClient.patch(`/quizzes/${quizId}/attempts/${attempt}`, {
+            selectedChoices: ordered,
+            endTime: new Date(),
+        });
+        router.push(`/quizzes/${quizId}/completed`);
     };
 
     return (
@@ -58,15 +71,20 @@ export default function QuizContainer({
                 <QuestionCard
                     key={index}
                     index={index}
+                    questionId={question.id}
                     question={question}
                     recordChoice={recordChoice}
                     edit={edit}
+                    refetch={refetch}
                 ></QuestionCard>
             ))}
 
             {edit ? (
                 <div className="w-auto h-auto flex flex-row items-center mt-4">
-                    <button className="w-auto h-auto flex items-center justify-center mx-2">
+                    <button
+                        className="w-auto h-auto flex items-center justify-center mx-2"
+                        onClick={addQuestion}
+                    >
                         <PlusCircleIcon className="h-16 w-16 text-gray-500 hover:text-gray-700" />
                     </button>
                     <p className="font-bold text-gray-500">Add Question</p>
@@ -74,14 +92,9 @@ export default function QuizContainer({
             ) : null}
 
             <button
-                className="h-12 w-20 mt-12 flex justify-center items-center bg-blue-500 rounded-md shadow-md text-white hover:bg-blue-700"
-                onClick={() => {
-                    if (edit) {
-                        //take user back to previous page
-                    } else {
-                        //submit attempt
-                    }
-                }}
+                className="h-12 w-20 mt-12 flex justify-center items-center bg-blue-500 rounded-md  disabled:invisible shadow-md text-white hover:bg-blue-700"
+                onClick={submitAttempt}
+                disabled={edit}
             >
                 <p className="font-bold">{edit ? 'Save' : 'Submit'}</p>
             </button>

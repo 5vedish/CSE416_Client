@@ -25,6 +25,7 @@ const PlatformPage: NextPage = () => {
                     if (result.data) {
                         setPlatformData(result.data);
                     }
+                    setPlatformId(parseInt(platformId.toString()));
                     console.log(result.data);
                 })
                 .catch((e) => {
@@ -35,6 +36,8 @@ const PlatformPage: NextPage = () => {
     };
 
     const createQuiz = async () => {
+        console.log('CREATE QUIZ FROM FRONTEND');
+        console.log(platformId);
         if (platformId > 0) {
             await httpClient.post<{ platformId: number }>('/quizzes', {
                 platformId: platformId,
