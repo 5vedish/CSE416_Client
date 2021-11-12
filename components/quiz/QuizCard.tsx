@@ -11,6 +11,7 @@ export default function QuizCard({
     questions,
     difficulty,
     quizId,
+    refetch,
 }: {
     id: number;
     title: string;
@@ -18,6 +19,7 @@ export default function QuizCard({
     questions: number;
     difficulty: string;
     quizId: number;
+    refetch: () => Promise<void>;
 }) {
     const router = useRouter();
     const startQuiz = async () => {
@@ -33,6 +35,12 @@ export default function QuizCard({
             })
             .catch((e) => {});
     };
+
+    const deleteQuiz = async () => {
+        await httpClient.delete(`/quizzes/${id}`);
+        await refetch();
+    };
+
     return (
         <div className="flex justify-center py-8">
             <div className="rounded-xl w-10/12 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -54,17 +62,17 @@ export default function QuizCard({
                     <span>Difficulty: </span>
                     {
                         {
-                            Hard: (
+                            HARD: (
                                 <span className="font-extrabold text-red-500">
                                     {difficulty}
                                 </span>
                             ),
-                            Medium: (
+                            MEDIUM: (
                                 <span className="font-extrabold text-yellow-500">
                                     {difficulty}
                                 </span>
                             ),
-                            Easy: (
+                            EASY: (
                                 <span className="font-extrabold text-green-500">
                                     {difficulty}
                                 </span>
@@ -81,7 +89,7 @@ export default function QuizCard({
                         </Link>
                     </button>
 
-                    <button>
+                    <button onClick={deleteQuiz}>
                         <TrashIcon className="w-8 h-8 hover:bg-gray-300"></TrashIcon>
                     </button>
                 </div>

@@ -34,6 +34,7 @@ interface Platform {
 }
 
 interface QuizAttempt {
+    userId: number;
     questionsCompleted: number;
     questionsCorrect: number;
     totalQuestions: number;

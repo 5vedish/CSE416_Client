@@ -45,6 +45,7 @@ export default function Platform({
                             questions={quiz.questions.length}
                             difficulty={quiz.difficulty}
                             quizId={quiz.id}
+                            refetch={refetch}
                         />
                     ))}
                     <CreateButton label="Add Quiz" create={createQuiz} />
