@@ -81,7 +81,7 @@ const Home: NextPage = () => {
     }, [platformId, memoizedRefetch]);
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div className="h-screen">
             <Navbar />
 
             <div
@@ -90,7 +90,7 @@ const Home: NextPage = () => {
                 }`}
             >
                 {user && (
-                    <div className="h-full p-4 overflow-auto">
+                    <div className="p-4">
                         <SearchResults />
                     </div>
                 )}
