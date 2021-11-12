@@ -6,7 +6,7 @@ import Submit from './Submit';
 import axios from 'axios';
 import { httpClient } from '../../lib/axios';
 import { useRouter } from 'next/router';
-import CreateButton from './CreateButton';
+import CreateButton from '../platform/CreateButton';
 import Link from 'next/link';
 
 export default function Quiz({
