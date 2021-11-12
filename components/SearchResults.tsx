@@ -55,6 +55,7 @@ export function SearchResults() {
                         sort_by: platformCriterion,
                         desc,
                         title: searchInput,
+                        per_page: 500,
                     },
                 });
 
@@ -71,6 +72,7 @@ export function SearchResults() {
                         sort_by: userCriterion,
                         desc,
                         name: searchInput,
+                        per_page: 500,
                     },
                 });
 

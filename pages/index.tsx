@@ -90,7 +90,7 @@ const Home: NextPage = () => {
                 }`}
             >
                 {user && (
-                    <div className="p-4">
+                    <div className="h-full p-4 overflow-auto">
                         <SearchResults />
                     </div>
                 )}
