@@ -8,6 +8,7 @@ import { useAuth } from '../components/utils/AuthProvider';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Platform from '../components/platform/Platform';
+import { SearchResults } from '../components/SearchResults';
 
 const Home: NextPage = () => {
     const [platformId, setPlatformId] = useState(-1);
@@ -88,20 +89,11 @@ const Home: NextPage = () => {
                     !user && 'bg-welcome bg-no-repeat bg-center bg-blue-500'
                 }`}
             >
-                {user &&
-                    (platformData ? (
-                        <Platform
-                            quizzes={platformData.quizzes}
-                            title={platformData.title}
-                            author={platformData.owner}
-                            createQuiz={createQuiz}
-                        />
-                    ) : (
-                        <CreateButton
-                            create={createPlatform}
-                            label="Create Platform"
-                        />
-                    ))}
+                {user && (
+                    <div className="p-4">
+                        <SearchResults />
+                    </div>
+                )}
             </div>
         </div>
     );
