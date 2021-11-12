@@ -65,6 +65,13 @@ const Home: NextPage = () => {
         }
     };
 
+    const deleteQuiz = async (quizId: number) => {
+        if (platformId > 0) {
+            await httpClient.delete(`/quizzes/${quizId}`);
+            await refetchPlatform();
+        }
+    };
+
     const memoizedRefetch = useCallback(refetchPlatform, [platformId]);
 
     useEffect(() => {
@@ -95,6 +102,7 @@ const Home: NextPage = () => {
                             title={platformData.title}
                             author={platformData.owner}
                             createQuiz={createQuiz}
+                            deleteQuiz={deleteQuiz}
                             rating={platformData.rating}
                         />
                     ) : (

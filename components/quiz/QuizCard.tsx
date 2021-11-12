@@ -11,6 +11,7 @@ export default function QuizCard({
     questions,
     difficulty,
     quizId,
+    deleteQuiz,
 }: {
     id: number;
     title: string;
@@ -18,6 +19,7 @@ export default function QuizCard({
     questions: number;
     difficulty: string;
     quizId: number;
+    deleteQuiz: (quizId: number) => Promise<void>;
 }) {
     const router = useRouter();
     const startQuiz = async () => {
@@ -33,6 +35,7 @@ export default function QuizCard({
             })
             .catch((e) => {});
     };
+
     return (
         <div className="flex justify-center py-8">
             <div className="rounded-xl w-10/12 bg-white shadow-md px-8 pt-6 pb-8 mb-4">
@@ -81,7 +84,11 @@ export default function QuizCard({
                         </Link>
                     </button>
 
-                    <button>
+                    <button
+                        onClick={() => {
+                            deleteQuiz(quizId);
+                        }}
+                    >
                         <TrashIcon className="w-8 h-8 hover:bg-gray-300"></TrashIcon>
                     </button>
                 </div>
