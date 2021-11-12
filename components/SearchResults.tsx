@@ -112,8 +112,9 @@ export function SearchResults() {
                                                 <div className="flex-shrink-0 flex pr-5">
                                                     {[
                                                         ...Array(result.rating),
-                                                    ].map(() => (
+                                                    ].map((_, idx) => (
                                                         <StarIcon
+                                                            key={idx}
                                                             className="h-5 w-5 text-yellow-400"
                                                             aria-hidden="true"
                                                         />
@@ -122,8 +123,9 @@ export function SearchResults() {
                                                         ...Array(
                                                             5 - result.rating,
                                                         ),
-                                                    ].map(() => (
+                                                    ].map((_, idx) => (
                                                         <StarIcon
+                                                            key={5 - idx}
                                                             className="h-5 w-5 text-gray-300"
                                                             aria-hidden="true"
                                                         />
