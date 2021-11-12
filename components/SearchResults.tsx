@@ -4,6 +4,7 @@ import { Tab } from '@headlessui/react';
 import clsx from 'clsx';
 import { SortDropdown } from './SortDropdown';
 import { httpClient } from '../lib/axios';
+import { StarIcon } from '@heroicons/react/solid';
 
 export function SearchResults() {
     const [categories, setCategories] = useState<{
@@ -90,16 +91,47 @@ export function SearchResults() {
                 </Tab.List>
                 <Tab.Panels className="mt-2">
                     {Object.values(categories).map((results, idx) => (
-                        <Tab.Panel
-                            key={idx}
-                            className={clsx(
-                                'bg-white rounded-xl p-3',
-                                'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
-                            )}
-                        >
-                            <ul>
+                        <Tab.Panel key={idx} className="rounded-xl p-3">
+                            <ul className="grid grid-cols-3 gap-4">
                                 {results.map((result) => (
-                                    <li key={result.id}>{result.title}</li>
+                                    <li key={result.id}>
+                                        <div className="bg-white overflow-hidden shadow rounded-lg">
+                                            <div className="flex justify-center px-4 py-5 sm:px-6">
+                                                <span className="font-semibold mr-1">
+                                                    {result.title}
+                                                </span>
+                                                <span className="font-medium text-gray-400">
+                                                    by{' '}
+                                                    {result.owner.displayName}
+                                                </span>
+                                            </div>
+                                            <div className="px-4 py-5 sm:p-6">
+                                                {/* Content goes here */}
+                                            </div>
+                                            <div className="flex justify-between px-4 py-4 sm:px-6">
+                                                <div className="flex-shrink-0 flex pr-5">
+                                                    {[
+                                                        ...Array(result.rating),
+                                                    ].map(() => (
+                                                        <StarIcon
+                                                            className="h-5 w-5 text-yellow-400"
+                                                            aria-hidden="true"
+                                                        />
+                                                    ))}
+                                                    {[
+                                                        ...Array(
+                                                            5 - result.rating,
+                                                        ),
+                                                    ].map(() => (
+                                                        <StarIcon
+                                                            className="h-5 w-5 text-gray-300"
+                                                            aria-hidden="true"
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
                                 ))}
                             </ul>
                         </Tab.Panel>
