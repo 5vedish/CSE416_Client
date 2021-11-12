@@ -9,7 +9,7 @@ import FormSubmit from '../components/forms/FormSubmit';
 import PasswordField from '../components/forms/PasswordField';
 import { httpClient } from '../lib/axios';
 import router from 'next/router';
-import { useAuth } from '../components/utils/AuthProvider';
+import { useAuth } from '../components/AuthProvider';
 
 type AccountInputs = {
     displayName: string;
@@ -21,7 +21,7 @@ type PasswordInputs = {
     confirmPassword: string;
 };
 
-const UpdateContact: NextPage = () => {
+const UpdateRating: NextPage = () => {
     const accountForm = useForm<AccountInputs>();
     const passwordForm = useForm<PasswordInputs>();
 
@@ -30,12 +30,15 @@ const UpdateContact: NextPage = () => {
     const onSubmit: SubmitHandler<AccountInputs | PasswordInputs> = async (
         data,
     ) => {
-        await updateUser(data);
+        await Promise.all([router.push('/'), router.push('/')]);
+        console.log('DATA');
+        console.log(data);
+        // https://stackoverflow.com/questions/35612428/call-async-await-functions-in-parallel
     };
 
     return (
         <div className="min-h-full">
-            <Navbar />
+            <Navbar currency={false} />
             <div className="w-full h-screen bg-gray-100">
                 <div className="flex justify-center py-10">
                     <form
@@ -45,46 +48,17 @@ const UpdateContact: NextPage = () => {
                         <GridWrapper>
                             <FormField
                                 form={accountForm}
-                                formKey="displayName"
+                                formKey="platform"
                                 label="Display Name"
                                 required="Display Name is required"
                                 defaultValue={user?.displayName}
                             />
                             <FormField
                                 form={accountForm}
-                                formKey="email"
+                                formKey="rating"
                                 label="Email"
                                 required="Email is required"
                                 defaultValue={user?.email}
-                            />
-                        </GridWrapper>
-                        <FormSubmit label="Update" />
-                    </form>
-                </div>
-
-                <div className="flex justify-center">
-                    <form
-                        onSubmit={passwordForm.handleSubmit(onSubmit)}
-                        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-                    >
-                        <GridWrapper>
-                            <PasswordField
-                                form={passwordForm}
-                                formKey="password"
-                                label="New Password"
-                                required="New password is required"
-                                eyeButton
-                            />
-
-                            <PasswordField
-                                form={passwordForm}
-                                formKey="confirmPassword"
-                                label="Confirm Password"
-                                required="Please confirm your password"
-                                validate={(p) =>
-                                    p === passwordForm.watch('password') ||
-                                    'Passwords must match'
-                                }
                             />
                         </GridWrapper>
                         <FormSubmit label="Update" />
@@ -95,4 +69,4 @@ const UpdateContact: NextPage = () => {
     );
 };
 
-export default UpdateContact;
+export default UpdateRating;

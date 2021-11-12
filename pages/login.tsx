@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import FormWrapper from '../components/forms/FormWrapper';
 
 import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/utils/AuthProvider';
 import PasswordField from '../components/forms/PasswordField';
 import FormField from '../components/forms/FormField';
 import FormHeader from '../components/forms/FormHeader';

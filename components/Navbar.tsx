@@ -1,10 +1,19 @@
 import Dropdown from './Dropdown';
-import { SearchIcon, PlusIcon } from '@heroicons/react/solid';
-import { useAuth } from './AuthProvider';
+import {
+    SearchIcon,
+    PlusIcon,
+    CurrencyDollarIcon,
+} from '@heroicons/react/solid';
+import { useAuth } from './utils/AuthProvider';
 import Link from 'next/link';
+import { useState } from 'react';
+import CreatePlatformModal from './platform/CreatePlatformModal';
+import { useModal } from './utils/ModalProvider';
 
 export default function Navbar() {
     const { user } = useAuth();
+
+    const { setIsOpen } = useModal();
 
     return (
         <nav className="flex items-center justify-between flex-wrap bg-blue-500 py-2 pl-6 pr-2">
@@ -14,10 +23,27 @@ export default function Navbar() {
                 </Link>
             </div>
             <div>
-                <button>
-                    <PlusIcon className="invisible h-5 w-5 text-white" />
-                </button>
+                {user && (
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className="bg-gray-100 hover:bg-gray-300 text-blue-500 font-bold py-1 px-1 rounded inline-flex items-center"
+                    >
+                        <PlusIcon className=" h-7 w-7 text-blue-500 " />
+                    </button>
+                )}
             </div>
+
+            {user && (
+                <div>
+                    <span>
+                        <CurrencyDollarIcon className=" h-5 w-5 text-white " />
+                    </span>
+                    <span className="align-text bottom font-logo text-white">
+                        69420
+                    </span>
+                </div>
+            )}
+
             <div className="invisible shadow flex">
                 <input
                     className="w-full rounded p-2"
@@ -28,11 +54,12 @@ export default function Navbar() {
                     <SearchIcon className="h-5 w-5 text-black" />
                 </button>
             </div>
-            <div>
+
+            {/* <div>
                 <a href="#" className="invisible text-white">
                     Shop
                 </a>
-            </div>
+            </div> */}
             <div>
                 {user ? (
                     <Dropdown />

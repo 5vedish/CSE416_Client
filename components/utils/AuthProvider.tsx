@@ -1,7 +1,7 @@
 import axios from 'axios';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { httpClient } from '../lib/axios';
+import { httpClient } from '../../lib/axios';
 
 import cookie from 'js-cookie';
 

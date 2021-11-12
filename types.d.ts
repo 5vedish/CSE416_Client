@@ -1,3 +1,15 @@
+interface User {
+    displayName: string;
+    currency: number;
+    experience: number;
+    level: number;
+    // createdPlatforms: {
+    //     id: number;
+    //     title: string;
+    //     rating: number;
+    // };
+}
+
 interface Question {
     id: number;
     choices: string[];
@@ -18,9 +30,11 @@ interface Platform {
     owner: string;
     quizzes: Quiz[];
     title: string;
+    rating: number;
 }
 
 interface QuizAttempt {
+    userId: number;
     questionsCompleted: number;
     questionsCorrect: number;
     totalQuestions: number;

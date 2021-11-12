@@ -4,10 +4,11 @@ import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/quiz/Quiz';
 import CreateButton from '../components/quiz/CreateButton';
 import { httpClient } from '../lib/axios';
-import { useAuth } from '../components/AuthProvider';
+import { useAuth } from '../components/utils/AuthProvider';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Platform from '../components/platform/Platform';
+import { SearchResults } from '../components/SearchResults';
 
 const Home: NextPage = () => {
     const [platformId, setPlatformId] = useState(-1);
@@ -67,11 +68,11 @@ const Home: NextPage = () => {
 
     const memoizedRefetch = useCallback(refetchPlatform, [platformId]);
 
-    useEffect(() => {
-        (async () => {
-            await refetchPlatformId();
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         await refetchPlatformId();
+    //     })();
+    // }, []);
 
     useEffect(() => {
         (async () => {
@@ -80,7 +81,7 @@ const Home: NextPage = () => {
     }, [platformId, memoizedRefetch]);
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div className="h-screen">
             <Navbar />
 
             <div
@@ -88,20 +89,11 @@ const Home: NextPage = () => {
                     !user && 'bg-welcome bg-no-repeat bg-center bg-blue-500'
                 }`}
             >
-                {user &&
-                    (platformData ? (
-                        <Platform
-                            quizzes={platformData.quizzes}
-                            title={platformData.title}
-                            author={platformData.owner}
-                            createQuiz={createQuiz}
-                        />
-                    ) : (
-                        <CreateButton
-                            create={createPlatform}
-                            label="Create Platform"
-                        />
-                    ))}
+                {user && (
+                    <div className="p-4">
+                        <SearchResults />
+                    </div>
+                )}
             </div>
         </div>
     );

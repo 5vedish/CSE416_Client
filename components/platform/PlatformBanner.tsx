@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GenerateStars from './GenerateStars';
+import { Rating, RatingView } from 'react-simple-star-rating';
+import { httpClient } from '../../lib/axios';
 
 export default function PlatformBanner({
     title,
     author,
-    stars,
+    id,
+    refetch,
+    rating,
 }: {
     title: String;
     author: String;
-    stars?: number;
+    id: number;
+    refetch: () => Promise<void>;
+    rating: number;
 }) {
+    const handleRating = async (newRating: number) => {
+        await httpClient
+            .put(`/platforms/${id}/ratings`, { rating: newRating })
+            .catch((e) => {
+                console.log(e);
+            });
+        console.log(`/platforms/${id}/ratings/${newRating}`);
+        await refetch();
+    };
     return (
         <div>
             <div className="content-center">
@@ -17,7 +32,11 @@ export default function PlatformBanner({
                     <div className="font-logo font text-xl"> {title} </div>
                     <div className="m-2"> by {author} </div>
                 </div>
-                {stars && <GenerateStars stars={stars} />}
+                <Rating
+                    onClick={handleRating}
+                    ratingValue={rating} /* Rating Props */
+                />
+                {/* referenced https://www.npmjs.com/package/react-simple-star-rating */}
             </div>
         </div>
     );
