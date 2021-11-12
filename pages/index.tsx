@@ -68,11 +68,11 @@ const Home: NextPage = () => {
 
     const memoizedRefetch = useCallback(refetchPlatform, [platformId]);
 
-    useEffect(() => {
-        (async () => {
-            await refetchPlatformId();
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         await refetchPlatformId();
+    //     })();
+    // }, []);
 
     useEffect(() => {
         (async () => {
