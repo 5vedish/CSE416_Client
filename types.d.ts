@@ -42,3 +42,12 @@ interface QuizAttempt {
     endTime: Date;
     difficulty: string;
 }
+
+interface Badge {
+    id: number;
+    badgeId: number;
+    name: string;
+    description: string;
+    tier: number;
+    imageUrl: string;
+}
