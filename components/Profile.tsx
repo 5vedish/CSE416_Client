@@ -1,5 +1,6 @@
 import { CurrencyDollarIcon } from '@heroicons/react/solid';
 import React from 'react';
+import { ExpTrack } from './ExpTrack';
 import Navbar from './Navbar';
 
 const Profile = ({
@@ -27,23 +28,7 @@ const Profile = ({
             </div>
 
             <div className="relative pt-1 w-1/4 m-auto mt-2">
-                <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
-                    <div
-                        style={{
-                            width: `${
-                                (experience / ((level + 1) * 10000)) * 100
-                            }%`,
-                        }}
-                        className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"
-                    ></div>
-                </div>
-                <div className="flex mb-2 items-center justify-center">
-                    <div>
-                        <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full bg-gray-200">
-                            {experience}/{(level + 1) * 10000}
-                        </span>
-                    </div>
-                </div>
+                <ExpTrack experience={experience} level={level} />
             </div>
         </div>
     );
