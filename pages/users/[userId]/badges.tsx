@@ -10,10 +10,14 @@ import { httpClient } from '../../../lib/axios';
 import Image from 'next/image';
 import CreateButton from '../../../components/platform/CreateButton';
 import Link from 'next/link';
+import ShopItemWrapper from '../../../components/wrapper/ShopItemWrapper';
+import ShopItem from '../../../components/ShopItem';
+import ShopItemOwned from '../../../components/ShopItemOwned';
 
-const UserPage: NextPage = () => {
+const BadgesPage: NextPage = () => {
     const [rewards, setRewards] = useState<Badge[]>([]);
     const [ownerName, setOwnerName] = useState('');
+    const [rewardsOwned, setRewardsOwned] = useState<Badge[]>([]);
 
     const router = useRouter();
 
@@ -49,6 +53,33 @@ const UserPage: NextPage = () => {
                     .catch((e) => {
                         setRewards([]);
                     });
+
+                await httpClient
+                    .get<{
+                        owner?: string;
+                        badges: { badge: Badge; owned: boolean }[];
+                    }>(userId === 'me' ? '/me/rewards' : `/rewards/${userId}`)
+                    .then((result) => {
+                        console.log(result.data);
+                        if (result.data) {
+                            const { owner } = result.data;
+                            const badges = result.data.badges
+                                .filter(({ owned }) => !owned)
+                                .map(({ badge }) => badge);
+                            setRewardsOwned(badges);
+                            if (userId === 'me') {
+                                setOwnerName(user.displayName);
+                            } else if (owner) {
+                                setOwnerName(owner);
+                            } else {
+                                setRewardsOwned([]);
+                                setOwnerName('');
+                            }
+                        }
+                    })
+                    .catch((e) => {
+                        setRewardsOwned([]);
+                    });
             }
         }
     };
@@ -64,33 +95,28 @@ const UserPage: NextPage = () => {
     return user ? (
         <div className="h-screen overflow-hidden bg-gray-100">
             <Navbar />
-            <div className="flex flex-row flex-inline w-full justify-center mt-16 font-logo lg:text-4xl items-center">
-                <p>{ownerName}&apos;s badges: </p>
-            </div>
-            <ul className="grid grid-cols-6 gap-4 m-10">
+
+            <ShopItemWrapper>
                 {rewards.map((reward) => (
-                    <li key={reward.id}>
-                        <div className="bg-white overflow-hidden shadow rounded-lg">
-                            <div className="flex justify-center px-4 py-5 sm:px-6">
-                                <span className="font-semibold mr-1">
-                                    {reward.name}
-                                </span>
-                            </div>
-                            <div className="px-4 py-5 sm:p-6 flex justify-center">
-                                <Image
-                                    src={reward.imageUrl}
-                                    alt="me"
-                                    width="72"
-                                    height="72"
-                                />
-                            </div>
-                            <div className="flex justify-center px-4 py-4 sm:px-6">
-                                {reward.description}
-                            </div>
-                        </div>
-                    </li>
+                    <ShopItem
+                        name={reward.name}
+                        urlString={reward.imageUrl}
+                        cost={500}
+                        key={reward.id}
+                    />
                 ))}
-            </ul>
+            </ShopItemWrapper>
+
+            <ShopItemWrapper>
+                {rewardsOwned.map((reward) => (
+                    <ShopItemOwned
+                        name={reward.name}
+                        urlString={reward.imageUrl}
+                        key={reward.id}
+                    />
+                ))}
+            </ShopItemWrapper>
+
             <div className="flex items-center justify-center">
                 <Link passHref href={`/users/${router.query.userId}`}>
                     <div className="m-10 space-x-2">
@@ -106,4 +132,4 @@ const UserPage: NextPage = () => {
     );
 };
 
-export default UserPage;
+export default BadgesPage;
