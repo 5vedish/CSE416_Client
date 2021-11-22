@@ -45,7 +45,7 @@ export default function Navbar() {
                         {user.currency}
                     </span>
                     <span>
-                        <Link href={`/users/${user.id}/badges`} passHref>
+                        <Link href={`/shop`} passHref>
                             <a>
                                 <ShoppingCartIcon className="w-12 h-12 text-white cursor-pointer hover:text-gray-200" />
                             </a>

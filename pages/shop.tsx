@@ -3,16 +3,16 @@ import { NextPage } from 'next';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useAuth } from '../../../components/utils/AuthProvider';
-import Navbar from '../../../components/Navbar';
-import Profile from '../../../components/Profile';
-import { httpClient } from '../../../lib/axios';
+import { useAuth } from '../components/utils/AuthProvider';
+import Navbar from '../components/Navbar';
+import Profile from '../components/Profile';
+import { httpClient } from '../lib/axios';
 import Image from 'next/image';
-import CreateButton from '../../../components/platform/CreateButton';
+import CreateButton from '../components/platform/CreateButton';
 import Link from 'next/link';
-import ShopItemWrapper from '../../../components/wrapper/ShopItemWrapper';
-import ShopItem from '../../../components/ShopItem';
-import ShopItemOwned from '../../../components/ShopItemOwned';
+import ShopItemWrapper from '../components/wrapper/ShopItemWrapper';
+import ShopItem from '../components/ShopItem';
+import ShopItemOwned from '../components/ShopItemOwned';
 
 const BadgesPage: NextPage = () => {
     const [rewards, setRewards] = useState<Badge[]>([]);
@@ -31,7 +31,7 @@ const BadgesPage: NextPage = () => {
                     .get<{
                         owner?: string;
                         badges: { badge: Badge; owned: boolean }[];
-                    }>(userId === 'me' ? '/me/rewards' : `/rewards/${userId}`)
+                    }>('/me/rewards')
                     .then((result) => {
                         console.log(result.data);
                         if (result.data) {
@@ -39,6 +39,7 @@ const BadgesPage: NextPage = () => {
                             const badges = result.data.badges
                                 .filter(({ owned }) => !owned)
                                 .map(({ badge }) => badge);
+                            console.log(badges);
                             setRewards(badges);
                             if (userId === 'me') {
                                 setOwnerName(user.displayName);
@@ -58,7 +59,7 @@ const BadgesPage: NextPage = () => {
                     .get<{
                         owner?: string;
                         badges: { badge: Badge; owned: boolean }[];
-                    }>(userId === 'me' ? '/me/rewards' : `/rewards/${userId}`)
+                    }>('/me/rewards')
                     .then((result) => {
                         console.log(result.data);
                         if (result.data) {
