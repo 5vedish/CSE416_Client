@@ -16,8 +16,9 @@ export default function ShopItem({
     name: string;
 }) {
     const router = useRouter();
+
     return (
-        <div className="inline-block px-3 bg-white overflow-hidden shadow rounded-lg">
+        <div className="inline-block px-3 bg-white overflow-hidden shadow rounded-lg mx-12">
             <div className="flex justify-center py-4">
                 <div className="text-center font-semibold">
                     {name}

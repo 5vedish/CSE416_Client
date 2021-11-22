@@ -5,7 +5,12 @@ import { httpClient } from '../../lib/axios';
 
 import cookie from 'js-cookie';
 
-type User = { displayName: string; email: string; currency: number };
+type User = {
+    displayName: string;
+    email: string;
+    currency: number;
+    id: number;
+};
 
 type Session = {
     sessionId: string;
@@ -28,6 +33,7 @@ type UpdateType =
           email: string;
           displayName: string;
           currency: number;
+          id: number;
       }
     | { password: string };
 
