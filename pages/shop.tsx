@@ -25,67 +25,48 @@ const BadgesPage: NextPage = () => {
 
     const refetchUser = async () => {
         if (user) {
-            const { userId } = router.query;
-            if (userId) {
-                await httpClient
-                    .get<{
-                        owner?: string;
-                        badges: { badge: Badge; owned: boolean }[];
-                    }>('/me/rewards')
-                    .then((result) => {
-                        console.log(result.data);
-                        if (result.data) {
-                            const { owner } = result.data;
-                            const badges = result.data.badges
-                                .filter(({ owned }) => !owned)
-                                .map(({ badge }) => badge);
-                            console.log(badges);
-                            setRewards(badges);
-                            if (userId === 'me') {
-                                setOwnerName(user.displayName);
-                            } else if (owner) {
-                                setOwnerName(owner);
-                            } else {
-                                setRewards([]);
-                                setOwnerName('');
-                            }
-                        }
-                    })
-                    .catch((e) => {
-                        setRewards([]);
-                    });
+            await httpClient
+                .get<{
+                    owner?: string;
+                    badges: { badge: Badge; owned: boolean }[];
+                }>('/me/rewards')
+                .then((result) => {
+                    console.log(result.data);
+                    if (result.data) {
+                        const { owner } = result.data;
+                        const badges = result.data.badges
+                            .filter(({ owned }) => !owned)
+                            .map(({ badge }) => badge);
+                        console.log(badges);
+                        setRewards(badges);
+                    }
+                })
+                .catch((e) => {
+                    setRewards([]);
+                });
 
-                await httpClient
-                    .get<{
-                        owner?: string;
-                        badges: { badge: Badge; owned: boolean }[];
-                    }>('/me/rewards')
-                    .then((result) => {
-                        console.log(result.data);
-                        if (result.data) {
-                            const { owner } = result.data;
-                            const badges = result.data.badges
-                                .filter(({ owned }) => owned)
-                                .map(({ badge }) => badge);
-                            setRewardsOwned(badges);
-                            if (userId === 'me') {
-                                setOwnerName(user.displayName);
-                            } else if (owner) {
-                                setOwnerName(owner);
-                            } else {
-                                setRewardsOwned([]);
-                                setOwnerName('');
-                            }
-                        }
-                    })
-                    .catch((e) => {
-                        setRewardsOwned([]);
-                    });
-            }
+            await httpClient
+                .get<{
+                    owner?: string;
+                    badges: { badge: Badge; owned: boolean }[];
+                }>('/me/rewards')
+                .then((result) => {
+                    console.log(result.data);
+                    if (result.data) {
+                        const { owner } = result.data;
+                        const badges = result.data.badges
+                            .filter(({ owned }) => owned)
+                            .map(({ badge }) => badge);
+                        setRewardsOwned(badges);
+                    }
+                })
+                .catch((e) => {
+                    setRewardsOwned([]);
+                });
         }
     };
 
-    const memoizedRefetch = useCallback(refetchUser, [router.query, user]);
+    const memoizedRefetch = useCallback(refetchUser, []);
 
     useEffect(() => {
         (async () => {
