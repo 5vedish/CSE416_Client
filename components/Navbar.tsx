@@ -3,12 +3,15 @@ import {
     SearchIcon,
     PlusIcon,
     CurrencyDollarIcon,
+    ShoppingCartIcon,
 } from '@heroicons/react/solid';
 import { useAuth } from './utils/AuthProvider';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CreatePlatformModal from './platform/CreatePlatformModal';
 import { useModal } from './utils/ModalProvider';
+import { httpClient } from '../lib/axios';
+import { AxiosResponse } from 'axios';
 
 export default function Navbar() {
     const { user } = useAuth();
@@ -34,12 +37,19 @@ export default function Navbar() {
             </div>
 
             {user && (
-                <div>
+                <div className="inline-flex flex-row justify-center items-center">
                     <span>
-                        <CurrencyDollarIcon className=" h-5 w-5 text-white " />
+                        <CurrencyDollarIcon className="h-5 w-5 text-white mr-2" />
                     </span>
-                    <span className="align-text bottom font-logo text-white">
-                        69420
+                    <span className="align-text bottom font-logo text-white mr-2">
+                        {user.currency}
+                    </span>
+                    <span>
+                        <Link href={`/users/${user.id}/badges`} passHref>
+                            <a>
+                                <ShoppingCartIcon className="w-12 h-12 text-white cursor-pointer hover:text-gray-200" />
+                            </a>
+                        </Link>
                     </span>
                 </div>
             )}

@@ -14,13 +14,14 @@ export default function ShopItem({
     name: string;
 }) {
     const router = useRouter();
+
     return (
-        <div className="inline-block px-3 bg-gray-300 overflow-hidden shadow rounded-lg">
+        <div className="inline-block px-3 bg-gray-300 overflow-hidden shadow rounded-lg mx-12">
             <div className="flex justify-center py-4 text-center">
                 <div className="font-semibold">
                     {name}
 
-                    {/* <div className="rounded-xl w-10/12 bg-white rounded px-4 pt-6 pb-8 mb-4"> */}
+                    {/* <div className="rounded-xl w-10/12 bg-white px-4 pt-6 pb-8 mb-4"> */}
                     <div className="text-center font-logo cursor-pointer py-4">
                         <Image
                             src={urlString}

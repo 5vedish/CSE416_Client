@@ -4,6 +4,7 @@ import { PlusCircleIcon } from '@heroicons/react/solid';
 import EditQuizControls from './EditQuizControls';
 import { httpClient } from '../../lib/axios';
 import { useRouter } from 'next/router';
+import { useAuth } from '../utils/AuthProvider';
 
 export default function QuizContainer({
     quizQuestions,
@@ -41,6 +42,8 @@ export default function QuizContainer({
         refetch();
     };
 
+    const { getUser } = useAuth();
+
     const submitAttempt = async () => {
         const ordered = Object.entries(record)
             .sort((a, b) => (a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0))
@@ -52,6 +55,7 @@ export default function QuizContainer({
             selectedChoices: ordered,
             endTime: new Date(),
         });
+        getUser();
         router.push(`/quizzes/${quizId}/completed`);
     };
 

@@ -5,7 +5,12 @@ import { httpClient } from '../../lib/axios';
 
 import cookie from 'js-cookie';
 
-type User = { displayName: string; email: string };
+type User = {
+    displayName: string;
+    email: string;
+    currency: number;
+    id: number;
+};
 
 type Session = {
     sessionId: string;
@@ -27,12 +32,15 @@ type UpdateType =
     | {
           email: string;
           displayName: string;
+          currency: number;
+          id: number;
       }
     | { password: string };
 
 type AuthContextValue = {
     user: User | undefined;
     loading: boolean;
+    getUser: () => Promise<void>;
     signUp: (data: SignupType) => Promise<number>;
     logIn: (data: LogInType) => Promise<number>;
     logOut: () => Promise<void>;
@@ -177,5 +185,6 @@ function useAuthProvider() {
         updateUser,
         requestPasswordReset,
         resetPassword,
+        getUser,
     };
 }

@@ -14,6 +14,7 @@ import { useAuth } from '../components/utils/AuthProvider';
 type AccountInputs = {
     displayName: string;
     email: string;
+    currency: number;
 };
 
 type PasswordInputs = {

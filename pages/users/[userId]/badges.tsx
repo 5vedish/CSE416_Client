@@ -37,7 +37,7 @@ const BadgesPage: NextPage = () => {
                         if (result.data) {
                             const { owner } = result.data;
                             const badges = result.data.badges
-                                .filter(({ owned }) => owned)
+                                .filter(({ owned }) => !owned)
                                 .map(({ badge }) => badge);
                             setRewards(badges);
                             if (userId === 'me') {
@@ -64,7 +64,7 @@ const BadgesPage: NextPage = () => {
                         if (result.data) {
                             const { owner } = result.data;
                             const badges = result.data.badges
-                                .filter(({ owned }) => !owned)
+                                .filter(({ owned }) => owned)
                                 .map(({ badge }) => badge);
                             setRewardsOwned(badges);
                             if (userId === 'me') {
@@ -99,6 +99,8 @@ const BadgesPage: NextPage = () => {
             <ShopItemWrapper>
                 {rewards.map((reward) => (
                     <ShopItem
+                        refetch={refetchUser}
+                        id={reward.id}
                         name={reward.name}
                         urlString={reward.imageUrl}
                         cost={500}
