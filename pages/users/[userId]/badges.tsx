@@ -105,6 +105,7 @@ const BadgesPage: NextPage = () => {
                         key={reward.id}
                     />
                 ))}
+                {/* <button onClick={buyBadge}> hi </button> */}
             </ShopItemWrapper>
 
             <ShopItemWrapper>
