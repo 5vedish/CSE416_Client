@@ -32,8 +32,6 @@ type UpdateType =
     | {
           email: string;
           displayName: string;
-          currency: number;
-          id: number;
       }
     | { password: string };
 
@@ -90,13 +88,21 @@ function useAuthProvider() {
 
     const updateUser = async (data: UpdateType) => {
         // update password or update info
-        try {
-            await httpClient.patch<any>('/me', data, { withCredentials: true });
-            if (!('password' in data)) {
-                setUser(data);
-            }
-            router.push('/');
-        } catch (e: any) {}
+        if (user) {
+            try {
+                await httpClient.patch<any>('/me', data, {
+                    withCredentials: true,
+                });
+                if (!('password' in data)) {
+                    setUser({
+                        ...data,
+                        id: user.id,
+                        currency: user.currency,
+                    });
+                }
+                router.push('/');
+            } catch (e: any) {}
+        }
     };
 
     const signUp = async (data: SignupType) => {
