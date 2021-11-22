@@ -130,6 +130,8 @@ function useAuthProvider() {
 
                 // console.log(session);
                 setUser(response.data.user);
+                getUser();
+
                 // cookie.set(
                 //     'sessionId',
                 //     session.sessionId,
