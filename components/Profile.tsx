@@ -2,6 +2,10 @@ import { CurrencyDollarIcon } from '@heroicons/react/solid';
 import React from 'react';
 import { ExpTrack } from './ExpTrack';
 import Navbar from './Navbar';
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/router';
+import { httpClient } from '../lib/axios';
+import { useAuth } from './utils/AuthProvider';
 
 const Profile = ({
     displayName,
@@ -14,6 +18,53 @@ const Profile = ({
     level: number;
     experience: number;
 }) => {
+    const [rewardsOwned, setRewardsOwned] = useState<Badge[]>([]);
+
+    const router = useRouter();
+
+    const { user } = useAuth();
+
+    const refetchUser = async () => {
+        if (user) {
+            const { userId } = router.query;
+            if (userId) {
+                await httpClient
+                    .get<{
+                        owner?: string;
+                        badges: { badge: Badge; owned: boolean }[];
+                    }>(userId === 'me' ? '/me/rewards' : `/rewards/${userId}`)
+                    .then((result) => {
+                        console.log(result.data);
+                        if (result.data) {
+                            const { owner } = result.data;
+                            const badges = result.data.badges
+                                .filter(({ owned }) => owned)
+                                .map(({ badge }) => badge);
+                            setRewardsOwned(badges);
+                            if (userId === 'me') {
+                            } else if (owner) {
+                            } else {
+                                setRewardsOwned([]);
+                            }
+                        }
+                    })
+                    .catch((e) => {
+                        setRewardsOwned([]);
+                    });
+            }
+        }
+    };
+
+    const memoizedRefetch = useCallback(refetchUser, [router.query, user]);
+
+    useEffect(() => {
+        (async () => {
+            await memoizedRefetch();
+        })();
+    }, [router.query, memoizedRefetch]);
+
+    console.log(rewardsOwned);
+
     return (
         <div className="h-screen overflow-hidden bg-gray-100">
             <Navbar />
@@ -29,6 +80,20 @@ const Profile = ({
 
             <div className="relative pt-1 w-1/4 m-auto mt-2">
                 <ExpTrack experience={experience} level={level} />
+            </div>
+
+            <div className="flex-col inline-flex mt-8 h-auto w-full justify-center items-center">
+                <p className="font-bold text-2xl">Badges</p>
+
+                <div className="inline-flex w-1/4 h-full mt-4 justify-between items-center">
+                    {rewardsOwned.map((reward, index) => (
+                        <img
+                            key={index}
+                            className="w-24 h-24 "
+                            src={reward.imageUrl}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

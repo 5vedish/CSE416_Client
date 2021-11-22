@@ -10,12 +10,21 @@ export default function ShopItem({
     urlString,
     cost,
     name,
+    id,
+    refetch,
 }: {
     urlString: string;
     cost: number;
     name: string;
+    id: number;
+    refetch: () => Promise<void>;
 }) {
     const router = useRouter();
+
+    const purchase = async () => {
+        const result = await httpClient.put('/me/rewards', { badgeId: id });
+        console.log(result);
+    };
 
     return (
         <div className="inline-block px-3 bg-white overflow-hidden shadow rounded-lg mx-12">
@@ -34,7 +43,10 @@ export default function ShopItem({
                     </div>
                     <div className="text-center">
                         {/* referenced https://austencam.com/posts/tailwind-tidbit-vertically-align-icons-and-text-in-buttons */}
-                        <button className="items-center bg-blue-500 text-white hover:text-white hover:bg-blue-700 font-logo rounded ">
+                        <button
+                            className="items-center bg-blue-500 text-white hover:text-white hover:bg-blue-700 font-logo rounded "
+                            onClick={purchase}
+                        >
                             <div className="inline-flex  px-3 py-2px-4 py-2 leading-5">
                                 <CurrencyDollarIcon className="inline-block w-5 h-5 mr-1" />
                                 {cost}
