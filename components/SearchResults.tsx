@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { PlatformSortDropdown } from './PlatformSortDropdown';
 import { httpClient } from '../lib/axios';
-import { SearchIcon, StarIcon } from '@heroicons/react/solid';
+import { SearchIcon, StarIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { UserSortDropdown } from './UserSortDropdown';
 import { RatingView } from 'react-simple-star-rating';
 import { AxiosResponse } from 'axios';
@@ -15,6 +15,7 @@ export function SearchResults() {
         Platforms: {
             id: number;
             rating: number;
+            likers: User[];
             title: string;
             owner: { displayName: string };
         }[];
@@ -85,6 +86,9 @@ export function SearchResults() {
             }
         })();
     }, [searchInput, currentCategory, platformCriterion, desc]);
+
+    console.log('PRINTING OUT');
+    console.log(categories.Platforms);
 
     return (
         <Tab.Group
@@ -178,6 +182,10 @@ export function SearchResults() {
                                                                 result.rating
                                                             }
                                                         />
+                                                    </div>
+                                                    <div className="flex-shrink-0 flex pr-5">
+                                                        {result.likers.length}
+                                                        <ThumbUpIcon className="ml-4 w-5 h-5 text-blue-500" />
                                                     </div>
                                                 </div>
                                             </div>

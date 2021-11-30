@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import type { NextPage } from 'next';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/quiz/Quiz';
 import CreateButton from '../components/quiz/CreateButton';
 import { httpClient } from '../lib/axios';
@@ -9,9 +9,6 @@ import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Platform from '../components/platform/Platform';
 import { SearchResults } from '../components/SearchResults';
-import ShopItem from '../components/ShopItem';
-import QuizWrapper from '../components/wrapper/QuizWrapper';
-import ShopItemWrapper from '../components/wrapper/ShopItemWrapper';
 
 const Home: NextPage = () => {
     const [platformId, setPlatformId] = useState(-1);
