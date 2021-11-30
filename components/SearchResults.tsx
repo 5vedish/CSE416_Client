@@ -87,9 +87,6 @@ export function SearchResults() {
         })();
     }, [searchInput, currentCategory, platformCriterion, desc]);
 
-    console.log('PRINTING OUT');
-    console.log(categories.Platforms);
-
     return (
         <Tab.Group
             onChange={(idx) => {
