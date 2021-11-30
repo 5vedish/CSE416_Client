@@ -20,6 +20,20 @@ export default function PlatformBanner({
     refetch: () => Promise<void>;
     rating: number;
 }) {
+    const [likedState, setLikedState] = useState(-1);
+
+    const like = async () => {
+        const result = await httpClient.put(`platforms/${id}/likes`);
+        setLikedState(1);
+        await refetch();
+    };
+
+    const unlike = async () => {
+        const result = await httpClient.delete(`platforms/${id}/likes`);
+        setLikedState(0);
+        await refetch();
+    };
+
     const handleRating = async (newRating: number) => {
         await httpClient
             .put(`/platforms/${id}/ratings`, { rating: newRating })
@@ -42,18 +56,38 @@ export default function PlatformBanner({
                 />
                 {/* referenced https://www.npmjs.com/package/react-simple-star-rating */}
                 <div className="inline-block">
-                    {liked ? (
+                    {likedState == -1 ? (
+                        liked ? (
+                            <ThumbUpIcon
+                                className="ml-4 w-10 h-10 text-black hover:text-blue-500"
+                                onClick={() => {
+                                    console.log('User Unliked');
+                                    unlike();
+                                }}
+                            />
+                        ) : (
+                            <ThumbUpIconOutline
+                                className="ml-4 w-10 h-10 text-black hover:text-blue-500"
+                                onClick={() => {
+                                    console.log('User Liked');
+                                    like();
+                                }}
+                            />
+                        )
+                    ) : likedState == 1 ? (
                         <ThumbUpIcon
                             className="ml-4 w-10 h-10 text-black hover:text-blue-500"
                             onClick={() => {
-                                console.log('Handle Unlike');
+                                console.log('User Unliked');
+                                unlike();
                             }}
                         />
                     ) : (
                         <ThumbUpIconOutline
                             className="ml-4 w-10 h-10 text-black hover:text-blue-500"
                             onClick={() => {
-                                console.log('Handle Like');
+                                console.log('User Liked');
+                                like();
                             }}
                         />
                     )}
