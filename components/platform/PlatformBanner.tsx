@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import GenerateStars from './GenerateStars';
 import { Rating, RatingView } from 'react-simple-star-rating';
 import { httpClient } from '../../lib/axios';
+import { ThumbUpIcon } from '@heroicons/react/solid';
+import { ThumbUpIcon as ThumbUpIconOutline } from '@heroicons/react/outline';
 
 export default function PlatformBanner({
     title,
     author,
     id,
+    liked,
     refetch,
     rating,
 }: {
     title: String;
     author: String;
     id: number;
+    liked: boolean;
     refetch: () => Promise<void>;
     rating: number;
 }) {
@@ -37,6 +41,23 @@ export default function PlatformBanner({
                     ratingValue={rating} /* Rating Props */
                 />
                 {/* referenced https://www.npmjs.com/package/react-simple-star-rating */}
+                <div className="inline-block">
+                    {liked ? (
+                        <ThumbUpIcon
+                            className="ml-4 w-10 h-10 text-black hover:text-blue-500"
+                            onClick={() => {
+                                console.log('Handle Unlike');
+                            }}
+                        />
+                    ) : (
+                        <ThumbUpIconOutline
+                            className="ml-4 w-10 h-10 text-black hover:text-blue-500"
+                            onClick={() => {
+                                console.log('Handle Like');
+                            }}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

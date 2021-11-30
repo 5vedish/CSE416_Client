@@ -1,8 +1,10 @@
 interface User {
+    id: number;
     displayName: string;
     currency: number;
     experience: number;
     level: number;
+    likedPlatforms: User[];
     // createdPlatforms: {
     //     id: number;
     //     title: string;
@@ -31,6 +33,7 @@ interface Platform {
     quizzes: Quiz[];
     title: string;
     rating: number;
+    likers: User[];
 }
 
 interface QuizAttempt {

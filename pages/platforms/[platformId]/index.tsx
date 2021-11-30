@@ -13,6 +13,7 @@ import Platform from '../../../components/platform/Platform';
 const PlatformPage: NextPage = () => {
     const router = useRouter();
     const [platformId, setPlatformId] = useState(-1);
+    const [likedPlatform, setLikedPlatform] = useState(false);
     const [platformData, setPlatformData] = useState<Platform | null>(null);
     const { user } = useAuth();
 
@@ -21,9 +22,26 @@ const PlatformPage: NextPage = () => {
         if (platformId) {
             await httpClient
                 .get<Platform>(`/platforms/${platformId}`)
-                .then((result) => {
+                .then(async (result) => {
                     if (result.data) {
                         setPlatformData(result.data);
+
+                        await httpClient
+                            .get<any>(`/me`, { withCredentials: true })
+                            .then((meResult) => {
+                                for (
+                                    let i = 0;
+                                    i < result.data.likers.length;
+                                    i++
+                                ) {
+                                    if (
+                                        meResult.data.id ===
+                                        result.data.likers[i].id
+                                    ) {
+                                        setLikedPlatform(true);
+                                    }
+                                }
+                            });
                     }
                     setPlatformId(parseInt(platformId.toString()));
                     console.log(result.data);
@@ -73,6 +91,7 @@ const PlatformPage: NextPage = () => {
                             rating={platformData.rating}
                             createQuiz={createQuiz}
                             refetch={memoizedRefetch}
+                            liked={likedPlatform}
                         />
                     ) : (
                         'Platform not found'

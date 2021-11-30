@@ -13,6 +13,7 @@ export default function Platform({
     quizzes,
     createQuiz,
     rating,
+    liked,
     refetch,
 }: {
     id: number;
@@ -21,6 +22,7 @@ export default function Platform({
     quizzes: Quiz[];
     createQuiz: () => Promise<void>;
     rating: number;
+    liked: boolean;
     refetch: () => Promise<void>;
 }) {
     console.log('PLATFORM');
@@ -34,6 +36,7 @@ export default function Platform({
                     author={author}
                     rating={rating}
                     refetch={refetch}
+                    liked={liked}
                 />
                 <QuizWrapper>
                     {quizzes.map((quiz) => (
