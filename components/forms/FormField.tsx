@@ -10,6 +10,8 @@ const FormField = ({
     validate,
     required,
     isNumber,
+    isMultiLine,
+    placeholder,
 }: {
     form: UseFormReturn<any, object>;
     formKey: string;
@@ -19,6 +21,8 @@ const FormField = ({
     required?: string | ValidationRule<boolean>;
     validate?: Validate<string> | Record<string, Validate<string>>;
     isNumber?: boolean;
+    isMultiLine?: boolean;
+    placeholder?: string;
 }) => {
     const {
         register,
@@ -34,17 +38,36 @@ const FormField = ({
                 {label}
             </label>
             <div className="relative">
-                <input
-                    {...register(formKey, {
-                        required,
-                        validate,
-                    })}
-                    className={`shadow appearance-none ${
-                        errors[formKey] ? 'border-red-500' : 'border-gray-300'
-                    } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
-                    defaultValue={defaultValue ?? ''}
-                    type={isNumber ? 'number' : 'text'}
-                />
+                {isMultiLine ? (
+                    <textarea
+                        rows={3}
+                        {...register(formKey, {
+                            required,
+                            validate,
+                        })}
+                        className={`border p-2 rounded w-full ${
+                            errors[formKey]
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                        }`}
+                        placeholder={placeholder ?? ''}
+                        defaultValue={defaultValue ?? ''}
+                    ></textarea>
+                ) : (
+                    <input
+                        {...register(formKey, {
+                            required,
+                            validate,
+                        })}
+                        className={`shadow appearance-none ${
+                            errors[formKey]
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                        } rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                        defaultValue={defaultValue ?? ''}
+                        type={isNumber ? 'number' : 'text'}
+                    />
+                )}
             </div>
             <span className="text-red-500 text-sm">
                 {errors[formKey]?.message}

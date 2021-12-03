@@ -97,7 +97,7 @@ export function SearchResults() {
                 );
             }}
         >
-            <div className="my-4 relative">
+            <div className="my-4 ">
                 <input
                     type="text"
                     name="search"

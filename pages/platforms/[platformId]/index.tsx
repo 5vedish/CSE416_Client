@@ -73,7 +73,7 @@ const PlatformPage: NextPage = () => {
     }, [router.query, memoizedRefetch]);
 
     return (
-        <div className="h-screen overflow-hidden">
+        <div className="h-screen overflow-y-scroll bg-gray-100">
             <Navbar />
 
             <div
@@ -93,6 +93,7 @@ const PlatformPage: NextPage = () => {
                             createQuiz={createQuiz}
                             refetch={memoizedRefetch}
                             liked={likedPlatform}
+                            comments={platformData.comments}
                         />
                     ) : (
                         'Platform not found'

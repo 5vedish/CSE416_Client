@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { httpClient } from '../../lib/axios';
+import CommentBox from '../comment/CommentBox';
 import Navbar from '../Navbar';
 import CreateButton from '../quiz/CreateButton';
 import QuizCard from '../quiz/QuizCard';
@@ -18,6 +19,7 @@ export default function Platform({
     yourRating,
     liked,
     refetch,
+    comments,
 }: {
     id: number;
     title: String;
@@ -28,6 +30,7 @@ export default function Platform({
     liked: boolean;
     yourRating: number;
     refetch: () => Promise<void>;
+    comments: Comment[];
 }) {
     const [userRating, setUserRating] = useState(yourRating);
     console.log(id);
@@ -42,36 +45,35 @@ export default function Platform({
         await refetch();
     };
     return (
-        <div className="min-h-full">
-            <div className="w-full h-screen bg-gray-100">
-                <PlatformBanner
-                    id={id}
-                    title={title}
-                    author={author}
-                    rating={rating}
-                />
-                <QuizWrapper>
-                    {quizzes.map((quiz) => (
-                        <QuizCard
-                            key={quiz.id}
-                            id={quiz.id}
-                            title={quiz.title}
-                            time={quiz.maxTime}
-                            questions={quiz.questions.length}
-                            difficulty={quiz.difficulty}
-                            quizId={quiz.id}
-                            refetch={refetch}
-                        />
-                    ))}
-                    <CreateButton label="Add Quiz" create={createQuiz} />
-                </QuizWrapper>
-                <div className="px-8 pt-4">Your Rating:</div>
-                <Rating
-                    className="p-8"
-                    onClick={handleRating}
-                    ratingValue={userRating} /* Rating Props */
-                />
-            </div>
+        <div>
+            <PlatformBanner
+                id={id}
+                title={title}
+                author={author}
+                rating={rating}
+            />
+            <QuizWrapper>
+                {quizzes.map((quiz) => (
+                    <QuizCard
+                        key={quiz.id}
+                        id={quiz.id}
+                        title={quiz.title}
+                        time={quiz.maxTime}
+                        questions={quiz.questions.length}
+                        difficulty={quiz.difficulty}
+                        quizId={quiz.id}
+                        refetch={refetch}
+                    />
+                ))}
+                <CreateButton label="Add Quiz" create={createQuiz} />
+            </QuizWrapper>
+            <div className="px-8 pt-4">Your Rating:</div>
+            <Rating
+                className="p-8"
+                onClick={handleRating}
+                ratingValue={userRating} /* Rating Props */
+            />
+            <CommentBox comments={comments} platformId={id} refetch={refetch} />
         </div>
     );
 }

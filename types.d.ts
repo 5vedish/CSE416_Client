@@ -35,6 +35,7 @@ interface Platform {
     yourRating: number;
     averageRating: number;
     likers: User[];
+    comments: Comment[];
 }
 
 interface QuizAttempt {
@@ -55,4 +56,11 @@ interface Badge {
     tier: number;
     imageUrl: string;
     cost: number;
+}
+
+interface Comment {
+    id: number;
+    author: { id: number; displayName: string };
+    createdAt: Date;
+    content: string;
 }
