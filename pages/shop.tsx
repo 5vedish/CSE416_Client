@@ -23,7 +23,8 @@ const BadgesPage: NextPage = () => {
 
     const { user } = useAuth();
 
-    const refetchUser = async () => {
+    const refetchBadges = async () => {
+        console.log(user);
         if (user) {
             await httpClient
                 .get<{
@@ -39,40 +40,26 @@ const BadgesPage: NextPage = () => {
                             .map(({ badge }) => badge);
                         console.log(badges);
                         setRewards(badges);
+                        const badgesOwned = result.data.badges
+                            .filter(({ owned }) => owned)
+                            .map(({ badge }) => badge);
+                        setRewardsOwned(badgesOwned);
                     }
                 })
                 .catch((e) => {
                     setRewards([]);
-                });
-
-            await httpClient
-                .get<{
-                    owner?: string;
-                    badges: { badge: Badge; owned: boolean }[];
-                }>('/me/rewards')
-                .then((result) => {
-                    console.log(result.data);
-                    if (result.data) {
-                        const { owner } = result.data;
-                        const badges = result.data.badges
-                            .filter(({ owned }) => owned)
-                            .map(({ badge }) => badge);
-                        setRewardsOwned(badges);
-                    }
-                })
-                .catch((e) => {
                     setRewardsOwned([]);
                 });
         }
     };
 
-    const memoizedRefetch = useCallback(refetchUser, []);
+    const memoizedRefetch = useCallback(refetchBadges, [user, rewards]);
 
     useEffect(() => {
         (async () => {
             await memoizedRefetch();
         })();
-    }, [router.query, memoizedRefetch]);
+    }, [router.query, memoizedRefetch, user]);
 
     return user ? (
         <div className="h-screen overflow-hidden bg-gray-100">
@@ -81,11 +68,11 @@ const BadgesPage: NextPage = () => {
             <ShopItemWrapper>
                 {rewards.map((reward) => (
                     <ShopItem
-                        refetch={refetchUser}
+                        refetch={memoizedRefetch}
                         id={reward.id}
                         name={reward.name}
                         urlString={reward.imageUrl}
-                        cost={500}
+                        cost={reward.cost}
                         key={reward.id}
                     />
                 ))}

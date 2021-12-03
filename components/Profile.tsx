@@ -85,7 +85,7 @@ const Profile = ({
             <div className="flex-col inline-flex mt-8 h-auto w-full justify-center items-center">
                 <p className="font-bold text-2xl">Badges</p>
 
-                <div className="inline-flex w-1/4 h-full mt-4 justify-between items-center">
+                <div className="inline-flex w-1/4 h-full mt-4 justify-between items-center border-2">
                     {rewardsOwned.map((reward, index) => (
                         <img
                             key={index}
@@ -94,6 +94,10 @@ const Profile = ({
                         />
                     ))}
                 </div>
+
+                <button className="mt-4 w-32 h-16 bg-blue-500 rounded-md">
+                    <p className="font-bold text-white text-lg"> Statistics</p>
+                </button>
             </div>
         </div>
     );

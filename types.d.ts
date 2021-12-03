@@ -53,4 +53,5 @@ interface Badge {
     description: string;
     tier: number;
     imageUrl: string;
+    cost: number;
 }
