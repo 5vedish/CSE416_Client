@@ -17,6 +17,8 @@ const UserStatisticsPage: NextPage = () => {
     const { user } = useAuth();
 
     const [averageScore, setAverageScore] = useState(-1);
+    const [lifetimeQuizzes, setLifetimeQuizzes] = useState(-1);
+    const [diffs, setDiffs] = useState<number[]>([]);
 
     useEffect(() => {
         (async () => {
@@ -26,9 +28,15 @@ const UserStatisticsPage: NextPage = () => {
             console.log('STATISTICS2');
             if (result.data) {
                 const { questionsCorrect } = result.data.averageScore;
+                const { quizAttempts } = result.data.lifetimeQuizzes;
 
-                console.log(questionsCorrect);
+                const diffs = result.data.diffs;
+
+                const diffsList = [diffs.e, diffs.m, diffs.h];
+
                 setAverageScore(questionsCorrect * 500);
+                setLifetimeQuizzes(quizAttempts);
+                setDiffs(diffsList);
             }
         })();
     }, []);
@@ -47,12 +55,23 @@ const UserStatisticsPage: NextPage = () => {
                         <p className="mr-2">Average Quiz Score:</p>
                         <p className={`font-bold`}>{averageScore.toFixed(2)}</p>
                     </div>
-                    {/* <div className={`${statStyle}`}>
-                    <p className="mr-2">Questions Completed:</p>
-                    <p className="font-bold">
-                        {questionsCompleted}/{totalQuestions}
-                    </p>
-                </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Lifetime Quizzes Taken:</p>
+                        <p className="font-bold">{lifetimeQuizzes}</p>
+                    </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Easy Quizzes Taken:</p>
+                        <p className="font-bold text-green-500">{diffs[0]}</p>
+                    </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Medium Quizzes Taken:</p>
+                        <p className="font-bold text-yellow-500">{diffs[1]}</p>
+                    </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Hard Quizzes Taken:</p>
+                        <p className="font-bold text-red-500">{diffs[2]}</p>
+                    </div>
+                    {/* 
                 <div className={`${statStyle}`}>
                     <p className="mr-2">Questions Correct:</p>
                     <p

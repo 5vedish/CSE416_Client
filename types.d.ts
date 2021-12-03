@@ -59,4 +59,6 @@ interface Badge {
 
 interface Statistics {
     averageScore: { questionsCorrect: number };
+    lifetimeQuizzes: { quizAttempts: number };
+    diffs: { e: number; m: number; h: number };
 }
