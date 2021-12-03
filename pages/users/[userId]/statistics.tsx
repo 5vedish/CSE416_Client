@@ -108,9 +108,13 @@ const UserStatisticsPage: NextPage = () => {
                 </div> */}
                 </div>
 
-                <button className="mt-8 p-2 bg-blue-500 border rounded-lg shadow-lg font-bold text-white">
-                    <Link href="/">Return To Platform</Link>
-                </button>
+                <Link passHref href={`/users/${router.query.userId}`}>
+                    <div className="m-10 space-x-2">
+                        <a className="bg-gray-300 hover:bg-gray-400 cursor-pointer text-black font-bold py-2 px-4 rounded">
+                            Back to profile
+                        </a>
+                    </div>
+                </Link>
             </div>
         </div>
     );
