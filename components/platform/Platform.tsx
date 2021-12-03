@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Rating } from 'react-simple-star-rating';
+import { httpClient } from '../../lib/axios';
 import Navbar from '../Navbar';
 import CreateButton from '../quiz/CreateButton';
 import QuizCard from '../quiz/QuizCard';
@@ -13,6 +15,7 @@ export default function Platform({
     quizzes,
     createQuiz,
     rating,
+    yourRating,
     liked,
     refetch,
 }: {
@@ -23,10 +26,21 @@ export default function Platform({
     createQuiz: () => Promise<void>;
     rating: number;
     liked: boolean;
+    yourRating: number;
     refetch: () => Promise<void>;
 }) {
-    console.log('PLATFORM');
+    const [userRating, setUserRating] = useState(yourRating);
     console.log(id);
+    const handleRating = async (newRating: number) => {
+        await httpClient
+            .put(`/platforms/${id}/ratings`, { rating: newRating })
+            .catch((e) => {
+                console.log(e);
+            });
+        console.log(`/platforms/${id}/ratings/${newRating}`);
+        setUserRating(newRating);
+        await refetch();
+    };
     return (
         <div className="min-h-full">
             <div className="w-full h-screen bg-gray-100">
@@ -35,8 +49,6 @@ export default function Platform({
                     title={title}
                     author={author}
                     rating={rating}
-                    refetch={refetch}
-                    liked={liked}
                 />
                 <QuizWrapper>
                     {quizzes.map((quiz) => (
@@ -53,6 +65,12 @@ export default function Platform({
                     ))}
                     <CreateButton label="Add Quiz" create={createQuiz} />
                 </QuizWrapper>
+                <div className="px-8 pt-4">Your Rating:</div>
+                <Rating
+                    className="p-8"
+                    onClick={handleRating}
+                    ratingValue={userRating} /* Rating Props */
+                />
             </div>
         </div>
     );
