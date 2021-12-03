@@ -56,3 +56,7 @@ interface Badge {
     imageUrl: string;
     cost: number;
 }
+
+interface Statistics {
+    averageScore: { questionsCorrect: number };
+}

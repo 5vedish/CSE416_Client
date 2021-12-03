@@ -10,7 +10,7 @@ export function ExpTrack({
             <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
                 <div
                     style={{
-                        width: `${(experience / ((level + 1) * 10000)) * 100}%`,
+                        width: `${(experience / ((level + 1) * 1000)) * 100}%`,
                     }}
                     className="
           shadow-none
@@ -24,7 +24,7 @@ export function ExpTrack({
                 ></div>
             </div>
             <p className="text-center">
-                {experience}/{(level + 1) * 10000}
+                {experience}/{(level + 1) * 1000}
             </p>
         </div>
     );
