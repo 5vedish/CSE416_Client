@@ -9,6 +9,7 @@ import { SearchIcon, StarIcon, ThumbUpIcon } from '@heroicons/react/solid';
 import { UserSortDropdown } from './UserSortDropdown';
 import { RatingView } from 'react-simple-star-rating';
 import { AxiosResponse } from 'axios';
+import LikeComponent from './LikeComponent';
 
 export function SearchResults() {
     const [categories, setCategories] = useState<{
@@ -150,45 +151,52 @@ export function SearchResults() {
                         <ul className="grid grid-cols-3 gap-4">
                             {results.map((result) =>
                                 'owner' in result ? (
-                                    <Link
-                                        key={`platform-${result.id}`}
-                                        href={`/platforms/${result.id}`}
-                                        passHref
-                                    >
-                                        <li>
-                                            <div className="bg-white overflow-hidden shadow rounded-lg">
-                                                <div className="flex justify-center px-4 py-5 sm:px-6">
-                                                    <span className="font-semibold mr-1">
+                                    // <Link
+                                    //     key={`platform-${result.id}`}
+                                    //     href={`/platforms/${result.id}`}
+                                    //     passHref
+                                    // >
+                                    <li key={`platform-${result.id}`}>
+                                        <div className="bg-white overflow-hidden shadow rounded-lg">
+                                            <div className="flex justify-center px-4 py-5 sm:px-6">
+                                                <Link
+                                                    key={`platform-${result.id}`}
+                                                    href={`/platforms/${result.id}`}
+                                                    passHref
+                                                >
+                                                    <a className="font-semibold mr-1">
                                                         {result.title}
-                                                    </span>
-                                                    <span className="font-medium text-gray-400">
-                                                        by{' '}
-                                                        {
-                                                            result.owner
-                                                                .displayName
+                                                    </a>
+                                                </Link>
+                                                <span className="font-medium text-gray-400">
+                                                    by{' '}
+                                                    {result.owner.displayName}
+                                                </span>
+                                            </div>
+                                            <div className="px-4 py-5 sm:p-6">
+                                                {/* Content goes here */}
+                                            </div>
+                                            <div className="flex justify-between px-4 py-4 sm:px-6">
+                                                <div className="flex-shrink-0 flex pr-5">
+                                                    <RatingView
+                                                        ratingValue={
+                                                            result.rating
                                                         }
-                                                    </span>
+                                                    />
                                                 </div>
-                                                <div className="px-4 py-5 sm:p-6">
-                                                    {/* Content goes here */}
-                                                </div>
-                                                <div className="flex justify-between px-4 py-4 sm:px-6">
-                                                    <div className="flex-shrink-0 flex pr-5">
-                                                        <RatingView
-                                                            ratingValue={
-                                                                result.rating
-                                                            }
-                                                        />
-                                                    </div>
-                                                    <div className="flex-shrink-0 flex pr-5">
-                                                        {result.likers.length}
-                                                        <ThumbUpIcon className="ml-4 w-5 h-5 text-blue-500" />
-                                                    </div>
+                                                <div className="flex-shrink-0 flex pr-5">
+                                                    {/* {result.likers.length} */}
+                                                    {/* <ThumbUpIcon className="ml-4 w-5 h-5 text-black" /> */}
+                                                    <LikeComponent
+                                                        id={result.id}
+                                                        showNumber={true}
+                                                    />
                                                 </div>
                                             </div>
-                                        </li>
-                                    </Link>
+                                        </div>
+                                    </li>
                                 ) : (
+                                    // </Link>
                                     <Link
                                         key={`profile-${result.id}`}
                                         href={`/users/${result.id}`}
