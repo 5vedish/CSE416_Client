@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { httpClient } from '../lib/axios';
 import { useAuth } from './utils/AuthProvider';
-import Link from 'next/dist/client/link';
+import Link from 'next/link';
 
 const Profile = ({
     displayName,
@@ -84,7 +84,9 @@ const Profile = ({
             </div>
 
             <div className="flex-col inline-flex mt-8 h-auto w-full justify-center items-center">
-                <p className="font-bold text-2xl">Badges</p>
+                <Link href={`/users/${router.query.userId}/rewards`} passHref>
+                    <a className="font-bold text-2xl">Badges</a>
+                </Link>
 
                 <div className="inline-flex w-1/4 h-full mt-4 justify-between items-center border-2 p-4 rounded-lg border-gray-300">
                     {rewardsOwned.map((reward, index) => (
