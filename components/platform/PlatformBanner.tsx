@@ -10,15 +10,11 @@ export default function PlatformBanner({
     title,
     author,
     id,
-    liked,
-    refetch,
     rating,
 }: {
     title: String;
     author: String;
     id: number;
-    liked: boolean;
-    refetch: () => Promise<void>;
     rating: number;
 }) {
     return (
@@ -29,6 +25,7 @@ export default function PlatformBanner({
                     <div className="m-2"> by {author} </div>
                 </div>
                 <RatingView ratingValue={rating} /* Rating Props */ />
+                {rating} / 5.0
                 {/* referenced https://www.npmjs.com/package/react-simple-star-rating */}
                 <div className="inline-block">
                     <LikeComponent id={id} showNumber={false} />

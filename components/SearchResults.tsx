@@ -16,6 +16,7 @@ export function SearchResults() {
         Platforms: {
             id: number;
             rating: number;
+            averageRating: number;
             likers: User[];
             title: string;
             owner: { displayName: string };
@@ -180,7 +181,7 @@ export function SearchResults() {
                                                 <div className="flex-shrink-0 flex pr-5">
                                                     <RatingView
                                                         ratingValue={
-                                                            result.rating
+                                                            result.averageRating
                                                         }
                                                     />
                                                 </div>

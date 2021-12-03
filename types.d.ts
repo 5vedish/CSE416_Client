@@ -32,7 +32,8 @@ interface Platform {
     owner: string;
     quizzes: Quiz[];
     title: string;
-    rating: number;
+    yourRating: number;
+    averageRating: number;
     likers: User[];
 }
 

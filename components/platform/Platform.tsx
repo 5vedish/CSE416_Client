@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Rating } from 'react-simple-star-rating';
 import { httpClient } from '../../lib/axios';
 import Navbar from '../Navbar';
@@ -15,6 +15,7 @@ export default function Platform({
     quizzes,
     createQuiz,
     rating,
+    yourRating,
     liked,
     refetch,
 }: {
@@ -25,9 +26,10 @@ export default function Platform({
     createQuiz: () => Promise<void>;
     rating: number;
     liked: boolean;
+    yourRating: number;
     refetch: () => Promise<void>;
 }) {
-    console.log('PLATFORM');
+    const [userRating, setUserRating] = useState(yourRating);
     console.log(id);
     const handleRating = async (newRating: number) => {
         await httpClient
@@ -36,6 +38,7 @@ export default function Platform({
                 console.log(e);
             });
         console.log(`/platforms/${id}/ratings/${newRating}`);
+        setUserRating(newRating);
         await refetch();
     };
     return (
@@ -66,7 +69,7 @@ export default function Platform({
                 <Rating
                     className="p-8"
                     onClick={handleRating}
-                    ratingValue={rating} /* Rating Props */
+                    ratingValue={userRating} /* Rating Props */
                 />
             </div>
         </div>
