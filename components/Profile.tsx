@@ -85,7 +85,7 @@ const Profile = ({
             <div className="flex-col inline-flex mt-8 h-auto w-full justify-center items-center">
                 <p className="font-bold text-2xl">Badges</p>
 
-                <div className="inline-flex w-1/4 h-full mt-4 justify-between items-center border-2">
+                <div className="inline-flex w-1/4 h-full mt-4 justify-between items-center border-2 p-4 rounded-lg border-gray-300">
                     {rewardsOwned.map((reward, index) => (
                         <img
                             key={index}
