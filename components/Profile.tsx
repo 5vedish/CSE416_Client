@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { httpClient } from '../lib/axios';
 import { useAuth } from './utils/AuthProvider';
+import Link from 'next/dist/client/link';
 
 const Profile = ({
     displayName,
@@ -96,7 +97,12 @@ const Profile = ({
                 </div>
 
                 <button className="mt-4 w-32 h-16 bg-blue-500 rounded-md">
-                    <p className="font-bold text-white text-lg"> Statistics</p>
+                    <Link href={`/users/${user?.id}/statistics`}>
+                        <p className="font-bold text-white text-lg">
+                            {' '}
+                            Statistics
+                        </p>
+                    </Link>
                 </button>
             </div>
         </div>

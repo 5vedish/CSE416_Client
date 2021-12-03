@@ -64,3 +64,9 @@ interface Comment {
     createdAt: Date;
     content: string;
 }
+
+interface Statistics {
+    averageScore: { questionsCorrect: number };
+    lifetimeQuizzes: { quizAttempts: number };
+    diffs: { e: number; m: number; h: number };
+}
