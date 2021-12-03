@@ -5,6 +5,7 @@ import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 import { BadgeCheckIcon, CurrencyDollarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
+import { useAuth } from './utils/AuthProvider';
 
 export default function ShopItem({
     urlString,
@@ -21,11 +22,16 @@ export default function ShopItem({
 }) {
     const router = useRouter();
 
+    const { getUser: refetchUser } = useAuth();
+
     const purchase = async () => {
         const result = await httpClient.put('/me/rewards', { badgeId: id });
         console.log(result);
         await refetch();
+        await refetchUser();
     };
+
+    console.log(cost);
 
     return (
         <div className="inline-block px-3 bg-white overflow-hidden shadow rounded-lg mx-12">

@@ -13,6 +13,7 @@ import Link from 'next/link';
 import ShopItemWrapper from '../components/wrapper/ShopItemWrapper';
 import ShopItem from '../components/ShopItem';
 import ShopItemOwned from '../components/ShopItemOwned';
+import FormHeader from '../components/forms/FormHeader';
 
 const BadgesPage: NextPage = () => {
     const [rewards, setRewards] = useState<Badge[]>([]);
@@ -53,7 +54,7 @@ const BadgesPage: NextPage = () => {
         }
     };
 
-    const memoizedRefetch = useCallback(refetchBadges, [user, rewards]);
+    const memoizedRefetch = useCallback(refetchBadges, [user]);
 
     useEffect(() => {
         (async () => {
@@ -64,7 +65,10 @@ const BadgesPage: NextPage = () => {
     return user ? (
         <div className="h-screen overflow-hidden bg-gray-100">
             <Navbar />
-
+            <FormHeader
+                label="Available Badges"
+                additionalStyles="mt-4 mb-6 mx-10 underline"
+            />
             <ShopItemWrapper>
                 {rewards.map((reward) => (
                     <ShopItem
@@ -79,6 +83,10 @@ const BadgesPage: NextPage = () => {
                 {/* <button onClick={buyBadge}> hi </button> */}
             </ShopItemWrapper>
 
+            <FormHeader
+                label="Owned Badges"
+                additionalStyles="mt-4 mb-6 mx-10 underline"
+            />
             <ShopItemWrapper>
                 {rewardsOwned.map((reward) => (
                     <ShopItemOwned
