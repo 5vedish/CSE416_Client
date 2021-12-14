@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ThumbUpIcon } from '@heroicons/react/solid';
 import { ThumbUpIcon as ThumbUpIconOutline } from '@heroicons/react/outline';
 import { httpClient } from '../lib/axios';
+import { useAuth } from './utils/AuthProvider';
 
 export default function LikeComponent({
     id,
@@ -12,6 +13,7 @@ export default function LikeComponent({
 }) {
     const [likedPlatform, setLikedPlatform] = useState(false);
     const [numberLikes, setNumberLikes] = useState(0);
+    const { user } = useAuth();
 
     const refetch = async () => {
         const platformId = id;
