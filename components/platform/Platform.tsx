@@ -33,7 +33,6 @@ export default function Platform({
     comments: Comment[];
 }) {
     const [userRating, setUserRating] = useState(yourRating);
-    console.log(id);
     const handleRating = async (newRating: number) => {
         await httpClient
             .put(`/platforms/${id}/ratings`, { rating: newRating })
@@ -55,6 +54,8 @@ export default function Platform({
             <QuizWrapper>
                 {quizzes.map((quiz) => (
                     <QuizCard
+                        platformTitle={String(title)}
+                        platformId={id}
                         key={quiz.id}
                         id={quiz.id}
                         title={quiz.title}

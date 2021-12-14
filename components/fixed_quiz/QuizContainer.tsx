@@ -50,6 +50,12 @@ export default function QuizContainer({
             .map(([_, v]) => v);
 
         const { attempt } = router.query;
+        const { platform } = router.query;
+
+        await httpClient.post(`/me/rewards/`, {
+            badgeId: quizId,
+            badgeName: platform,
+        });
 
         await httpClient.patch(`/quizzes/${quizId}/attempts/${attempt}`, {
             selectedChoices: ordered,
