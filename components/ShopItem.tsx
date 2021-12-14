@@ -26,7 +26,6 @@ export default function ShopItem({
 
     const purchase = async () => {
         const result = await httpClient.put('/me/rewards', { badgeId: id });
-        console.log(result);
         await refetch();
         await refetchUser();
     };

@@ -59,6 +59,8 @@ export default function Platform({
             <QuizWrapper>
                 {quizzes.map((quiz) => (
                     <QuizCard
+                        platformTitle={String(title)}
+                        platformId={id}
                         key={quiz.id}
                         id={quiz.id}
                         editable={user.id === authorId}

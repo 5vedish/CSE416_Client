@@ -110,7 +110,7 @@ export function SearchResults() {
                     }}
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center py-1.5 pr-1.5">
-                    <SearchIcon className="text-gray-400 h-5 w-5" />
+                    {/* <SearchIcon className="text-gray-400 h-5 w-5" /> */}
                 </div>
             </div>
             <Tab.List className="flex items-center justify-between rounded-xl">
