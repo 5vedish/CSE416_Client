@@ -34,7 +34,7 @@ const CreatePlatformModal = () => {
         if (response.data) {
             router.push(`/platforms/${response.data.id}`);
             await httpClient.post(`/me/rewards/`, {
-                badgeId: response.data.id,
+                badgeId: response.data.id + 99999,
                 badgeName: title,
             });
         }
