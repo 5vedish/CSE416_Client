@@ -35,7 +35,7 @@ export default function QuizCard({
                 if (result.data) {
                     console.log(id);
                     router.push(
-                        `/quizzes/${id}?attempt=${result.data.attemptId}&platform=${platformTitle}`,
+                        `/quizzes/${id}?attempt=${result.data.attemptId}&platform=${platformTitle}&platformId=${platformId}`,
                     );
                 }
             })

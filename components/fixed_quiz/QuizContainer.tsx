@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useAuth } from '../utils/AuthProvider';
 
 export default function QuizContainer({
+    platformId,
     quizQuestions,
     edit,
     quizId,
@@ -15,6 +16,7 @@ export default function QuizContainer({
     time,
     refetch,
 }: {
+    platformId: Number;
     quizQuestions: Question[];
     edit: boolean;
     quizId: number;
@@ -54,7 +56,7 @@ export default function QuizContainer({
         const { platform } = router.query;
 
         await httpClient.post(`/me/rewards/`, {
-            badgeId: quizId,
+            badgeId: platformId,
             badgeName: platform,
         });
 
