@@ -17,12 +17,15 @@ const QuizPage: NextPage = () => {
     } | null>(null);
 
     const [quizId, setQuizId] = useState(-1);
+    const [platformId, setPlatformId] = useState(-1);
 
     const { user } = useAuth();
     const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
 
     const refetch = async () => {
         const { quizId } = router.query;
+        const { platformId } = router.query;
+        setPlatformId(Number(platformId));
         console.log(quizId);
         if (quizId) {
             const result: AxiosResponse<Quiz> = await httpClient.get(
@@ -59,6 +62,7 @@ const QuizPage: NextPage = () => {
             <Navbar />
             {quizData && (
                 <QuizContainer
+                    platformId={platformId}
                     quizQuestions={quizQuestions}
                     edit={Boolean(router.query.edit)}
                     quizId={quizData.id}

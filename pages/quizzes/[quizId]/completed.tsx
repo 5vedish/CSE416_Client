@@ -23,6 +23,7 @@ const QuizCompleted: NextPage = () => {
 
         (async () => {
             const { quizId } = router.query;
+            // const { platform } = router.query;
 
             const result: AxiosResponse<QuizAttempt> = await httpClient.get(
                 `/quizzes/${quizId}/attempts`,
@@ -61,6 +62,11 @@ const QuizCompleted: NextPage = () => {
                 currency: quizResult.questionsCorrect * 500,
                 experience: quizResult.questionsCorrect * 500,
             });
+
+            // await httpClient.post(`/me/rewards/`, {
+            //     badgeId: Number(quizId),
+            //     badgeName: platform,
+            // });
         })();
     }, []);
 

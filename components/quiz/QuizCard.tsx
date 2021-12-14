@@ -5,6 +5,8 @@ import { PencilAltIcon, TrashIcon } from '@heroicons/react/solid';
 import Link from 'next/link';
 
 export default function QuizCard({
+    platformTitle,
+    platformId,
     id,
     title,
     time,
@@ -14,6 +16,8 @@ export default function QuizCard({
     refetch,
     editable,
 }: {
+    platformTitle: string;
+    platformId: number;
     id: number;
     title: string;
     time: number;
@@ -31,7 +35,7 @@ export default function QuizCard({
                 if (result.data) {
                     console.log(id);
                     router.push(
-                        `/quizzes/${id}?attempt=${result.data.attemptId}`,
+                        `/quizzes/${id}?attempt=${result.data.attemptId}&platform=${platformTitle}&platformId=${platformId}`,
                     );
                 }
             })

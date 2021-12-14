@@ -41,6 +41,9 @@ const PlatformPage: NextPage = () => {
                                         setLikedPlatform(true);
                                     }
                                 }
+                            })
+                            .catch((e) => {
+                                return;
                             });
                     }
                     setPlatformId(parseInt(platformId.toString()));
