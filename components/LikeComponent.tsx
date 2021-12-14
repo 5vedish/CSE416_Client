@@ -38,6 +38,9 @@ export default function LikeComponent({
                                         setLikedPlatform(true);
                                     }
                                 }
+                            })
+                            .catch((e) => {
+                                return;
                             });
                     }
                     console.log(result.data);
