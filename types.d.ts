@@ -30,6 +30,7 @@ interface Quiz {
 interface Platform {
     id: number;
     owner: string;
+    ownerId: number;
     quizzes: Quiz[];
     title: string;
     yourRating: number;

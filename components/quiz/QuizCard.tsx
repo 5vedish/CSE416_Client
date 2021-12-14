@@ -12,6 +12,7 @@ export default function QuizCard({
     difficulty,
     quizId,
     refetch,
+    editable,
 }: {
     id: number;
     title: string;
@@ -20,6 +21,7 @@ export default function QuizCard({
     difficulty: string;
     quizId: number;
     refetch: () => Promise<void>;
+    editable: boolean;
 }) {
     const router = useRouter();
     const startQuiz = async () => {
@@ -80,19 +82,24 @@ export default function QuizCard({
                         }[difficulty]
                     }
                 </div>
-                <div className="flex-inline flex-row flex mt-2">
-                    <button className="mr-2 hover:bg-gray-300">
-                        <Link href={`/quizzes/${quizId}?edit=true`} passHref>
-                            <a>
-                                <PencilAltIcon className="w-8 h-8"></PencilAltIcon>
-                            </a>
-                        </Link>
-                    </button>
+                {editable && (
+                    <div className="flex-inline flex-row flex mt-2">
+                        <button className="mr-2 hover:bg-gray-300">
+                            <Link
+                                href={`/quizzes/${quizId}?edit=true`}
+                                passHref
+                            >
+                                <a>
+                                    <PencilAltIcon className="w-8 h-8"></PencilAltIcon>
+                                </a>
+                            </Link>
+                        </button>
 
-                    <button onClick={deleteQuiz}>
-                        <TrashIcon className="w-8 h-8 hover:bg-gray-300"></TrashIcon>
-                    </button>
-                </div>
+                        <button onClick={deleteQuiz}>
+                            <TrashIcon className="w-8 h-8 hover:bg-gray-300"></TrashIcon>
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

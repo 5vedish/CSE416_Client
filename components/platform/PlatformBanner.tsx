@@ -19,18 +19,21 @@ export default function PlatformBanner({
 }) {
     return (
         <div>
-            <div className="content-center">
+            <div className="inline-flex space-x-5 items-center">
                 <div className="m-8 inline-block">
                     <div className="font-logo font text-xl"> {title} </div>
                     <div className="m-2"> by {author} </div>
                 </div>
-                <RatingView
-                    ratingValue={Math.floor(rating)} /* Rating Props */
-                />
-                {rating} / 5
+                <div>
+                    <RatingView
+                        ratingValue={Math.floor(rating)} /* Rating Props */
+                    />
+                    <div>{rating} / 5</div>
+                </div>
+
                 {/* referenced https://www.npmjs.com/package/react-simple-star-rating */}
                 <div className="inline-block">
-                    <LikeComponent id={id} showNumber={false} />
+                    <LikeComponent id={id} showNumber={true} />
                 </div>
             </div>
         </div>
