@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { BadgeCheckIcon, CurrencyDollarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
 import { useAuth } from './utils/AuthProvider';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function ShopItem({
     urlString,
@@ -25,7 +26,11 @@ export default function ShopItem({
     const { getUser: refetchUser } = useAuth();
 
     const purchase = async () => {
-        const result = await httpClient.put('/me/rewards', { badgeId: id });
+        const result = await httpClient
+            .put('/me/rewards', { badgeId: id })
+            .catch((err: Error) => {
+                toast('Not Enough Currency');
+            });
         await refetch();
         await refetchUser();
     };
@@ -64,6 +69,8 @@ export default function ShopItem({
                     </div>
                     <div className="flex-inline flex-row flex mt-2"></div>
                 </div>
+                <Toaster />
+                {/* referenced react hot toast documentation */}
             </div>
         </div>
     );
