@@ -63,7 +63,7 @@ export default function Platform({
                         platformId={id}
                         key={quiz.id}
                         id={quiz.id}
-                        editable={user.id === authorId}
+                        editable={Boolean(user && user.id === authorId)}
                         title={quiz.title}
                         time={quiz.maxTime}
                         questions={quiz.questions.length}
@@ -72,7 +72,7 @@ export default function Platform({
                         refetch={refetch}
                     />
                 ))}
-                {user.id === authorId && (
+                {user && user.id === authorId && (
                     <CreateButton label="Add Quiz" create={createQuiz} />
                 )}
             </QuizWrapper>

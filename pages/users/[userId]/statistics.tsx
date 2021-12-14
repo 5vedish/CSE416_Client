@@ -19,13 +19,18 @@ const UserStatisticsPage: NextPage = () => {
     const [averageScore, setAverageScore] = useState(-1);
     const [lifetimeQuizzes, setLifetimeQuizzes] = useState(-1);
     const [diffs, setDiffs] = useState<number[]>([]);
+    const [timeData, setTimeData] = useState<{
+        total: number;
+        average: number;
+    }>({ total: 0, average: 0 });
 
     useEffect(() => {
         (async () => {
             const result: AxiosResponse<Statistics> = await httpClient.get(
                 '/statistics',
             );
-            console.log('STATISTICS2');
+            console.log('STATISTICS');
+            console.log(result.data);
             if (result.data) {
                 const { questionsCorrect } = result.data.averageScore;
                 const { quizAttempts } = result.data.lifetimeQuizzes;
@@ -37,6 +42,10 @@ const UserStatisticsPage: NextPage = () => {
                 setAverageScore(questionsCorrect * 500);
                 setLifetimeQuizzes(quizAttempts);
                 setDiffs(diffsList);
+                setTimeData({
+                    total: result.data.timeData.totalTimeSpent,
+                    average: result.data.timeData.averageTimeSpent,
+                });
             }
         })();
     }, []);
@@ -70,6 +79,16 @@ const UserStatisticsPage: NextPage = () => {
                     <div className={`${statStyle}`}>
                         <p className="mr-2">Hard Quizzes Taken:</p>
                         <p className="font-bold text-red-500">{diffs[2]}</p>
+                    </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">Total Time Spent Taking Quizzes:</p>
+                        <p className="font-bold">{timeData.total} seconds</p>
+                    </div>
+                    <div className={`${statStyle}`}>
+                        <p className="mr-2">
+                            Average Time Spent Taking One Quiz:
+                        </p>
+                        <p className="font-bold">{timeData.average} seconds</p>
                     </div>
                     {/* 
                 <div className={`${statStyle}`}>
