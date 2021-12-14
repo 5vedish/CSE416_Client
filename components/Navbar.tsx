@@ -16,6 +16,15 @@ import { AxiosResponse } from 'axios';
 export default function Navbar() {
     const { user } = useAuth();
 
+    const [currency, setCurrency] = useState(-1); // this is basically a switch to have the navbar rerender
+
+    useEffect(() => {
+        (async () => {
+            const { currency } = (await httpClient.get('/me')).data;
+            setCurrency(currency);
+        })();
+    }, [user]);
+
     const { setIsOpen } = useModal();
 
     return (

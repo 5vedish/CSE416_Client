@@ -88,6 +88,7 @@ const PlatformPage: NextPage = () => {
                             quizzes={platformData.quizzes}
                             title={platformData.title}
                             author={platformData.owner}
+                            authorId={platformData.ownerId}
                             rating={platformData.averageRating}
                             yourRating={platformData.yourRating}
                             createQuiz={createQuiz}

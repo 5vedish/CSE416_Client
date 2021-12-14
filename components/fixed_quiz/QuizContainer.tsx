@@ -25,6 +25,7 @@ export default function QuizContainer({
 }) {
     const [score, setScore] = useState(0);
     const [record, setRecord] = useState<{ [key: number]: number }>({});
+    const refetchUser = useAuth().getUser;
 
     const recordChoice = (index: number, choice: number) => {
         setRecord({ ...record, [index]: choice });
@@ -62,6 +63,7 @@ export default function QuizContainer({
             endTime: new Date(),
         });
         getUser();
+        refetchUser();
         router.push(`/quizzes/${quizId}/completed`);
     };
 
